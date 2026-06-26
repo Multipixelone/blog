@@ -16,7 +16,9 @@ feed_filenames = ["atom.xml"]
 github_alerts = true
 
 [markdown.highlighting]
-theme = "github-light"
+style = "class"
+light_theme = "github-light"
+dark_theme = "github-dark"
 
 [extra]
 # Site-wide extra data accessible in templates via config.extra

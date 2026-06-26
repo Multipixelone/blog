@@ -234,6 +234,14 @@ pre code {
   color: inherit;
 }
 
+/* Syntax-highlighting themes (giallo-*.css) set their own code background and
+   base color. Keep the paper-themed --code-bg and --ink so code blocks match
+   the page aesthetic in both light and dark mode; only token colors adapt. */
+.z-code {
+  background: transparent;
+  color: inherit;
+}
+
 article {
   margin-bottom: 3rem;
 }
