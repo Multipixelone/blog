@@ -28,6 +28,14 @@
   }
 }
 
+@font-face {
+  font-family: "Cooper*";
+  src: url("fonts/cooper/Cooper-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -110,14 +118,28 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Fraunces", Georgia, serif;
-  font-weight: 900;
-  font-optical-sizing: auto;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 1.1;
   margin: 2.5rem 0 1rem;
   color: var(--ink);
   font-variant-ligatures: common-ligatures discretionary-ligatures;
+}
+
+h1 {
+  font-family: "Cooper*", Georgia, serif;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+h2, h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 600;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+}
+
+h4, h5, h6 {
+  font-family: "EB Garamond", Georgia, "Times New Roman", serif;
+  font-weight: 600;
 }
 
 h1 {
@@ -227,16 +249,14 @@ article h2 a:hover {
 
 article:has(> h1) > p:first-of-type::first-letter {
   float: left;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: "EB Garamond", Georgia, "Times New Roman", serif;
   font-size: 3.4rem;
   line-height: 0.8;
   padding-right: 0.55rem;
   padding-top: 0.15rem;
-  font-weight: 900;
-  font-optical-sizing: auto;
+  font-weight: 700;
   color: var(--accent);
   font-variant: small-caps;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
 .pagination {
