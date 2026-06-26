@@ -290,3 +290,45 @@ footer a:hover {
     font-size: 2.8rem;
   }
 }
+
+/* GitHub-style markdown alerts (Obsidian callouts) */
+.markdown-alert {
+  border-left: 3px solid;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  border-radius: 2px;
+}
+
+.markdown-alert p:first-child {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.markdown-alert p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-alert-note {
+  border-left-color: #4a6fa5;
+  background: #f0f4fa;
+}
+
+.markdown-alert-tip {
+  border-left-color: #4a7a4a;
+  background: #f0f7f0;
+}
+
+.markdown-alert-important {
+  border-left-color: #6a4a8a;
+  background: #f5f0fa;
+}
+
+.markdown-alert-warning {
+  border-left-color: #a07a2a;
+  background: #faf6ee;
+}
+
+.markdown-alert-caution {
+  border-left-color: #a04a4a;
+  background: #faf0f0;
+}

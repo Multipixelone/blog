@@ -12,6 +12,9 @@ generate_feeds = false
 feed_filenames = ["atom.xml"]
 
 # Syntax highlighting (Zola 0.22+ uses [markdown.highlighting])
+[markdown]
+github_alerts = true
+
 [markdown.highlighting]
 theme = "github-light"
 
