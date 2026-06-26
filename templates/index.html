@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ config.title }}</h1>
+<p>Technical notes and projects by Finn Rutis.</p>
+<p><a href="{{ get_url(path="@/blog/_index.md") }}">Read the blog →</a></p>
+{% endblock %}

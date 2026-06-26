@@ -1,0 +1,19 @@
+# Zola configuration for Finn Rutis' technical blog
+# Docs: https://www.getzola.org/documentation/getting-started/configuration/
+
+base_url = "https://blog.finnrut.is/"
+title = "Finn Rutis"
+description = "Technical writings by Finn Rutis"
+author = "Finn Rutis"
+default_language = "en"
+
+# Atom feed — generated per-section (blog only); see content/blog/_index.md
+generate_feeds = false
+feed_filenames = ["atom.xml"]
+
+# Syntax highlighting (Zola 0.22+ uses [markdown.highlighting])
+[markdown.highlighting]
+theme = "github-light"
+
+[extra]
+# Site-wide extra data accessible in templates via config.extra

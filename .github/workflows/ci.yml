@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: flake check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.0
+      - uses: nixbuild/nix-quick-install-action@v35
+      - name: Run nix flake check
+        run: nix flake check --print-build-logs
+      - name: Build site
+        run: nix build .#default --print-build-logs
