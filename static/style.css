@@ -292,13 +292,21 @@ article h2 a:hover {
 article:has(> h1) > p:first-of-type::first-letter {
   float: left;
   font-family: "Cooper*", Georgia, serif;
-  font-size: 3.4rem;
-  line-height: 0.8;
+  /* glyph fits inside float box when line-height == 1;
+     2.95 * line-height makes the box a hair under 3 lines so line 4 flows up */
+  font-size: calc(3 * 1.65em);
+  line-height: 1;
   padding-right: 0.55rem;
-  padding-top: 0.15rem;
+  padding-top: 0.85rem;
   font-weight: 400;
   color: var(--accent);
   font-feature-settings: "swsh" 1;
+}
+
+/* When the first paragraph is shorter than the drop cap's 3-line float box,
+   force the next paragraph to start below the float instead of wrapping up. */
+article:has(> h1) > p:first-of-type + p {
+  clear: left;
 }
 
 .pagination {
@@ -351,10 +359,6 @@ footer a:hover {
 
   nav a {
     margin-right: 1.25rem;
-  }
-
-  article:has(> h1) > p:first-of-type::first-letter {
-    font-size: 2.8rem;
   }
 }
 
