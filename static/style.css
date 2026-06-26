@@ -77,7 +77,7 @@ header {
 }
 
 header::after {
-  content: "❧";
+  content: "⚘";
   position: absolute;
   left: 50%;
   bottom: -0.7em;
@@ -85,6 +85,8 @@ header::after {
   padding: 0 0.75rem;
   background: var(--paper);
   color: var(--accent);
+  font-family: "Cooper*";
+  font-weight: 400;
   font-size: 1.15rem;
   line-height: 1;
 }
