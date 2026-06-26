@@ -5,7 +5,7 @@ slug: "hello-world"
 template: "page.html"
 ---
 
-This is a small technical blog where I'll post notes, experiments, and things I figure out while working on systems and developer tooling.
+This is my long overdue blog where I'll post notes, projects, and things that might eventually be helpful to future surfers of the net.
 
 <!-- more -->
 
@@ -17,6 +17,6 @@ To build the site locally, I run:
 nix build
 ```
 
-That's it. The flake handles Zola and any other dependencies, so the same command works on any machine with Nix installed.
+The flake handles Zola and any other dependencies, so the same command works on any machine with Nix installed.
 
-What to expect here: short posts about Nix, infrastructure, command-line tools, and whatever else I end up deep in. Nothing polished to a shine — just notes written while they're fresh.
+Expect nothing consistant. Expect random ramblings, expect writings that don't make a lot of sense to anyone but me. As long as one person somewhere eventually finds it helpful: that's the bar to clear.
