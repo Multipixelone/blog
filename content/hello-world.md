@@ -1,6 +1,6 @@
 ---
 title: "Hello, world"
-date: 2026-06-26
+date: 2026-06-25
 slug: "hello-world"
 template: "page.html"
 ---
