@@ -3,9 +3,9 @@
   --paper-shade: #efeadd;
   --ink: #2b2520;
   --muted: #766b5e;
-  --accent: #7a3e3e;
-  --accent-hover: #5e2d2d;
-  --gold: #a68b4b;
+  --accent: #b54a00;
+  --accent-hover: #8c3800;
+  --selection-bg: #f5d9c4;
   --border: #ddd6c6;
   --code-bg: #f3efe6;
   --code-border: #e7e0d1;
@@ -18,9 +18,9 @@
     --paper-shade: #242019;
     --ink: #e8e2d8;
     --muted: #9e9486;
-    --accent: #c9a96e;
-    --accent-hover: #ddb97d;
-    --gold: #c9a96e;
+    --accent: #ff9e42;
+    --accent-hover: #ffb366;
+    --selection-bg: #5a2e0f;
     --border: #3b342c;
     --code-bg: #242019;
     --code-border: #332d26;
@@ -57,8 +57,8 @@ body {
 }
 
 ::selection {
-  background: var(--gold);
-  color: var(--paper);
+  background: var(--selection-bg);
+  color: var(--ink);
 }
 
 header {
@@ -76,7 +76,7 @@ header::after {
   transform: translateX(-50%);
   padding: 0 0.75rem;
   background: var(--paper);
-  color: var(--gold);
+  color: var(--accent);
   font-size: 1.15rem;
   line-height: 1;
 }
@@ -110,10 +110,12 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  line-height: 1.15;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 900;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1.1;
   margin: 2.5rem 0 1rem;
-  font-weight: 600;
   color: var(--ink);
   font-variant-ligatures: common-ligatures discretionary-ligatures;
 }
@@ -121,11 +123,12 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 2.6rem;
   margin-top: 0;
-  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 h2 {
   font-size: 1.9rem;
+  letter-spacing: -0.01em;
 }
 
 h3 {
@@ -224,14 +227,16 @@ article h2 a:hover {
 
 article:has(> h1) > p:first-of-type::first-letter {
   float: left;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 3.6rem;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 3.4rem;
   line-height: 0.8;
   padding-right: 0.55rem;
   padding-top: 0.15rem;
-  font-weight: 700;
+  font-weight: 900;
+  font-optical-sizing: auto;
   color: var(--accent);
   font-variant: small-caps;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
 .pagination {
@@ -271,7 +276,7 @@ footer a:hover {
   }
 
   h1 {
-    font-size: 2.1rem;
+    font-size: 1.95rem;
   }
 
   h2 {
