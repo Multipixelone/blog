@@ -36,6 +36,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Cooper*";
+  src: url("fonts/cooper/Cooper-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -251,14 +259,14 @@ article h2 a:hover {
 
 article:has(> h1) > p:first-of-type::first-letter {
   float: left;
-  font-family: "EB Garamond", Georgia, "Times New Roman", serif;
+  font-family: "Cooper*", Georgia, serif;
   font-size: 3.4rem;
   line-height: 0.8;
   padding-right: 0.55rem;
   padding-top: 0.15rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--accent);
-  font-variant: small-caps;
+  font-feature-settings: "swsh" 1;
 }
 
 .pagination {
