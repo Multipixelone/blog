@@ -8,6 +8,6 @@ My name is Finn Rutis. I'm a musical theatre performer, but in my free time I wo
 
 Most posts here will cover technical notes, small projects, and practical problems I run into. Most often around Nix, infrastructure, and building software. I write them partly to remember what I figured out, and partly in case someone else finds the answer useful.
 
-I also am obsessed with the human condition and what stories we tell eachother, so expect some of those as well over time.
+I also am obsessed with the human condition and what stories we tell each other, so expect some of those as well over time.
 
 Hope you enjoy :-)
