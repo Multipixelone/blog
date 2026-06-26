@@ -26,13 +26,13 @@ That one metadata file now feeds around thirty variants covering acting, tech, w
 
 But that only solved my mechanical gripes with the process. The framing and phrasing were still my main sticking point because when I write, I write casual and personal, so I made a workflow for that too.
 
-I wrote a skill for my agentic coding assistant that automated the process: pulling the job listing, extracting key phrases, and mostly making sure the LLM structured things precisely how I wanted it. But the real trick wasn't the prompt itself. It was a file called [AGENTS.md](https://github.com/Multipixelone/resume/blob/main/AGENTS.md) that lives in the resume repo, committed with the templates. It's about 325 lines of system prompt that governs how the model writes copy.
+I wrote a skill for my agentic coding assistant that automated the process: pulling the job listing, extracting key phrases, but mostly making sure the LLM structured things precisely how I wanted it. But the real trick wasn't the prompt itself. It was my [AGENTS.md](https://github.com/Multipixelone/resume/blob/main/AGENTS.md) file that lives in the resume repo, committed with the templates. It's about 325 lines of system prompt that governs how the model writes copy.
 
-The section I keep coming back to is "What to Avoid (AI Tells)." Instead of telling the model to sound friendly or confident, it lists things it can't write. No "leveraged." No "spearheaded." No "orchestrated." No em dashes, ever. I tried telling it what voice to use, and it kept sounding like a LinkedIn post. Once I gave it forbidden words and patterns, the output got sharper. It writes better when I tell it what to skip.
+The section I kept revising was "What to Avoid (AI Tells)." Instead of telling the model to sound friendly or confident, it lists things it _can't_ write. No "leveraged." No "spearheaded." No "orchestrated." **No em dashes, ever.** I tried telling it what voice to use, and it kept sounding like a LinkedIn post. As soon as I told it explicitly what _not_ to do, it finally sounded normal. It wrote far better when I told it what to skip.
 
 The other piece that keeps it from drifting is the output shape. The model doesn't get to spit out prose. It fills in TOML metadata against a schema I defined. If it hallucinates a field, the build fails. Same basic idea as writing a test for an API: the model is the function, and the schema is the test.
 
-That's the part that actually matters. Generating text is easy. Building a system where the generated output has to be correct is the hard part. Making these systems _predictable_. Giving them enough context that anyone picking up my system in a year or two could get right back into writing resumes.
+That's the part that actually matters. Generating text that _looks right_ is easy. Building a system where the generated output has to be correct is the hard part. Making these systems _predictable_. Giving them enough context that anyone picking up my system in a year or two could get right back into writing resumes.
 
 I know those breadcrumbs will save my ass in a year or two.
 

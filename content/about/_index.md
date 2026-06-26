@@ -1,7 +1,7 @@
 +++
 title = "About"
-template = "page.html"
-date = 2026-06-26
+template = "about.html"
+sort_by = "date"
 +++
 
 I'm Finn Rutis. I work on systems and developer tooling, and this blog is where I write down things I learn along the way.

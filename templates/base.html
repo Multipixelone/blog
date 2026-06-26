@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
-  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="blog/atom.xml", trailing_slash=false) }}">
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
   <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock %}">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
   <meta property="og:url" content="{% block og_url %}{{ current_url | default(value=config.base_url) }}{% endblock %}">
@@ -19,8 +19,7 @@
   <header>
     <nav>
       <a href="{{ get_url(path="/") }}">Home</a>
-      <a href="{{ get_url(path="@/blog/_index.md") }}">Blog</a>
-      <a href="{{ get_url(path="@/about.md") }}">About</a>
+      <a href="{{ get_url(path="@/about/_index.md") }}">About</a>
     </nav>
   </header>
 
@@ -29,7 +28,7 @@
   </main>
 
   <footer>
-    <p>&copy; {{ now() | date(format="%Y") }} {{ config.author }}. <a href="{{ get_url(path="blog/atom.xml", trailing_slash=false) }}">Atom feed</a></p>
+    <p>&copy; {{ now() | date(format="%Y") }} {{ config.author }}. <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}">Atom feed</a></p>
   </footer>
 </body>
 </html>
