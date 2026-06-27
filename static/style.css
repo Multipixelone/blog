@@ -303,10 +303,10 @@ article:has(> h1) > p:first-of-type::first-letter {
   font-feature-settings: "swsh" 1;
 }
 
-/* When the first paragraph is shorter than the drop cap's 3-line float box,
-   force the next paragraph to start below the float instead of wrapping up. */
-article:has(> h1) > p:first-of-type + p {
-  clear: left;
+/* Contain the floated drop cap so a short first paragraph still pushes the
+   next paragraph below the 3-line float box instead of letting it wrap up. */
+article:has(> h1) > p:first-of-type {
+  display: flow-root;
 }
 
 .pagination {
