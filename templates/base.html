@@ -68,6 +68,12 @@
         var label = 'Code block' + (caption !== 'code' ? ': ' + caption : '');
         pre.setAttribute('aria-label', label);
 
+        // Real header element (replaces the ::before pseudo-element).
+        var header = document.createElement('div');
+        header.className = 'z-code-header';
+        header.textContent = caption;
+        pre.insertBefore(header, code);
+
         // Copy button.
         var btn = document.createElement('button');
         btn.type = 'button';
