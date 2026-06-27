@@ -223,6 +223,16 @@ h1 {
   letter-spacing: 0;
 }
 
+.pronouns {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.45em;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-left: 0.4em;
+  vertical-align: middle;
+}
+
 h2 {
   font-size: 1.75rem;
   font-weight: 700;
