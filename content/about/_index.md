@@ -11,3 +11,8 @@ Most posts here will cover technical notes, small projects, and practical proble
 I also am obsessed with the human condition and what stories we tell each other, so expect some of those as well over time.
 
 Hope you enjoy :-)
+
+## Elsewhere
+
+- [GitHub](https://github.com/Multipixelone)
+- [Resume](https://resume.finnrut.is/)
