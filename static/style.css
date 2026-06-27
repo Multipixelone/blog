@@ -60,7 +60,7 @@
    so users who own the desktop font skip the download. */
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataPro Mono Liga"),
+  src: local("PragmataProMonoLiga-Regular"),
     url("https://fonts.finnrut.is/PragmataPro_Mono_Regular_ligatures_0827.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
@@ -69,7 +69,7 @@
 
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataPro Mono Liga Bold"),
+  src: local("PragmataProMonoLiga-Bold"),
     url("https://fonts.finnrut.is/PragmataPro_Mono_Bold_ligatures_0827.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
@@ -78,7 +78,7 @@
 
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataPro Mono Liga Italic"),
+  src: local("PragmataProMonoLiga-Italic"),
     url("https://fonts.finnrut.is/PragmataPro_Mono_Italic_ligatures_0827.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
@@ -87,7 +87,7 @@
 
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataPro Mono Liga Bold Italic"),
+  src: local("PragmataProMonoLiga-BoldItalic"),
     url("https://fonts.finnrut.is/PragmataPro_Mono__Bold_Italic_ligatures_0827.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
