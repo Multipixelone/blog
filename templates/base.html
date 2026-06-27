@@ -60,10 +60,18 @@
         pre.setAttribute('role', 'region');
 
         // Caption for the header bar: filename beats language.
+        // Zola emits Sublime-internal syntax names in data-lang (e.g. `bash`
+        // resolves to `shellscript`); map the common ones to friendlier labels.
+        var langMap = {
+          shellscript: 'bash',
+          'python-2': 'python',
+          'js-template': 'javascript',
+          'ts-template': 'typescript'
+        };
         var lang = code.dataset.lang || '';
         var name = code.dataset.name || '';
-        var caption = name || lang || 'code';
-        pre.dataset.caption = caption;
+        var displayLang = langMap[lang] || lang;
+        var caption = name || displayLang || 'code';
 
         var label = 'Code block' + (caption !== 'code' ? ': ' + caption : '');
         pre.setAttribute('aria-label', label);
