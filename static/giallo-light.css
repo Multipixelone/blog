@@ -6,6 +6,12 @@
  *          orange #af3a03  gray #928374
  */
 
+:root {
+  --giallo-ln: #a89984;
+  --z-bg: #fbf1c7;
+  --z-scroll-shadow: rgba(60, 56, 54, 0.18);
+}
+
 .z-code {
   color: #3c3836;
   background-color: #fbf1c7;
