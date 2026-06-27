@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ term.name }} — {{ config.title }}{% endblock %}
+{% block description %}Posts tagged "{{ term.name }}".{% endblock %}
+
+{% block content %}
+<p class="tag-back"><a href="{{ get_url(path="/tags/") }}">← All tags</a></p>
+<h1>
+  <span class="tag-hash">#</span>{{ term.name }}
+</h1>
+
+{% for page in term.pages %}
+<article>
+  <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+  <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+  {% if page.summary %}{{ page.summary | safe }}{% endif %}
+</article>
+{% endfor %}
+
+<p class="tag-feed">
+  <a href="{{ term.permalink | trim_end_matches(pat='/') | safe }}/atom.xml">Atom feed for this tag</a>
+</p>
+{% endblock %}

@@ -401,6 +401,72 @@ article:has(> h1) > p:first-of-type::first-letter {
   font-weight: 600;
 }
 
+/* Tags — inline clickable cross-links on posts and tag listing pages. */
+.tags {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.tags a {
+  display: inline-block;
+  margin-right: 0.75rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
+.tags a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* /tags/ index — flat list of tags with per-tag post counts. */
+.tag-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.tag-list li {
+  margin-bottom: 0;
+}
+
+.tag-count {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-variant: small-caps;
+  margin-left: 0.25rem;
+}
+
+/* /tags/<slug>/ — back-link and feed link affordances. */
+.tag-back {
+  font-size: 0.9rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+.tag-hash {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  margin-right: 0.1em;
+}
+
+.tag-feed {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
 footer {
   margin-top: 4rem;
   padding-top: 1.25rem;

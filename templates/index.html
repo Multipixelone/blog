@@ -9,6 +9,14 @@
   <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
   <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
   {% if page.summary %}{{ page.summary | safe }}{% endif %}
+  {% if page.taxonomies and page.taxonomies.tags %}
+  <nav class="tags" aria-label="Tags">
+    {% for tag in page.taxonomies.tags %}
+    {% set term = get_taxonomy_term(kind="tags", term=tag) %}
+    <a href="{{ term.permalink | safe }}">#{{ tag }}</a>
+    {% endfor %}
+  </nav>
+  {% endif %}
 </article>
 {% endfor %}
 

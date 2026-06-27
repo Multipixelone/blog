@@ -1,8 +1,13 @@
 ---
-title: "What a resume generator taught me about making LLM output reliable"
+title: What a resume generator taught me about making LLM output reliable
 date: 2026-06-26
-slug: "resume-gen"
-template: "page.html"
+slug: resume-gen
+template: page.html
+taxonomies:
+  tags:
+    - technology
+    - llm
+    - project
 ---
 
 One thing about me is I am obsessed with overengineering personal projects. Even when I am the singular consumer of a given project, I like to play pretend that I am leading a team of developers who are all following the trail of bread crumbs I left months ago.

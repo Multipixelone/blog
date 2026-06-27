@@ -11,6 +11,13 @@ default_language = "en"
 generate_feeds = false
 feed_filenames = ["atom.xml"]
 
+# Tags taxonomy — front-matter `tags:` lists become clickable cross-links.
+# See templates/tags/{list,single}.html. Per-tag Atom feeds are generated at
+# /tags/<slug>/atom.xml (linked from the tag listing pages).
+taxonomies = [
+    {name = "tags", feed = true}
+]
+
 # Syntax highlighting (Zola 0.22+ uses [markdown.highlighting])
 [markdown]
 github_alerts = true

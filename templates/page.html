@@ -14,5 +14,13 @@
   <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
   {% endif %}
   {{ page.content | safe }}
+  {% if page.taxonomies and page.taxonomies.tags %}
+  <nav class="tags" aria-label="Tags">
+    {% for tag in page.taxonomies.tags %}
+    {% set term = get_taxonomy_term(kind="tags", term=tag) %}
+    <a href="{{ term.permalink | safe }}">#{{ tag }}</a>
+    {% endfor %}
+  </nav>
+  {% endif %}
 </article>
 {% endblock %}
