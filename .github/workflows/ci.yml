@@ -26,3 +26,5 @@ jobs:
         run: nix build .#default --print-build-logs
       - name: Check internal links
         run: nix develop --command zola check
+      - name: Spell check
+        run: nix run nixpkgs#typos -- .

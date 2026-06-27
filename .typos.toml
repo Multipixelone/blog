@@ -1,0 +1,11 @@
+# typos spell-checker config
+# https://github.com/crate-ci/typos
+#
+# `repitition` is part of the kebab-case CSS class name
+# `z-arbitrary-repitition` emitted by Zola's syntax highlighter (it matches a
+# token in regex strings). We can't rename the class in the giallo themes
+# without breaking highlighting, so whitelist the word here. (Per the typos
+# reference: when the correction equals the key, the word is always valid.)
+
+[default.extend-words]
+repitition = "repitition"
