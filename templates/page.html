@@ -10,8 +10,28 @@
 {% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock %}
 {% block canonical %}{{ page.permalink }}{% endblock %}
 
+{% block article_meta %}
+  <meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S") }}">
+  <meta property="article:author" content="{{ config.author }}">
+{% endblock %}
+
 {% block content %}
 <article>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | json_encode | safe }},
+  "datePublished": "{{ page.date | date(format="%Y-%m-%d") }}",
+  "dateModified": "{{ page.updated | default(value=page.date) | date(format="%Y-%m-%d") }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ config.author | json_encode | safe }}
+  },
+  "url": {{ page.permalink | json_encode | safe }},
+  "description": {{ page.description | default(value=config.description) | json_encode | safe }}
+}
+  </script>
   <h1>{{ page.title }}</h1>
   {% if page.date %}
   <time>{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.content | striptags | split(pat=" ") | length }} words</span></time>

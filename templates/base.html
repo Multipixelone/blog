@@ -21,6 +21,8 @@
   <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock %}">
   <meta property="og:image" content="{% block og_image %}{{ get_url(path="favicon.ico") }}{% endblock %}">
   <meta property="og:site_name" content="{{ config.title }}">
+  <meta name="author" content="{{ config.author }}">
+  {% block article_meta %}{% endblock %}
 </head>
 <body>
   <header>
