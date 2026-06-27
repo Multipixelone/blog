@@ -15,6 +15,10 @@ feed_filenames = ["atom.xml"]
 [markdown]
 github_alerts = true
 
+# style = "class" emits z-* token classes; colors come entirely from
+# static/giallo-{light,dark}.css (Gruvbox). The theme names below are only a
+# fallback if style is switched to inline/enriched — Zola 0.22 ships no
+# "gruvbox" theme, so keep the bundled github pair to stay build-green.
 [markdown.highlighting]
 style = "class"
 light_theme = "github-light"
