@@ -38,6 +38,14 @@
 
 @font-face {
   font-family: "Cooper*";
+  src: url("fonts/cooper/Cooper-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cooper*";
   src: url("fonts/cooper/Cooper-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
@@ -55,7 +63,7 @@ html {
 body {
   font-family: "EB Garamond", Georgia, "Times New Roman", serif;
   font-size: 18px;
-  line-height: 1.65;
+  line-height: 1.7;
   color: var(--ink);
   background: var(--paper)
     radial-gradient(ellipse at top, rgba(255, 255, 255, 0.6), transparent 60%);
@@ -147,18 +155,16 @@ h6 {
 
 h1 {
   font-family: "Cooper*", Georgia, serif;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.05;
+  margin-bottom: 1.5rem;
+  text-wrap: balance;
 }
 
 h2,
 h3 {
-  font-family: "Fraunces", Georgia, serif;
+  font-family: "EB Garamond", Georgia, "Times New Roman", serif;
   font-weight: 600;
-  font-optical-sizing: auto;
-  font-variation-settings:
-    "SOFT" 0,
-    "WONK" 0;
 }
 
 h4,
@@ -169,18 +175,23 @@ h6 {
 }
 
 h1 {
-  font-size: 2.6rem;
+  font-size: 2.3rem;
   margin-top: 0;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 h2 {
-  font-size: 1.9rem;
+  font-size: 1.75rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 h3 {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.2;
 }
 
 h4 {
@@ -328,7 +339,7 @@ footer {
   color: var(--muted);
   text-align: center;
   font-variant: small-caps;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
 footer a {
@@ -346,7 +357,7 @@ footer a:hover {
   }
 
   h1 {
-    font-size: 1.95rem;
+    font-size: 1.85rem;
   }
 
   h2 {
