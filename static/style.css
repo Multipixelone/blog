@@ -417,7 +417,6 @@ article:has(> h1) > p:first-of-type::first-letter {
   color: var(--muted);
   font-size: 0.85rem;
   font-style: italic;
-  margin-left: 0.5rem;
   display: inline;
 }
 
