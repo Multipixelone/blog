@@ -60,8 +60,10 @@
    so users who own the desktop font skip the download. */
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataProMonoLiga-Regular"),
-    url("https://fonts.finnrut.is/PragmataPro_Mono_Regular_ligatures_0827.woff2") format("woff2");
+  src:
+    local("PragmataProMonoLiga-Regular"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono_Regular_ligatures_0827.woff2")
+      format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -69,8 +71,10 @@
 
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataProMonoLiga-Bold"),
-    url("https://fonts.finnrut.is/PragmataPro_Mono_Bold_ligatures_0827.woff2") format("woff2");
+  src:
+    local("PragmataProMonoLiga-Bold"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono_Bold_ligatures_0827.woff2")
+      format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -78,8 +82,10 @@
 
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataProMonoLiga-Italic"),
-    url("https://fonts.finnrut.is/PragmataPro_Mono_Italic_ligatures_0827.woff2") format("woff2");
+  src:
+    local("PragmataProMonoLiga-Italic"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono_Italic_ligatures_0827.woff2")
+      format("woff2");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -87,8 +93,10 @@
 
 @font-face {
   font-family: "PragmataPro Mono Liga";
-  src: local("PragmataProMonoLiga-BoldItalic"),
-    url("https://fonts.finnrut.is/PragmataPro_Mono__Bold_Italic_ligatures_0827.woff2") format("woff2");
+  src:
+    local("PragmataProMonoLiga-BoldItalic"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono__Bold_Italic_ligatures_0827.woff2")
+      format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -103,8 +111,16 @@ html {
   min-height: 100%;
   background-color: var(--paper);
   background-image:
-    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 60%),
-    radial-gradient(ellipse 120% 70% at 50% 100%, var(--shadow), transparent 55%);
+    radial-gradient(
+      ellipse 120% 60% at 50% 0%,
+      rgba(255, 255, 255, 0.5),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 70% at 50% 100%,
+      var(--shadow),
+      transparent 55%
+    );
   background-attachment: fixed;
 }
 
@@ -124,8 +140,16 @@ body {
 @media (prefers-color-scheme: dark) {
   html {
     background-image:
-      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%),
-      radial-gradient(ellipse 120% 70% at 50% 100%, var(--shadow), transparent 55%);
+      radial-gradient(
+        ellipse 120% 60% at 50% 0%,
+        rgba(255, 255, 255, 0.04),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 120% 70% at 50% 100%,
+        var(--shadow),
+        transparent 55%
+      );
   }
 }
 
@@ -225,7 +249,7 @@ h1 {
 
 .pronouns {
   color: var(--muted);
-  font-family: var(--font-mono);
+  font-family: "linotype-sabon";
   font-size: 0.45em;
   font-weight: 400;
   letter-spacing: 0;
@@ -338,8 +362,16 @@ pre.z-code {
     linear-gradient(to left, var(--z-bg) 0%, transparent 100%),
     linear-gradient(to right, var(--z-scroll-shadow) 0%, transparent 100%),
     linear-gradient(to left, var(--z-scroll-shadow) 0%, transparent 100%);
-  background-position: left center, right center, left center, right center;
-  background-size: 2rem 100%, 2rem 100%, 0.75rem 100%, 0.75rem 100%;
+  background-position:
+    left center,
+    right center,
+    left center,
+    right center;
+  background-size:
+    2rem 100%,
+    2rem 100%,
+    0.75rem 100%,
+    0.75rem 100%;
   background-repeat: no-repeat;
   background-attachment: local, local, scroll, scroll;
   counter-reset: line;
@@ -425,7 +457,10 @@ pre.z-code .giallo-l.z-hl {
   border: 1px solid var(--code-border);
   border-radius: 3px;
   cursor: pointer;
-  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .copy-btn:hover,
@@ -604,7 +639,12 @@ article:has(> h1) > p:first-of-type::first-letter {
   font-variant: small-caps;
   letter-spacing: 0.04em;
   line-height: 1.15;
-  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .tag-list a:hover {
