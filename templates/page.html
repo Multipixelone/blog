@@ -14,7 +14,7 @@
 <article>
   <h1>{{ page.title }}</h1>
   {% if page.date %}
-  <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+  <time>{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.content | striptags | split(pat=" ") | length }} words</span></time>
   {% endif %}
   {{ page.content | safe }}
   {% if page.taxonomies and page.taxonomies.tags %}
@@ -23,6 +23,12 @@
     {% set term = get_taxonomy_term(kind="tags", term=tag) %}
     <a href="{{ term.permalink | safe }}">#{{ tag }}</a>
     {% endfor %}
+  </nav>
+  {% endif %}
+  {% if page.lower or page.higher %}
+  <nav class="post-nav" aria-label="More posts">
+    {% if page.lower %}<a href="{{ page.lower.permalink | safe }}">← {{ page.lower.title }}</a>{% endif %}
+    {% if page.higher %}<a href="{{ page.higher.permalink | safe }}">{{ page.higher.title }} →</a>{% endif %}
   </nav>
   {% endif %}
 </article>

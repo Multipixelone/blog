@@ -401,6 +401,25 @@ article:has(> h1) > p:first-of-type::first-letter {
   font-weight: 600;
 }
 
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.reading-time {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-left: 0.5rem;
+  display: inline;
+}
+
 /* Tags — inline clickable cross-links on posts and tag listing pages. */
 .tags {
   margin-top: 1.5rem;
