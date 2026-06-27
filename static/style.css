@@ -94,9 +94,9 @@ header::after {
   content: "❦";
   position: absolute;
   left: 50%;
-  bottom: -0.7em;
+  bottom: -0.6em;
   transform: translateX(-50%);
-  padding: 0 0.75rem;
+  padding: 0.1em 0.75rem;
   background: var(--paper);
   color: var(--accent);
   font-family: "Cooper*";
