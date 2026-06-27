@@ -1,12 +1,15 @@
 ---
 title: Ramblings About Theodicy
 date: 2026-06-27
+description: "Personal reflections on religion, faith, and God — shaped by childhood, a Molloy University theology class, and a teacher who changed everything."
 slug: ramblings-about-theodicy
 template: page.html
 taxonomies:
   tags:
     - theology
     - personal
+extra:
+  cover_alt: "Social card for 'Ramblings About Theodicy'"
 ---
 
 I grew up in a pretty atheist household. My mom had religious trauma, and my dad is a pretty scientifically minded fella. They always _said_ that if I ever got into God or Religion, that they'd accept it, but I wonder how truthful that is.

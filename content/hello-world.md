@@ -1,6 +1,7 @@
 ---
 title: "Flakey blog: or, why Nix Flakes are the only deployment system I hope to ever use again"
 date: 2026-06-25
+description: "Introducing a new blog: a Zola-built site deployed via Nix flakes and GitHub Pages for posting notes, projects, and technical ramblings."
 slug: "hello-world"
 template: "page.html"
 taxonomies:

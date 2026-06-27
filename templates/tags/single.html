@@ -2,6 +2,8 @@
 
 {% block title %}{{ term.name }} — {{ config.title }}{% endblock %}
 {% block description %}Posts tagged "{{ term.name }}".{% endblock %}
+{% block og_title %}{{ term.name }} — {{ config.title }}{% endblock og_title %}
+{% block og_description %}Posts tagged "{{ term.name }}".{% endblock og_description %}
 
 {% block content %}
 <nav class="tag-back" aria-label="Tag navigation">

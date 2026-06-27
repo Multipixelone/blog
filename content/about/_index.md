@@ -1,5 +1,6 @@
 +++
 title = "About"
+description = "About Finn Rutis — a musical theatre performer who writes technical notes on Nix, infrastructure, and software in their free time."
 template = "about.html"
 sort_by = "date"
 +++

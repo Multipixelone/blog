@@ -18,6 +18,11 @@ taxonomies = [
     {name = "tags", feed = true}
 ]
 
+# Exclude paginated section index pages from sitemap.xml — keeps the sitemap
+# clean (one entry per real page) instead of N entries per section. Supported
+# by Zola 0.22+.
+exclude_paginated_pages_in_sitemap = "all"
+
 # Syntax highlighting (Zola 0.22+ uses [markdown.highlighting])
 [markdown]
 github_alerts = true
@@ -30,6 +35,12 @@ github_alerts = true
 style = "class"
 light_theme = "github-light"
 dark_theme = "github-dark"
+error_on_missing_language = true
 
 [extra]
 # Site-wide extra data accessible in templates via config.extra
+og_image = "og.png"
+author_url = "https://blog.finnrut.is/about/"
+author_github = "https://github.com/Multipixelone"
+author_twitter = "@Multipixelone"
+pronouns = "they/them"

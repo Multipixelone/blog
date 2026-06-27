@@ -1,5 +1,30 @@
-{% extends "base.html" %} {% block content %}
-<h1>{{ config.title }}</h1>
+{% extends "base.html" %}
+{% block canonical %}{% if paginator and paginator.current_index == 1 %}{{ section.permalink }}{% else %}{{ current_url }}{% endif %}{% endblock canonical %}
+
+{% block json_ld %}
+{% if paginator and paginator.current_index == 1 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ config.base_url | safe }}#website",
+  "url": "{{ config.base_url | safe }}",
+  "name": {{ config.title | json_encode | safe }},
+  "description": {{ config.description | json_encode | safe }},
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Person",
+    "@id": "{{ config.base_url | safe }}about/#person",
+    "name": {{ config.author | json_encode | safe }},
+    "url": "{{ config.base_url | safe }}about/"
+  }
+}
+</script>
+{% endif %}
+{% endblock json_ld %}
+
+{% block content %}
+<h1>{{ config.title }}{% if config.extra.pronouns %} <span class="pronouns">{{ config.extra.pronouns }}</span>{% endif %}</h1>
 <p>Finn's space for ramblings. Enjoy your stay.</p>
 
 {% for page in paginator.pages %}

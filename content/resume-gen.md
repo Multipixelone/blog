@@ -1,6 +1,7 @@
 ---
 title: What a resume generator taught me about making LLM output reliable
 date: 2026-06-26
+description: "Building a Nix-flake resume generator with 30 variants taught me that anti-patterns and TOML schema validation are what make LLM output reliable."
 slug: resume-gen
 template: page.html
 taxonomies:
@@ -8,6 +9,8 @@ taxonomies:
     - technology
     - llm
     - project
+extra:
+  cover_alt: "Social card for 'What a resume generator taught me about making LLM output reliable'"
 ---
 
 One thing about me is I am obsessed with overengineering personal projects. Even when I am the singular consumer of a given project, I like to play pretend that I am leading a team of developers who are all following the trail of bread crumbs I left months ago.

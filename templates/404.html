@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}404 — Page not found — {{ config.title }}{% endblock title %}
+
+{% block description %}The page you were looking for could not be found.{% endblock description %}
+
+{% block robots_meta %}<meta name="robots" content="noindex, follow">{% endblock robots_meta %}
+
+{% block canonical %}{{ config.base_url }}404.html{% endblock canonical %}
+
+{% block content %}
+<div class="error-page">
+  <h1>404 — Page not found</h1>
+  <p>The page you were looking for does not exist.</p>
+  <p><a href="{{ config.base_url }}">Go back home</a></p>
+</div>
+{% endblock content %}

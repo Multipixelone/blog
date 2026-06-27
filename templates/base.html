@@ -3,26 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}{{ config.title }}{% endblock %}</title>
-  <meta name="description" content="{% block description %}{{ config.description }}{% endblock %}">
-  <link rel="stylesheet" href="https://use.typekit.net/qdt5rud.css">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
+  <link rel="canonical" href="{% block canonical %}{{ current_url | default(value=config.base_url) }}{% endblock canonical %}">
+  {% block robots_meta %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endblock robots_meta %}
+  <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock og_title %}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}">
+  <meta property="og:url" content="{% block og_url %}{{ current_url | default(value=config.base_url) }}{% endblock og_url %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.description }}{% endblock og_description %}">
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:locale" content="en_US">
+  {% block og_image %}
+  <meta property="og:image" content="{{ config.base_url }}og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ config.title }}">
+  {% endblock og_image %}
+  <meta name="twitter:card" content="{% block twitter_card %}summary{% endblock twitter_card %}">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
+  <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock twitter_description %}">
+  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og.png">{% endblock twitter_image %}
+  {% block json_ld %}{% endblock json_ld %}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
   <link rel="icon" href="{{ get_url(path="favicon.ico") }}">
+  <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") }}">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbf1c7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#282828">
+  <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+  <link rel="stylesheet" href="https://use.typekit.net/qdt5rud.css">
   <link rel="stylesheet" href="{{ get_url(path="giallo-light.css") }}" media="(prefers-color-scheme: light)">
   <link rel="stylesheet" href="{{ get_url(path="giallo-dark.css") }}" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
-  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
-  <meta property="og:title" content="{% block og_title %}{{ config.title }}{% endblock %}">
-  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-  <meta property="og:url" content="{% block og_url %}{{ current_url | default(value=config.base_url) }}{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}{{ config.description }}{% endblock %}">
-  <link rel="canonical" href="{% block canonical %}{{ current_url | default(value=config.base_url) }}{% endblock %}">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock %}">
-  <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock %}">
-  <meta property="og:image" content="{% block og_image %}{{ get_url(path="favicon.ico") }}{% endblock %}">
-  <meta property="og:site_name" content="{{ config.title }}">
   <meta name="author" content="{{ config.author }}">
-  {% block article_meta %}{% endblock %}
+  {% block article_meta %}{% endblock article_meta %}
 </head>
 <body>
   <header>
