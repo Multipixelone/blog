@@ -1,6 +1,6 @@
 ---
 title: Declarative systems are the future and I want more!
-date: 2026-06-26
+date: 2026-06-27
 slug: nixos-for-who
 template: page.html
 taxonomies:
