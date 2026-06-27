@@ -100,6 +100,12 @@
 
 html {
   scroll-behavior: smooth;
+  min-height: 100%;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(ellipse 120% 70% at 50% 100%, var(--shadow), transparent 55%);
+  background-attachment: fixed;
 }
 
 body {
@@ -107,9 +113,7 @@ body {
   font-size: 18px;
   line-height: 1.75;
   color: var(--ink);
-  background: var(--paper)
-    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.6), transparent 60%);
-  background-attachment: fixed;
+  background: transparent;
   max-width: 700px;
   margin: 0 auto;
   padding: 2rem 1.5rem 3rem;
@@ -118,13 +122,10 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    background: var(--paper)
-      radial-gradient(
-        ellipse at top,
-        rgba(255, 255, 255, 0.04),
-        transparent 60%
-      );
+  html {
+    background-image:
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%),
+      radial-gradient(ellipse 120% 70% at 50% 100%, var(--shadow), transparent 55%);
   }
 }
 
