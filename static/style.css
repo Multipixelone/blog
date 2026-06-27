@@ -10,6 +10,9 @@
   --code-bg: #f3efe6;
   --code-border: #e7e0d1;
   --shadow: rgba(43, 37, 32, 0.06);
+  --font-mono:
+    "PragmataPro Mono Liga", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,6 +52,45 @@
   src: url("fonts/cooper/Cooper-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+
+/* PragmataPro Mono Liga — served from Cloudflare R2 with CORS locked to
+   blog.finnrut.is (FSD Web Site license §7.1 access control). local() first
+   so users who own the desktop font skip the download. */
+@font-face {
+  font-family: "PragmataPro Mono Liga";
+  src: local("PragmataPro Mono Liga"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono_Regular_ligatures_0827.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PragmataPro Mono Liga";
+  src: local("PragmataPro Mono Liga Bold"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono_Bold_ligatures_0827.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PragmataPro Mono Liga";
+  src: local("PragmataPro Mono Liga Italic"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono_Italic_ligatures_0827.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PragmataPro Mono Liga";
+  src: local("PragmataPro Mono Liga Bold Italic"),
+    url("https://fonts.finnrut.is/PragmataPro_Mono__Bold_Italic_ligatures_0827.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -237,9 +279,7 @@ time {
 }
 
 code {
-  font-family:
-    "PragmataPro Mono Liga", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
-    Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-mono);
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   padding: 0.1em 0.3em;
@@ -249,6 +289,7 @@ code {
 }
 
 pre {
+  font-family: var(--font-mono);
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   padding: 1rem;
@@ -267,6 +308,12 @@ pre code {
   border-radius: 0;
   font-size: inherit;
   color: inherit;
+}
+
+kbd,
+samp,
+var {
+  font-family: var(--font-mono);
 }
 
 /* Syntax-highlighting themes (giallo-*.css) set their own code background and
