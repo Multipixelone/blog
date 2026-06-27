@@ -6,6 +6,9 @@
 {% block og_type %}article{% endblock %}
 {% block og_url %}{{ page.permalink }}{% endblock %}
 {% block og_description %}{{ page.description | default(value=config.description) }}{% endblock %}
+{% block twitter_title %}{{ page.title }}{% endblock %}
+{% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock %}
+{% block canonical %}{{ page.permalink }}{% endblock %}
 
 {% block content %}
 <article>
