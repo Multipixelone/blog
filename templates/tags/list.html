@@ -7,11 +7,13 @@
 <h1>Tags</h1>
 
 {% if terms %}
-<ul class="tag-list">
+<ul class="tag-list" role="list" aria-label="All tags">
   {% for term in terms %}
   <li>
-    <a href="{{ term.permalink | safe }}">{{ term.name }}</a>
-    <span class="tag-count">{{ term.pages | length }}</span>
+    <a href="{{ term.permalink | safe }}">
+      <span class="tag-name">{{ term.name }}</span>
+      <span class="tag-count" aria-label="{{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}">{{ term.pages | length }}</span>
+    </a>
   </li>
   {% endfor %}
 </ul>

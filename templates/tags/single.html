@@ -4,10 +4,16 @@
 {% block description %}Posts tagged "{{ term.name }}".{% endblock %}
 
 {% block content %}
-<p class="tag-back"><a href="{{ get_url(path="/tags/") }}">← All tags</a></p>
-<h1>
-  <span class="tag-hash">#</span>{{ term.name }}
-</h1>
+<nav class="tag-back" aria-label="Tag navigation">
+  <a href="{{ get_url(path="/tags/") }}">← All tags</a>
+</nav>
+
+<header class="tag-header">
+  <h1>
+    <span class="tag-hash">#</span>{{ term.name }}
+  </h1>
+  <p class="tag-meta">{{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</p>
+</header>
 
 {% for page in term.pages %}
 <article>
@@ -17,7 +23,7 @@
 </article>
 {% endfor %}
 
-<p class="tag-feed">
+<footer class="tag-feed">
   <a href="{{ term.permalink | trim_end_matches(pat='/') | safe }}/atom.xml">Atom feed for this tag</a>
-</p>
+</footer>
 {% endblock %}
