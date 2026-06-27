@@ -1,8 +1,15 @@
 ---
-title: "Hello, world"
+title: "Flakey blog: or, why Nix Flakes are the only deployment system I hope to ever use again"
 date: 2026-06-25
 slug: "hello-world"
 template: "page.html"
+taxonomies:
+  tags:
+    - technology
+    - nix
+    - flakes
+    - meta
+    - project
 ---
 
 This is my long overdue blog where I'll post notes, projects, and things that might eventually be helpful to future surfers of the net.
