@@ -131,76 +131,15 @@
 
 @font-face {
   font-family: "Sabon Next";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Demi%20Italic.woff2") format("woff2");
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sabon Next";
   src: url("https://fonts.finnrut.is/Sabon%20Next%20Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Sabon Next";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Bold%20Italic.woff2") format("woff2");
+strong,
+b {
   font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sabon Next";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Extra%20Bold.woff2") format("woff2");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sabon Next";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Extra%20Bold%20Italic.woff2") format("woff2");
-  font-weight: 800;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sabon Next";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Black.woff2") format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sabon Next";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Black%20Italic.woff2") format("woff2");
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
-
-/* Display cut — optical-size variant for large headings; separate family so it
-   doesn't collide with Regular at weight 400. */
-@font-face {
-  font-family: "Sabon Next Display";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Display.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Sabon Next Display";
-  src: url("https://fonts.finnrut.is/Sabon%20Next%20Display%20Italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
 }
 
 * {
@@ -351,7 +290,7 @@ h1 {
 .pronouns {
   color: var(--muted);
   font-family: "Sabon Next";
-  font-size: 0.45em;
+  font-size: 0.6em;
   font-weight: 400;
   letter-spacing: 0;
   margin-left: 0.4em;
