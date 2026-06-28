@@ -14,15 +14,15 @@ extra:
   cover_alt: "Social card for 'Declarative systems are the future and I want more!'"
 ---
 
-I first tried NixOS way before I was ready to appreciate the concept. I didn't understand it, I thought it was clunky, I bounced off the concept __hard__. Fast forward to today, my [Multipixelone/infra](https://github.com/Multipixelone/infra) repo now sits at 3,773 commits. Who is this technology for?
+I first tried NixOS way before I was ready to appreciate the concept. I didn't understand it, I thought it was clunky, I bounced off the concept **hard**. Fast forward to today, my [Multipixelone/infra](https://github.com/Multipixelone/infra) repo now sits at 3,773 commits. Who is this technology for?
 
 <!-- more -->
 
-My first experince was in my middle school days of taking my laptop to school and recklessly installing as many distros as possible alongside each other and distro-hopping like crazy (the day I learned I could have a separate partition for /home, everything changed). So let me get one thing squared away first: NixOS is a massive overcomplication of the standard computing paradigm for, like, 90% of people. 
+My first experince was in my middle school days of taking my laptop to school and recklessly installing as many distros as possible alongside each other and distro-hopping like crazy (the day I learned I could have a separate partition for /home, everything changed). So let me get one thing squared away first: NixOS is a massive overcomplication of the standard computing paradigm for, like, 90% of people.
 
-The standard way computers are set up is _imperative_. Your computer has what is called a _state_, a catch-all term for the configuration of everything that makes up your computer (apps, settings, files), and you perform actions that manipulate that state. You install apps, you download files, you open System Preferences and change things. This is, genuinely, perfectly fine for your grandma's desktop, but scales terribly. 
+The standard way computers are set up is _imperative_. Your computer has what is called a _state_, a catch-all term for the configuration of everything that makes up your computer (apps, settings, files), and you perform actions that manipulate that state. You install apps, you download files, you open System Preferences and change things. This is, genuinely, perfectly fine for your grandma's Macbook, but scales terribly.
 
-The biggest problem at scale here is forgetting changes. If this computer dies, and, heaven forbid, you don't have a backup made, do you remember all the programs you had installed? Do you remember the intricate configuration files that connect them all together? How confident are you that you would be able to reproduce it without doing the _same exact amount of work over again_? NixOS solves this problem by giving you one place to define everything on your system: every config key and installed app is in one place, where it is the single source of truth for your computer. 
+The biggest problem at scale here is forgetting changes. If this computer dies, and, heaven forbid, you don't have a backup made, do you remember all the programs you had installed? Do you remember the intricate configuration files that connect them all together? How confident are you that you would be able to reproduce it in any less time then it took you to set up everything in the first place? NixOS solves this problem by giving you one place to define everything on your system: every config key and installed app is in one place, where it is the single source of truth for your computer.
 
 Here's what that looks like in practice. My entire fleet and homelab: desktop, laptop, IoT server, media server are defined by four files, each one a list of concerns pulled from a shared vocabulary. My desktop pulls in gaming related concerns:
 
