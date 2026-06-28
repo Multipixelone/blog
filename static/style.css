@@ -102,6 +102,107 @@
   font-display: swap;
 }
 
+/* Sabon Next — served from Cloudflare R2 (fonts.finnrut.is) with CORS locked
+   to blog.finnrut.is. Replaces the Adobe Fonts linotype-sabon kit. Local
+   copies in static/fonts/sabon/ are gitignored (Linotype EULA §redistribution). */
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Demi.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Demi%20Italic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Bold%20Italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Extra%20Bold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Extra%20Bold%20Italic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Black%20Italic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Display cut — optical-size variant for large headings; separate family so it
+   doesn't collide with Regular at weight 400. */
+@font-face {
+  font-family: "Sabon Next Display";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Display.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sabon Next Display";
+  src: url("https://fonts.finnrut.is/Sabon%20Next%20Display%20Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -125,7 +226,7 @@ html {
 }
 
 body {
-  font-family: "linotype-sabon", Georgia, "Times New Roman", serif;
+  font-family: "Sabon Next", Georgia, "Times New Roman", serif;
   font-size: 18px;
   line-height: 1.75;
   color: var(--ink);
@@ -230,14 +331,14 @@ h1 {
 
 h2,
 h3 {
-  font-family: "linotype-sabon", Georgia, "Times New Roman", serif;
+  font-family: "Sabon Next", Georgia, "Times New Roman", serif;
   font-weight: 600;
 }
 
 h4,
 h5,
 h6 {
-  font-family: "linotype-sabon", Georgia, "Times New Roman", serif;
+  font-family: "Sabon Next", Georgia, "Times New Roman", serif;
   font-weight: 600;
 }
 
@@ -249,7 +350,7 @@ h1 {
 
 .pronouns {
   color: var(--muted);
-  font-family: "linotype-sabon";
+  font-family: "Sabon Next";
   font-size: 0.45em;
   font-weight: 400;
   letter-spacing: 0;

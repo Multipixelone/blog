@@ -15,3 +15,7 @@ public/
 # (FSD license §5.2 redistribution + §7.1 access-control requirement).
 # Local copies live here for dev only; use local-fallback CSS pattern.
 static/fonts/pragmata/
+
+# Sabon Next — proprietary Linotype font, must not be committed to public repo.
+# Local copies live here for dev only; served from R2 (fonts.finnrut.is) in prod.
+static/fonts/sabon/
