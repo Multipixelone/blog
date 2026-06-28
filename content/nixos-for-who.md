@@ -24,7 +24,7 @@ The standard way computers are set up is _imperative_. Your computer has what is
 
 The biggest problem at scale here is forgetting changes. If this computer dies, and, heaven forbid, you don't have a backup made, do you remember all the programs you had installed? Do you remember the intricate configuration files that connect them all together? How confident are you that you would be able to reproduce it in any less time then it took you to set up everything in the first place? NixOS solves this problem by giving you one place to define everything on your system: every config key and installed app is in one place, where it is the single source of truth for your computer.
 
-Here's what that looks like in practice. My entire fleet and homelab: desktop, laptop, IoT server, media server are defined by four files, each one a list of concerns pulled from a shared vocabulary. My desktop pulls in gaming related concerns:
+Here's what that looks like in practice. My entire fleet and homelab: desktop, laptop, IoT server, media server are defined by one file each, just a list of profiles to pull in. My desktop pulls in gaming related concerns:
 
 ```nix
 { config, ... }:
@@ -39,7 +39,9 @@ Here's what that looks like in practice. My entire fleet and homelab: desktop, l
   };
 }
 ```
-While my laptop pulls in a different profile called `laptop` that completely changes how a device with the profile manages power and performance. Note here that `laptop` depends on `pc`: 
+
+While my laptop pulls in a different profile that completely changes how that device manages power and performance. Note here that `laptop` depends on `pc`:
+
 ```nix
 { config, ... }:
 {
@@ -53,7 +55,9 @@ While my laptop pulls in a different profile called `laptop` that completely cha
   };
 }
 ```
+
 My music server, `marin`, pulls in no profiles with GUI:
+
 ```nix
 { config, ... }:
 {
@@ -68,7 +72,7 @@ My music server, `marin`, pulls in no profiles with GUI:
 }
 ```
 
-No machines are configured: they're described. Adding a new server is writing one 11-line file.
+Once you have multiple systems, you can reuse code like this and never write the same thing twice. Once I configure Firefox for my desktop, everything is just how I like it everywhere. One cool byproduct of this is that I can also generate an `.iso` from my repository, that also has all my apps set up the way I like them.
 
 And it's not just machines. My identity is defined once, and everything else derives from it:
 
@@ -86,7 +90,6 @@ And it's not just machines. My identity is defined once, and everything else der
       nixos.base = {
         users.users.${config.flake.meta.owner.username} = {
           isNormalUser = true;
-          linger = true;
           extraGroups = [ "input" ];
         };
 
@@ -99,11 +102,41 @@ And it's not just machines. My identity is defined once, and everything else der
 }
 ```
 
-Change my name in one place, and it changes everywhere — the user account, the `nix` trusted-users list, the login screen avatar. The person is the root of the configuration tree.
+Change my name in one place, and it changes everywhere — the user account, the login screen avatar. No value needs to be hard coded.
 
-This, however, front-loads the effort. When you want an app installed, instead of just `sudo apt install vlc`, you have to navigate to your configuration repository, add it to a key that holds installed packages, and rebuild your system. You are trading effort now for reliability in the long run. 
+This, however, front-loads the effort. When you want an app installed, instead of just `sudo apt install vlc`, you have to navigate to your configuration repository, add it to a key that holds installed packages, and rebuild your system. You are trading effort now for reliability in the long run.
 
-NixOS also has what I consider to be the most helpful feature: modules. Modules are a collection of code that contains an app and all of the configuration keys that app exposes. Take the 
+NixOS also has what I consider to be the most helpful feature: modules. Modules are a collection of code that contains an app and all of the configuration keys that app exposes. Take the `gaming` module. It pulls in an external module for platform optimizations, enables Steam and 32-bit graphics support, opens the firewall for local network game transfers, and adds Proton-GE for compatibility — all in one place.
+
+```nix
+  flake.modules = {
+    nixos.gaming =
+      { pkgs, ... }:
+      {
+        imports = [
+          inputs.nix-gaming.nixosModules.platformOptimizations
+        ];
+        hardware = {
+          steam-hardware.enable = true;
+          graphics = {
+            # 32 bit support
+            enable32Bit = true;
+          };
+        };
+
+        programs.steam = {
+          enable = true;
+          localNetworkGameTransfers.openFirewall = true;
+          platformOptimizations.enable = true;
+          extraCompatPackages = with pkgs; [
+            proton-ge-bin
+          ];
+
+        };
+      };
+```
+
+Both my desktop (`link`) and my laptop (`zelda`) import `gaming`, and they both get this entire stack. That's composition and reuse — I'm importing someone else's hard work (`nix-gaming`) and getting it in one line, and I'm reusing my own bundle across machines. You can't do this in imperative sysadmin.
 
 <!-- NOTE (review): The modules paragraph should illustrate COMPOSITION or REUSE — the thing imperative systems structurally cannot do. Don't make it "here's what a module looks like" (e.g. "here's an nginx module" doesn't advance the argument). Make it "here's how I use the same module across three machines" or "here's how I imported someone else's module and got their entire setup in one line" — that's the "future" argument moving forward. Also: "Modules are a collection of code that contains an app and all of the configuration keys that app exposes" — "a collection of code" is vague; "a module bundles an application with its configuration options" is tighter. "exposes" is correct Nix terminology but may lose a general audience; consider whether context defines it enough. STRATEGIC: this paragraph is the last natural place to plant the seed for the title's "I want more" promise — frame modules as "here's what's possible, and I'm already pushing against the limits" to set up the ending. If modules are just "here's what I have," the "I want more" turn later will feel unearned. -->
 
