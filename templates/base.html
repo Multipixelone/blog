@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Warm the R2 font origin and preload the render-critical body serif.
+       The preload href must byte-match the @font-face url() (incl. %20) or
+       the font downloads twice. -->
+  <link rel="preconnect" href="https://fonts.finnrut.is" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/Sabon%20Next%20Regular.woff2" crossorigin>
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
   <link rel="canonical" href="{% block canonical %}{{ current_url | default(value=config.base_url) }}{% endblock canonical %}">
@@ -20,40 +25,78 @@
   <meta property="og:image:alt" content="{{ config.title }}">
   {% endblock og_image %}
   <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock twitter_card %}">
+  {% if config.extra.author_twitter %}<meta name="twitter:site" content="{{ config.extra.author_twitter }}">
+  <meta name="twitter:creator" content="{{ config.extra.author_twitter }}">{% endif %}
   <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
   <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock twitter_description %}">
-  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}{{ config.extra.og_image }}">{% endblock twitter_image %}
+  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}{{ config.extra.og_image }}">
+  <meta name="twitter:image:alt" content="{{ config.title }}">{% endblock twitter_image %}
   {% block json_ld %}{% endblock json_ld %}
   {% block feed %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">{% endblock feed %}
   <link rel="icon" href="{{ get_url(path="favicon.ico") }}">
   <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") }}">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbf1c7">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#282828">
-  <link rel="stylesheet" href="{{ get_url(path="giallo-light.css") }}" media="(prefers-color-scheme: light)">
-  <link rel="stylesheet" href="{{ get_url(path="giallo-dark.css") }}" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f4ed">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1c1915">
+  <link rel="stylesheet" id="giallo-light" href="{{ get_url(path="giallo-light.css") }}" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" id="giallo-dark" href="{{ get_url(path="giallo-dark.css") }}" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+  <script>
+  // Apply the reader's saved theme choice before first paint (no flash). Defines
+  // window.__setTheme(mode) — 'light' | 'dark' | 'auto' — reused by the toggle.
+  (function () {
+    var LIGHT = "#f7f4ed", DARK = "#1c1915", root = document.documentElement;
+    window.__setTheme = function (mode) {
+      var l = document.getElementById("giallo-light"),
+          d = document.getElementById("giallo-dark"),
+          metas = document.querySelectorAll('meta[name="theme-color"]');
+      if (mode === "light" || mode === "dark") {
+        root.setAttribute("data-theme", mode);
+        if (l) l.media = mode === "light" ? "all" : "not all";
+        if (d) d.media = mode === "dark" ? "all" : "not all";
+        metas.forEach(function (m) { m.content = mode === "dark" ? DARK : LIGHT; });
+      } else {
+        root.removeAttribute("data-theme");
+        if (l) l.media = "(prefers-color-scheme: light)";
+        if (d) d.media = "(prefers-color-scheme: dark)";
+        metas.forEach(function (m) {
+          m.content = m.media.indexOf("dark") !== -1 ? DARK : LIGHT;
+        });
+      }
+    };
+    try {
+      var saved = localStorage.getItem("theme");
+      if (saved === "light" || saved === "dark") window.__setTheme(saved);
+    } catch (e) {}
+  })();
+  </script>
   <meta name="author" content="{{ config.author }}">
   {% block article_meta %}{% endblock article_meta %}
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <header>
     <nav>
       <a href="{{ get_url(path="/") }}">Home</a>
       <a href="{{ get_url(path="/tags/") }}">Tags</a>
       <a href="{{ get_url(path="@/about/_index.md") }}">About</a>
+      <button type="button" id="theme-toggle" class="theme-toggle" data-mode="auto" aria-label="Switch color theme (system)" hidden>
+        <svg class="icon-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 0 0 17z" fill="currentColor" stroke="none"/></svg>
+        <svg class="icon-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></svg>
+        <svg class="icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.2 8.2 0 1 1 9.8 3.5a6.4 6.4 0 0 0 10.7 10.7z"/></svg>
+      </button>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
     {% block content %}{% endblock %}
   </main>
 
   <footer>
     <p class="footer-links">
       <a href="https://github.com/Multipixelone">GitHub</a>
-      <span class="sep">·</span>
+      <span class="sep" aria-hidden="true">·</span>
       <a href="https://resume.finnrut.is/">Resume</a>
-      <span class="sep">·</span>
+      <span class="sep" aria-hidden="true">·</span>
       <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}">Atom feed</a>
     </p>
     <p class="copyright">&copy; {{ now() | date(format="%Y") }} {{ config.author }}</p>
@@ -124,10 +167,45 @@
       });
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCodeBlocks);
-    } else {
+    // Theme toggle — cycles system → light → dark, persisting the choice.
+    function initThemeToggle() {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn || typeof window.__setTheme !== 'function') return;
+      var MODES = ['auto', 'light', 'dark'];
+      var LABEL = { auto: 'system', light: 'light', dark: 'dark' };
+      function current() {
+        try {
+          var s = localStorage.getItem('theme');
+          if (s === 'light' || s === 'dark') return s;
+        } catch (e) {}
+        return 'auto';
+      }
+      function render(mode) {
+        btn.setAttribute('data-mode', mode);
+        btn.setAttribute('aria-label', 'Switch color theme (' + LABEL[mode] + ')');
+      }
+      render(current());
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        var next = MODES[(MODES.indexOf(current()) + 1) % MODES.length];
+        try {
+          if (next === 'auto') localStorage.removeItem('theme');
+          else localStorage.setItem('theme', next);
+        } catch (e) {}
+        window.__setTheme(next);
+        render(next);
+      });
+    }
+
+    function init() {
       initCodeBlocks();
+      initThemeToggle();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
     }
   })();
   </script>

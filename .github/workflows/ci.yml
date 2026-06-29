@@ -28,3 +28,36 @@ jobs:
         run: nix develop --command zola check
       - name: Spell check
         run: nix run nixpkgs#typos -- .
+
+  audit:
+    name: audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.0
+      - uses: nixbuild/nix-quick-install-action@v35
+      # Build a copy whose absolute URLs resolve to the local audit server, so
+      # Lighthouse/pa11y exercise the real generated HTML and assets.
+      - name: Build site (localhost base_url)
+        run: nix develop --command zola build --base-url http://localhost:8080 --output-dir ./public
+      - name: Serve site
+        run: |
+          nohup python3 -m http.server 8080 --directory ./public >/dev/null 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:8080/ >/dev/null && break; sleep 1; done
+      # Accessibility: audits every page in the sitemap. Blocks on real a11y errors.
+      - name: Accessibility (pa11y-ci)
+        run: npx --yes pa11y-ci --sitemap http://localhost:8080/sitemap.xml
+      # Lighthouse: a11y + SEO block (minScore 0.9); perf + best-practices warn
+      # (network/font variance). See .github/lighthouserc.json.
+      - name: Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:8080/
+            http://localhost:8080/nixos-for-who/
+            http://localhost:8080/tags/
+          configPath: .github/lighthouserc.json
+      # External links can break or rate-limit outside our control, so report
+      # but don't fail the build.
+      - name: External links (lychee)
+        continue-on-error: true
+        run: nix run nixpkgs#lychee -- --no-progress 'content/**/*.md'

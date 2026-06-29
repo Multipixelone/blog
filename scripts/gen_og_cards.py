@@ -44,8 +44,11 @@ TITLE_MIN = 50
 TITLE_MAX_LINES = 4
 TITLE_LINE_RATIO = 1.12  # line height as a multiple of font size
 
+# Tolerate minified HTML: `minify_html` drops the quotes around the type value
+# (`<script type=application/ld+json>`), and attribute order isn't guaranteed.
 JSONLD_RE = re.compile(
-    r'<script type="application/ld\+json">\s*(\{.*?\})\s*</script>',
+    r'<script\b[^>]*\btype=(?:"application/ld\+json"|\'application/ld\+json\'|application/ld\+json)[^>]*>'
+    r'\s*(\{.*?\})\s*</script>',
     re.DOTALL,
 )
 

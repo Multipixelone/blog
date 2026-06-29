@@ -18,7 +18,7 @@ I first tried NixOS way before I was ready to appreciate the concept. I didn't u
 
 <!-- more -->
 
-My first experince was in my middle school days of taking my laptop to school and recklessly installing as many distros as possible alongside each other and distro-hopping like crazy (the day I learned I could have a separate partition for /home, everything changed). So let me get one thing squared away first: NixOS is a massive overcomplication of the standard computing paradigm for, like, 90% of people.
+My first experience was in my middle school days of taking my laptop to school and recklessly installing as many distros as possible alongside each other and distro-hopping like crazy (the day I learned I could have a separate partition for /home, everything changed). So let me get one thing squared away first: NixOS is a massive overcomplication of the standard computing paradigm for, like, 90% of people.
 
 The standard way computers are set up is _imperative_. Your computer has what is called a _state_, a catch-all term for the configuration of everything that makes up your computer (apps, settings, files), and you perform actions that manipulate that state. You install apps, you download files, you open System Preferences and change things. This is, genuinely, perfectly fine for your grandma's Macbook, but scales terribly.
 

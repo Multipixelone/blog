@@ -11,6 +11,9 @@ public/
 # OpenCode session storage
 .slim/
 
+# Claude Code machine-local settings (permission allowlists, absolute paths)
+.claude/settings.local.json
+
 # PragmataPro — proprietary font, must not be committed to public repo
 # (FSD license §5.2 redistribution + §7.1 access-control requirement).
 # Local copies live here for dev only; use local-fallback CSS pattern.

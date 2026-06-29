@@ -1,8 +1,9 @@
 :root {
+  color-scheme: light;
   --paper: #f7f4ed;
   --paper-shade: #efeadd;
   --ink: #2b2520;
-  --muted: #766b5e;
+  --muted: #6f6456;
   --accent: #b54a00;
   --accent-hover: #8c3800;
   --selection-bg: #f5d9c4;
@@ -10,13 +11,33 @@
   --code-bg: #f3efe6;
   --code-border: #e7e0d1;
   --shadow: rgba(43, 37, 32, 0.06);
+  /* Top ambient highlight in the page background gradient. */
+  --glow: rgba(255, 255, 255, 0.5);
+  /* Markdown alert (callout) border + surface colors. */
+  --alert-note-bd: #4a6fa5;
+  --alert-note-bg: #f0f4fa;
+  --alert-tip-bd: #4a7a4a;
+  --alert-tip-bg: #f0f7f0;
+  --alert-important-bd: #6a4a8a;
+  --alert-important-bg: #f5f0fa;
+  --alert-warning-bd: #a07a2a;
+  --alert-warning-bg: #faf6ee;
+  --alert-caution-bd: #a04a4a;
+  --alert-caution-bg: #faf0f0;
   --font-mono:
     "PragmataPro Mono Liga", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, "Liberation Mono", monospace;
 }
 
+/* Dark palette. The reader's explicit toggle choice (data-theme) wins over the
+   OS; with no choice we fall back to prefers-color-scheme so no-JS readers and
+   first paint both get the right theme. The two dark blocks below MUST stay in
+   sync — CSS can't share one declaration body across a media query and a plain
+   selector. The :not([data-theme="light"]) guard lets an explicit "light"
+   choice override an OS dark preference without a separate light block. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --paper: #1c1915;
     --paper-shade: #242019;
     --ink: #e8e2d8;
@@ -28,7 +49,44 @@
     --code-bg: #242019;
     --code-border: #332d26;
     --shadow: rgba(0, 0, 0, 0.2);
+    --glow: rgba(255, 255, 255, 0.04);
+    --alert-note-bd: #6a8fc5;
+    --alert-note-bg: #1a2230;
+    --alert-tip-bd: #6a9a6a;
+    --alert-tip-bg: #182218;
+    --alert-important-bd: #9a6aba;
+    --alert-important-bg: #221a2a;
+    --alert-warning-bd: #c09a4a;
+    --alert-warning-bg: #221e14;
+    --alert-caution-bd: #c06a6a;
+    --alert-caution-bg: #221616;
   }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #1c1915;
+  --paper-shade: #242019;
+  --ink: #e8e2d8;
+  --muted: #9e9486;
+  --accent: #ff9e42;
+  --accent-hover: #ffb366;
+  --selection-bg: #5a2e0f;
+  --border: #3b342c;
+  --code-bg: #242019;
+  --code-border: #332d26;
+  --shadow: rgba(0, 0, 0, 0.2);
+  --glow: rgba(255, 255, 255, 0.04);
+  --alert-note-bd: #6a8fc5;
+  --alert-note-bg: #1a2230;
+  --alert-tip-bd: #6a9a6a;
+  --alert-tip-bg: #182218;
+  --alert-important-bd: #9a6aba;
+  --alert-important-bg: #221a2a;
+  --alert-warning-bd: #c09a4a;
+  --alert-warning-bg: #221e14;
+  --alert-caution-bd: #c06a6a;
+  --alert-caution-bg: #221616;
 }
 
 @font-face {
@@ -153,7 +211,7 @@ html {
   background-image:
     radial-gradient(
       ellipse 120% 60% at 50% 0%,
-      rgba(255, 255, 255, 0.5),
+      var(--glow),
       transparent 60%
     ),
     radial-gradient(
@@ -175,22 +233,6 @@ body {
   padding: 2rem 1.5rem 3rem;
   font-variant-ligatures: common-ligatures;
   text-rendering: optimizeLegibility;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    background-image:
-      radial-gradient(
-        ellipse 120% 60% at 50% 0%,
-        rgba(255, 255, 255, 0.04),
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 120% 70% at 50% 100%,
-        var(--shadow),
-        transparent 55%
-      );
-  }
 }
 
 ::selection {
@@ -220,6 +262,11 @@ header::after {
   line-height: 1;
 }
 
+header nav {
+  display: flex;
+  align-items: center;
+}
+
 nav a {
   display: inline-block;
   margin-right: 1.75rem;
@@ -235,6 +282,76 @@ nav a:hover {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/* Theme toggle — cycles system → light → dark. JS reveals it (hidden by
+   default so no-JS readers don't get a dead control) and sets data-mode,
+   which selects the single visible icon. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  /* margin-left: auto pushes the switcher to the right edge of the nav;
+     negative block margins keep it from growing the header height. */
+  margin: -0.35rem 0 -0.35rem auto;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+}
+
+.theme-toggle svg {
+  display: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.theme-toggle[data-mode="auto"] .icon-auto,
+.theme-toggle[data-mode="light"] .icon-light,
+.theme-toggle[data-mode="dark"] .icon-dark {
+  display: block;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link — off-screen until focused, then it drops into the top-left. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3.5rem;
+  z-index: 100;
+  padding: 0.5rem 0.9rem;
+  background: var(--paper);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 a {
@@ -261,34 +378,28 @@ h6 {
 }
 
 h1 {
+  font-family: "Cooper*", Georgia, serif;
+  font-weight: 700;
+  font-size: 2.3rem;
+  line-height: 1.05;
+  letter-spacing: 0;
+  margin: 0 0 1.5rem;
+  text-wrap: balance;
   font-variant-ligatures: common-ligatures discretionary-ligatures;
 }
 
-h1 {
-  font-family: "Cooper*", Georgia, serif;
-  font-weight: 700;
-  line-height: 1.05;
-  margin-bottom: 1.5rem;
-  text-wrap: balance;
-}
-
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   font-family: "Sabon Next", Georgia, "Times New Roman", serif;
-  font-weight: 600;
 }
 
 h4,
 h5,
 h6 {
-  font-family: "Sabon Next", Georgia, "Times New Roman", serif;
   font-weight: 600;
-}
-
-h1 {
-  font-size: 2.3rem;
-  margin-top: 0;
-  letter-spacing: 0;
 }
 
 .pronouns {
@@ -876,56 +987,77 @@ footer .copyright {
 }
 
 .markdown-alert-note {
-  border-left-color: #4a6fa5;
-  background: #f0f4fa;
+  border-left-color: var(--alert-note-bd);
+  background: var(--alert-note-bg);
 }
 
 .markdown-alert-tip {
-  border-left-color: #4a7a4a;
-  background: #f0f7f0;
+  border-left-color: var(--alert-tip-bd);
+  background: var(--alert-tip-bg);
 }
 
 .markdown-alert-important {
-  border-left-color: #6a4a8a;
-  background: #f5f0fa;
+  border-left-color: var(--alert-important-bd);
+  background: var(--alert-important-bg);
 }
 
 .markdown-alert-warning {
-  border-left-color: #a07a2a;
-  background: #faf6ee;
+  border-left-color: var(--alert-warning-bd);
+  background: var(--alert-warning-bg);
 }
 
 .markdown-alert-caution {
-  border-left-color: #a04a4a;
-  background: #faf0f0;
+  border-left-color: var(--alert-caution-bd);
+  background: var(--alert-caution-bg);
 }
 
-/* Dark-mode callout surfaces — the light backgrounds above would otherwise
-   leave light --ink text on a pale panel (illegible). Tinted dark panels keep
-   the accent border hue while staying readable. */
-@media (prefers-color-scheme: dark) {
-  .markdown-alert-note {
-    border-left-color: #6a8fc5;
-    background: #1a2230;
+/* Respect a reduced-motion preference: kill smooth scroll and near-instant
+   any transition/animation (the theme swap, link hovers, the skip link). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .markdown-alert-tip {
-    border-left-color: #6a9a6a;
-    background: #182218;
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Print: drop the site chrome, flatten to ink-on-paper, and let code blocks
+   spill their full height instead of clipping at the on-screen max-height. */
+@media print {
+  html {
+    background: #fff;
   }
 
-  .markdown-alert-important {
-    border-left-color: #9a6aba;
-    background: #221a2a;
+  body {
+    color: #000;
+    max-width: none;
   }
 
-  .markdown-alert-warning {
-    border-left-color: #c09a4a;
-    background: #221e14;
+  header nav,
+  footer,
+  .copy-btn,
+  .post-nav,
+  .pagination {
+    display: none;
   }
 
-  .markdown-alert-caution {
-    border-left-color: #c06a6a;
-    background: #221616;
+  header::after {
+    content: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  pre.z-code {
+    max-height: none;
+    overflow: visible;
+    border: 1px solid #ccc;
   }
 }
