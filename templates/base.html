@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Warm the R2 font origin and preload the render-critical body serif.
+       The preload href must byte-match the @font-face url() (incl. %20) or
+       the font downloads twice. -->
+  <link rel="preconnect" href="https://fonts.finnrut.is" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/Sabon%20Next%20Regular.woff2" crossorigin>
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
   <link rel="canonical" href="{% block canonical %}{{ current_url | default(value=config.base_url) }}{% endblock canonical %}">
