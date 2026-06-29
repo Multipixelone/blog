@@ -31,7 +31,7 @@
 <article>
   <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
   {% if page.date %}
-  <time>{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
+  <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
   {% endif %}
   {% if page.summary %}{{ page.summary | safe }}{% endif %} {% if
   page.taxonomies and page.taxonomies.tags %}
