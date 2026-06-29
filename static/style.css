@@ -10,6 +10,19 @@
   --code-bg: #f3efe6;
   --code-border: #e7e0d1;
   --shadow: rgba(43, 37, 32, 0.06);
+  /* Top ambient highlight in the page background gradient. */
+  --glow: rgba(255, 255, 255, 0.5);
+  /* Markdown alert (callout) border + surface colors. */
+  --alert-note-bd: #4a6fa5;
+  --alert-note-bg: #f0f4fa;
+  --alert-tip-bd: #4a7a4a;
+  --alert-tip-bg: #f0f7f0;
+  --alert-important-bd: #6a4a8a;
+  --alert-important-bg: #f5f0fa;
+  --alert-warning-bd: #a07a2a;
+  --alert-warning-bg: #faf6ee;
+  --alert-caution-bd: #a04a4a;
+  --alert-caution-bg: #faf0f0;
   --font-mono:
     "PragmataPro Mono Liga", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, "Liberation Mono", monospace;
@@ -28,6 +41,19 @@
     --code-bg: #242019;
     --code-border: #332d26;
     --shadow: rgba(0, 0, 0, 0.2);
+    --glow: rgba(255, 255, 255, 0.04);
+    /* Tinted dark callout surfaces keep the accent hue while staying legible
+       against light --ink text. */
+    --alert-note-bd: #6a8fc5;
+    --alert-note-bg: #1a2230;
+    --alert-tip-bd: #6a9a6a;
+    --alert-tip-bg: #182218;
+    --alert-important-bd: #9a6aba;
+    --alert-important-bg: #221a2a;
+    --alert-warning-bd: #c09a4a;
+    --alert-warning-bg: #221e14;
+    --alert-caution-bd: #c06a6a;
+    --alert-caution-bg: #221616;
   }
 }
 
@@ -153,7 +179,7 @@ html {
   background-image:
     radial-gradient(
       ellipse 120% 60% at 50% 0%,
-      rgba(255, 255, 255, 0.5),
+      var(--glow),
       transparent 60%
     ),
     radial-gradient(
@@ -175,22 +201,6 @@ body {
   padding: 2rem 1.5rem 3rem;
   font-variant-ligatures: common-ligatures;
   text-rendering: optimizeLegibility;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    background-image:
-      radial-gradient(
-        ellipse 120% 60% at 50% 0%,
-        rgba(255, 255, 255, 0.04),
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 120% 70% at 50% 100%,
-        var(--shadow),
-        transparent 55%
-      );
-  }
 }
 
 ::selection {
@@ -261,34 +271,28 @@ h6 {
 }
 
 h1 {
+  font-family: "Cooper*", Georgia, serif;
+  font-weight: 700;
+  font-size: 2.3rem;
+  line-height: 1.05;
+  letter-spacing: 0;
+  margin: 0 0 1.5rem;
+  text-wrap: balance;
   font-variant-ligatures: common-ligatures discretionary-ligatures;
 }
 
-h1 {
-  font-family: "Cooper*", Georgia, serif;
-  font-weight: 700;
-  line-height: 1.05;
-  margin-bottom: 1.5rem;
-  text-wrap: balance;
-}
-
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   font-family: "Sabon Next", Georgia, "Times New Roman", serif;
-  font-weight: 600;
 }
 
 h4,
 h5,
 h6 {
-  font-family: "Sabon Next", Georgia, "Times New Roman", serif;
   font-weight: 600;
-}
-
-h1 {
-  font-size: 2.3rem;
-  margin-top: 0;
-  letter-spacing: 0;
 }
 
 .pronouns {
@@ -876,56 +880,26 @@ footer .copyright {
 }
 
 .markdown-alert-note {
-  border-left-color: #4a6fa5;
-  background: #f0f4fa;
+  border-left-color: var(--alert-note-bd);
+  background: var(--alert-note-bg);
 }
 
 .markdown-alert-tip {
-  border-left-color: #4a7a4a;
-  background: #f0f7f0;
+  border-left-color: var(--alert-tip-bd);
+  background: var(--alert-tip-bg);
 }
 
 .markdown-alert-important {
-  border-left-color: #6a4a8a;
-  background: #f5f0fa;
+  border-left-color: var(--alert-important-bd);
+  background: var(--alert-important-bg);
 }
 
 .markdown-alert-warning {
-  border-left-color: #a07a2a;
-  background: #faf6ee;
+  border-left-color: var(--alert-warning-bd);
+  background: var(--alert-warning-bg);
 }
 
 .markdown-alert-caution {
-  border-left-color: #a04a4a;
-  background: #faf0f0;
-}
-
-/* Dark-mode callout surfaces — the light backgrounds above would otherwise
-   leave light --ink text on a pale panel (illegible). Tinted dark panels keep
-   the accent border hue while staying readable. */
-@media (prefers-color-scheme: dark) {
-  .markdown-alert-note {
-    border-left-color: #6a8fc5;
-    background: #1a2230;
-  }
-
-  .markdown-alert-tip {
-    border-left-color: #6a9a6a;
-    background: #182218;
-  }
-
-  .markdown-alert-important {
-    border-left-color: #9a6aba;
-    background: #221a2a;
-  }
-
-  .markdown-alert-warning {
-    border-left-color: #c09a4a;
-    background: #221e14;
-  }
-
-  .markdown-alert-caution {
-    border-left-color: #c06a6a;
-    background: #221616;
-  }
+  border-left-color: var(--alert-caution-bd);
+  background: var(--alert-caution-bg);
 }
