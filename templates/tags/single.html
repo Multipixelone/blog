@@ -4,6 +4,7 @@
 {% block description %}Posts tagged "{{ term.name }}".{% endblock %}
 {% block og_title %}{{ term.name }} — {{ config.title }}{% endblock og_title %}
 {% block og_description %}Posts tagged "{{ term.name }}".{% endblock og_description %}
+{% block feed %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} — #{{ term.name }}" href="{{ term.permalink | trim_end_matches(pat='/') | safe }}/atom.xml">{% endblock feed %}
 
 {% block content %}
 <nav class="tag-back" aria-label="Tag navigation">

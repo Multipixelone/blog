@@ -31,10 +31,7 @@
 <article>
   <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
   {% if page.date %}
-  {% set word_count = page.content | striptags | split(pat=" ") | length %}
-  {% set minutes = (word_count / 200) | round | int %}
-  {% if minutes < 1 %}{% set minutes = 1 %}{% endif %}
-  <time>{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ word_count }} words · {{ minutes }} min read</span></time>
+  <time>{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
   {% endif %}
   {% if page.summary %}{{ page.summary | safe }}{% endif %} {% if
   page.taxonomies and page.taxonomies.tags %}

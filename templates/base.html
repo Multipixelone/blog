@@ -14,17 +14,17 @@
   <meta property="og:site_name" content="{{ config.title }}">
   <meta property="og:locale" content="en_US">
   {% block og_image %}
-  <meta property="og:image" content="{{ config.base_url }}og.png">
+  <meta property="og:image" content="{{ config.base_url }}{{ config.extra.og_image }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="{{ config.title }}">
   {% endblock og_image %}
-  <meta name="twitter:card" content="{% block twitter_card %}summary{% endblock twitter_card %}">
+  <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock twitter_card %}">
   <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
   <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock twitter_description %}">
-  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og.png">{% endblock twitter_image %}
+  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}{{ config.extra.og_image }}">{% endblock twitter_image %}
   {% block json_ld %}{% endblock json_ld %}
-  <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
+  {% block feed %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">{% endblock feed %}
   <link rel="icon" href="{{ get_url(path="favicon.ico") }}">
   <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") }}">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fbf1c7">

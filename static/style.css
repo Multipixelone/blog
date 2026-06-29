@@ -899,3 +899,33 @@ footer .copyright {
   border-left-color: #a04a4a;
   background: #faf0f0;
 }
+
+/* Dark-mode callout surfaces — the light backgrounds above would otherwise
+   leave light --ink text on a pale panel (illegible). Tinted dark panels keep
+   the accent border hue while staying readable. */
+@media (prefers-color-scheme: dark) {
+  .markdown-alert-note {
+    border-left-color: #6a8fc5;
+    background: #1a2230;
+  }
+
+  .markdown-alert-tip {
+    border-left-color: #6a9a6a;
+    background: #182218;
+  }
+
+  .markdown-alert-important {
+    border-left-color: #9a6aba;
+    background: #221a2a;
+  }
+
+  .markdown-alert-warning {
+    border-left-color: #c09a4a;
+    background: #221e14;
+  }
+
+  .markdown-alert-caution {
+    border-left-color: #c06a6a;
+    background: #221616;
+  }
+}

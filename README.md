@@ -50,13 +50,23 @@ The Nix flake runs these checks automatically:
 - **nix flake check** — validates the flake and its outputs
 - **site build** — the static site builds successfully from `.#default`
 
+## Social cards
+
+Per-post Open Graph cards (1200×630) are generated at build time by
+`scripts/gen_og_cards.py`, which reads the JSON-LD each post emits and draws an
+"accent band" card with Pillow. Cooper (the only build-available font — Sabon Next
+is served from R2 and absent from CI) is decompressed woff2→ttf via `woff2_decompress`
+first. Output lands at `/og/<slug>.png`, with a site-wide `/og.png` default for the
+homepage, tags, and about pages.
+
 <details>
 <summary>Project structure</summary>
 
 ```
 content/    markdown posts and pages
-templates/  Tera HTML templates (hand-rolled minimal theme)
-static/     CNAME, robots.txt, style.css, 404.html
+templates/  Tera HTML templates (hand-rolled minimal theme), incl. 404.html
+static/     CNAME, robots.txt, style.css, fonts, favicon
+scripts/    build-time helpers (Open Graph card generator)
 zola.toml   site configuration
 flake.nix   Nix flake (devShell + site build derivation)
 ```

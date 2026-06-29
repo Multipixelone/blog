@@ -16,8 +16,27 @@
             pname = "finn-blog";
             version = "0.1.0";
             src = ./.;
-            nativeBuildInputs = [ pkgs.zola ];
-            buildPhase = "zola build --output-dir $out";
+            nativeBuildInputs = [
+              pkgs.zola
+              # Open Graph card generation: Pillow draws the cards, woff2 supplies
+              # woff2_decompress (Cooper ships as woff2; Pillow needs ttf).
+              (pkgs.python3.withPackages (ps: [ ps.pillow ]))
+              pkgs.woff2
+            ];
+            buildPhase = ''
+              zola build --output-dir $out
+
+              # Decompress the committed Cooper fonts (woff2 -> ttf) for Pillow.
+              mkdir -p fonts-ttf
+              for f in Cooper-Black Cooper-Bold Cooper-Regular; do
+                cp static/fonts/cooper/$f.woff2 fonts-ttf/
+                woff2_decompress fonts-ttf/$f.woff2
+              done
+
+              python3 scripts/gen_og_cards.py \
+                --out $out --font-dir fonts-ttf \
+                --title "Finn Rutis" --base-url "https://blog.finnrut.is/"
+            '';
             dontInstall = true;
           };
         });
@@ -26,7 +45,11 @@
         let pkgs = pkgsFor system; in
         {
           default = pkgs.mkShellNoCC {
-            packages = [ pkgs.zola ];
+            packages = [
+              pkgs.zola
+              (pkgs.python3.withPackages (ps: [ ps.pillow ]))
+              pkgs.woff2
+            ];
           };
         });
     };
