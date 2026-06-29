@@ -1,5 +1,10 @@
 {
   "ci": {
+    "collect": {
+      "settings": {
+        "chromeFlags": "--no-sandbox"
+      }
+    },
     "assert": {
       "assertions": {
         "categories:accessibility": ["error", { "minScore": 0.9 }],
