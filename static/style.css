@@ -324,6 +324,29 @@ nav a:hover {
   border-radius: 4px;
 }
 
+/* Skip link — off-screen until focused, then it drops into the top-left. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3.5rem;
+  z-index: 100;
+  padding: 0.5rem 0.9rem;
+  background: var(--paper);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 a {
   color: var(--accent);
   text-underline-offset: 0.12em;
@@ -979,4 +1002,55 @@ footer .copyright {
 .markdown-alert-caution {
   border-left-color: var(--alert-caution-bd);
   background: var(--alert-caution-bg);
+}
+
+/* Respect a reduced-motion preference: kill smooth scroll and near-instant
+   any transition/animation (the theme swap, link hovers, the skip link). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Print: drop the site chrome, flatten to ink-on-paper, and let code blocks
+   spill their full height instead of clipping at the on-screen max-height. */
+@media print {
+  html {
+    background: #fff;
+  }
+
+  body {
+    color: #000;
+    max-width: none;
+  }
+
+  header nav,
+  footer,
+  .copy-btn,
+  .post-nav,
+  .pagination {
+    display: none;
+  }
+
+  header::after {
+    content: none;
+  }
+
+  a {
+    color: #000;
+  }
+
+  pre.z-code {
+    max-height: none;
+    overflow: visible;
+    border: 1px solid #ccc;
+  }
 }

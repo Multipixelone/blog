@@ -10,7 +10,7 @@
 {% block og_image %}
 {% if page.extra.cover %}
 <meta property="og:image" content="{{ page.extra.cover }}">
-{% if page.extra.cover_alt %}<meta property="og:image:alt" content="{{ page.extra.cover_alt }}">{% endif %}
+<meta property="og:image:alt" content="{{ page.extra.cover_alt | default(value=page.title) }}">
 {% else %}
 <meta property="og:image" content="{{ config.base_url }}og/{{ page.slug }}.png">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,8 @@
 {% block twitter_card %}summary_large_image{% endblock twitter_card %}
 {% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
 {% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock twitter_description %}
-{% block twitter_image %}{% if page.extra.cover %}<meta name="twitter:image" content="{{ page.extra.cover }}">{% else %}<meta name="twitter:image" content="{{ config.base_url }}og/{{ page.slug }}.png">{% endif %}{% endblock twitter_image %}
+{% block twitter_image %}{% if page.extra.cover %}<meta name="twitter:image" content="{{ page.extra.cover }}">{% else %}<meta name="twitter:image" content="{{ config.base_url }}og/{{ page.slug }}.png">{% endif %}
+<meta name="twitter:image:alt" content="{{ page.extra.cover_alt | default(value=page.title) }}">{% endblock twitter_image %}
 
 {% block article_meta %}
   <meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">

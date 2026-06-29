@@ -25,9 +25,12 @@
   <meta property="og:image:alt" content="{{ config.title }}">
   {% endblock og_image %}
   <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock twitter_card %}">
+  {% if config.extra.author_twitter %}<meta name="twitter:site" content="{{ config.extra.author_twitter }}">
+  <meta name="twitter:creator" content="{{ config.extra.author_twitter }}">{% endif %}
   <meta name="twitter:title" content="{% block twitter_title %}{{ config.title }}{% endblock twitter_title %}">
   <meta name="twitter:description" content="{% block twitter_description %}{{ config.description }}{% endblock twitter_description %}">
-  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}{{ config.extra.og_image }}">{% endblock twitter_image %}
+  {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}{{ config.extra.og_image }}">
+  <meta name="twitter:image:alt" content="{{ config.title }}">{% endblock twitter_image %}
   {% block json_ld %}{% endblock json_ld %}
   {% block feed %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">{% endblock feed %}
   <link rel="icon" href="{{ get_url(path="favicon.ico") }}">
@@ -70,6 +73,7 @@
   {% block article_meta %}{% endblock article_meta %}
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <header>
     <nav>
       <a href="{{ get_url(path="/") }}">Home</a>
@@ -83,7 +87,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
     {% block content %}{% endblock %}
   </main>
 
