@@ -50,6 +50,54 @@ The Nix flake runs these checks automatically:
 - **nix flake check** — validates the flake and its outputs
 - **site build** — the static site builds successfully from `.#default`
 
+## Profile links
+
+The footer's icon row and the About page's "Elsewhere" list are both rendered
+from `[[extra.profiles]]` in `zola.toml`, so they can't drift apart. To add a
+place, append a block there; if its `icon` isn't one `templates/macros/icons.html`
+already draws, add an arm to that macro (anything unrecognised falls back to a
+generic link glyph). Drop `footer = true` to list somewhere on About only.
+
+## Feeds
+
+Both formats are generated from the same page list, using the local templates in
+`templates/{atom,rss}.xml` rather than Zola's built-ins (the built-ins title the
+channel "Finn Rutis - Home" and omit per-item categories):
+
+| Feed | Site-wide | Per tag |
+| --- | --- | --- |
+| RSS 2.0 | `/rss.xml` | `/tags/<slug>/rss.xml` |
+| Atom | `/atom.xml` | `/tags/<slug>/atom.xml` |
+
+All four are advertised with `<link rel="alternate">` on the pages they belong
+to, so readers autodiscover them from the URL alone.
+
+## Build provenance
+
+The footer carries a "built from this repo at `<sha>`" badge linking to the exact
+commit on GitHub. The revision travels in through `SITE_COMMIT`, which
+`flake.nix` sets from the flake's own git revision (`self.rev`, or
+`self.dirtyRev` on a dirty tree) — Nix sandboxes the build, so an inherited env
+var wouldn't survive. Both workflows check out with `fetch-depth: 0` so that
+revision resolves.
+
+Nothing breaks without it: under `zola serve` and in ad-hoc builds `SITE_COMMIT`
+is unset and the badge degrades to a plain link to the repository.
+
+## PGP
+
+`/pgp/` publishes the key's fingerprint plus instructions to fetch and verify it.
+The armored key itself is optional and absent by default — export it to
+`static/pgp.asc` and the page grows a download button and the full key block on
+the next build:
+
+```sh
+gpg --armor --export 0x59BF38D05371C5E9 > static/pgp.asc
+```
+
+The filename and the fingerprint live in `[extra.pgp]` in `zola.toml`, which also
+feeds the About page's fingerprint line.
+
 ## Social cards
 
 Per-post Open Graph cards (1200×630) are generated at build time by
@@ -63,12 +111,16 @@ homepage, tags, and about pages.
 <summary>Project structure</summary>
 
 ```
-content/    markdown posts and pages
-templates/  Tera HTML templates (hand-rolled minimal theme), incl. 404.html
-static/     CNAME, robots.txt, style.css, fonts, favicon
-scripts/    build-time helpers (Open Graph card generator)
-zola.toml   site configuration
-flake.nix   Nix flake (devShell + site build derivation)
+content/               markdown posts and pages
+templates/             Tera HTML templates (hand-rolled minimal theme), incl. 404.html
+templates/atom.xml     feed templates, overriding Zola's built-ins
+templates/rss.xml
+templates/macros/      inline SVG icon set (footer, About, PGP page)
+templates/shortcodes/  markdown-callable snippets
+static/                CNAME, robots.txt, style.css, fonts, favicon
+scripts/               build-time helpers (Open Graph card generator)
+zola.toml              site configuration
+flake.nix              Nix flake (devShell + site build derivation)
 ```
 
 </details>

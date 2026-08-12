@@ -18,7 +18,11 @@ jobs:
     name: flake check
     runs-on: ubuntu-latest
     steps:
+      # Full history: the flake reads `self.rev` for the footer's build badge,
+      # which needs a non-shallow, clean checkout to resolve.
       - uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
       - uses: nixbuild/nix-quick-install-action@v35
       - name: Run nix flake check
         run: nix flake check --print-build-logs
@@ -38,6 +42,10 @@ jobs:
       # Build a copy whose absolute URLs resolve to the local audit server, so
       # Lighthouse/pa11y exercise the real generated HTML and assets.
       - name: Build site (localhost base_url)
+        # Mirror the real build's footer badge so the audited HTML matches what
+        # ships (the nix build gets this from the flake's `self.rev` instead).
+        env:
+          SITE_COMMIT: ${{ github.sha }}
         run: nix develop --command zola build --base-url http://localhost:8080 --output-dir ./public
       - name: Serve site
         run: |

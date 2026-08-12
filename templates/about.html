@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/icons.html" as icons %}
 
 {% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
 {% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
@@ -7,8 +8,48 @@
 {% block og_description %}{{ section.description | default(value=config.description) }}{% endblock %}
 
 {% block content %}
+{# "Elsewhere" is rendered from config.extra.profiles so the footer icon row and
+   this list can never drift apart — add a place in zola.toml and it shows up in
+   both. The PGP entry is separate: it points at an internal page, not a
+   profile, and leads with the fingerprint because that's the useful part. #}
+{%- set pgp_page = get_section(path="pgp/_index.md") %}
 <article>
   <h1>{{ section.title }}</h1>
   {{ section.content | safe }}
+
+  <h2 id="elsewhere">Elsewhere</h2>
+  <ul class="elsewhere" role="list">
+    {%- for profile in config.extra.profiles | default(value=[]) %}
+    <li>
+      <a href="{{ profile.url }}" rel="me">
+        {{ icons::icon(name=profile.icon) }}
+        <span class="elsewhere-name">{{ profile.name }}</span>
+        {%- if profile.handle %}<span class="elsewhere-handle">{{ profile.handle }}</span>{% endif %}
+      </a>
+    </li>
+    {%- endfor %}
+    <li>
+      <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}" type="application/rss+xml">
+        {{ icons::icon(name="rss") }}
+        <span class="elsewhere-name">RSS</span>
+        <span class="elsewhere-handle">/rss.xml</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}" type="application/atom+xml">
+        {{ icons::icon(name="rss") }}
+        <span class="elsewhere-name">Atom</span>
+        <span class="elsewhere-handle">/atom.xml</span>
+      </a>
+    </li>
+  </ul>
+
+  <h2 id="pgp">PGP</h2>
+  <p>
+    If you want to send me something private, or check a signature of mine, my
+    OpenPGP key fingerprint is:
+  </p>
+  <p class="fingerprint"><code>{{ config.extra.pgp.fingerprint_pretty }}</code></p>
+  <p><a href="{{ pgp_page.permalink }}">The key, and how to fetch and verify it →</a></p>
 </article>
 {% endblock %}

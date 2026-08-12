@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "macros/icons.html" as icons %}
+
+{% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
+{% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block og_title %}{{ section.title }}{% endblock og_title %}
+{% block og_url %}{{ section.permalink }}{% endblock og_url %}
+{% block og_description %}{{ section.description | default(value=config.description) }}{% endblock og_description %}
+{% block canonical %}{{ section.permalink }}{% endblock canonical %}
+
+{% block content %}
+{# The armored key is served as a plain file so `curl | gpg --import` works and
+   so this page never becomes the only copy. It is deliberately optional: until
+   static/<key_file> is committed, the page still stands on the fingerprint and
+   the fetch instructions rather than shipping a dead download link. #}
+{%- set key_file = config.extra.pgp.key_file %}
+{%- set armored = load_data(path="static/" ~ key_file, format="plain", required=false) %}
+<article>
+  <h1>{{ section.title }}</h1>
+  {{ section.content | safe }}
+
+  {% if armored %}
+  <h2 id="the-key">The key</h2>
+  <p>
+    <a class="key-download" href="{{ get_url(path=key_file) }}" download>
+      {{ icons::icon(name="download") }}
+      <span>Download {{ key_file }}</span>
+    </a>
+  </p>
+  <pre class="key-armor" tabindex="0" role="region" aria-label="Armored OpenPGP public key"><code>{{ armored | trim }}</code></pre>
+  {% endif %}
+</article>
+{% endblock %}

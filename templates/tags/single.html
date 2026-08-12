@@ -4,9 +4,13 @@
 {% block description %}Posts tagged "{{ term.name }}".{% endblock %}
 {% block og_title %}{{ term.name }} — {{ config.title }}{% endblock og_title %}
 {% block og_description %}Posts tagged "{{ term.name }}".{% endblock og_description %}
-{% block feed %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} — #{{ term.name }}" href="{{ term.permalink | trim_end_matches(pat='/') | safe }}/atom.xml">{% endblock feed %}
+{# Tera scopes `set` to the block it's in — a top-level one wouldn't reach
+   either block — so the feed base is derived once per block that needs it. #}
+{% block feed %}{% set feed_base = term.permalink | trim_end_matches(pat='/') | safe %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} — #{{ term.name }} (Atom)" href="{{ feed_base }}/atom.xml">
+<link rel="alternate" type="application/rss+xml" title="{{ config.title }} — #{{ term.name }} (RSS)" href="{{ feed_base }}/rss.xml">{% endblock feed %}
 
 {% block content %}
+{% set feed_base = term.permalink | trim_end_matches(pat='/') | safe %}
 <nav class="tag-back" aria-label="Tag navigation">
   <a href="{{ get_url(path="/tags/") }}">← All tags</a>
 </nav>
@@ -27,6 +31,9 @@
 {% endfor %}
 
 <footer class="tag-feed">
-  <a href="{{ term.permalink | trim_end_matches(pat='/') | safe }}/atom.xml">Atom feed for this tag</a>
+  Feeds for this tag:
+  <a href="{{ feed_base }}/rss.xml">RSS</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="{{ feed_base }}/atom.xml">Atom</a>
 </footer>
 {% endblock %}

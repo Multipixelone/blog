@@ -19,7 +19,11 @@ jobs:
     name: build site
     runs-on: ubuntu-latest
     steps:
+      # Full history: the flake reads `self.rev` for the footer's build badge,
+      # which needs a non-shallow, clean checkout to resolve.
       - uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
       - uses: nixbuild/nix-quick-install-action@v35
       - name: Build site
         run: nix build .#default --print-build-logs
