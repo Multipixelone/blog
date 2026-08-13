@@ -109,6 +109,38 @@
     <data class="p-name" value="{{ config.author }}"></data>
     <data class="u-url" value="{{ config.base_url }}about/"></data>
   </span>
+  {#- Table of contents, for posts long enough to need one. Collapsed by
+      default: on a short post it would be noise between the title and the
+      first paragraph, and on a long one the reader opening it has already
+      decided they want it. Two levels deep — a third would be an outline of
+      an outline. #}
+  {%- set_global heading_count = page.toc | length %}
+  {%- for heading in page.toc %}
+  {#- Tera won't take a filter inside an arithmetic expression, so bind it. -#}
+  {%- set child_count = heading.children | length %}
+  {%- set_global heading_count = heading_count + child_count %}
+  {%- endfor %}
+  {%- if heading_count >= 3 %}
+  <details class="toc">
+    <summary>Contents</summary>
+    <nav aria-label="Table of contents">
+      <ol>
+        {%- for heading in page.toc %}
+        <li>
+          <a href="{{ heading.permalink | safe }}">{{ heading.title }}</a>
+          {%- if heading.children %}
+          <ol>
+            {%- for child in heading.children %}
+            <li><a href="{{ child.permalink | safe }}">{{ child.title }}</a></li>
+            {%- endfor %}
+          </ol>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ol>
+    </nav>
+  </details>
+  {%- endif %}
   <div class="e-content">
     {{ page.content | safe }}
   </div>

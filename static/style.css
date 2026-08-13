@@ -753,6 +753,56 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
 }
 
 /* ------------------------------------------------------------------
+   Table of contents — a <details> above the post body, rendered only
+   when the post has three or more headings.
+   ------------------------------------------------------------------ */
+.toc {
+  margin: 1.75rem 0 2.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: var(--paper-shade);
+  font-size: 0.9rem;
+}
+
+.toc summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.toc[open] summary {
+  margin-bottom: 0.6rem;
+}
+
+.toc ol {
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.toc > nav > ol {
+  padding-left: 1.2rem;
+}
+
+.toc li {
+  margin: 0.2rem 0;
+}
+
+.toc a {
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.toc a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* ------------------------------------------------------------------
    Heading anchors — rendered by templates/anchor-link.html for every
    heading (zola.toml: insert_anchor_links = "right").
    ------------------------------------------------------------------ */

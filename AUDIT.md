@@ -154,7 +154,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 - [x] **Heading anchors.** `insert_anchor_links = "heading"` (or `= "right"`)
       in `[markdown]` gives every heading a copyable link — table stakes for
       technical posts people cite. Style the `.zola-anchor` to appear on hover.
-- [ ] **Table of contents for long posts.** `nixos-for-who` is 7KB of prose;
+- [x] **Table of contents for long posts.** `nixos-for-who` is 7KB of prose;
       a `page.toc`-driven `<details>` TOC above the fold (rendered only when the
       post has 3+ headings) costs ~10 template lines.
 - [ ] **Archive/all-posts view.** With `paginate_by = 10`, older posts fall off
