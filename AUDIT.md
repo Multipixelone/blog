@@ -55,7 +55,7 @@ cheap and visible.
 - [x] **Microformats2.** Add `h-entry` / `h-card` / `p-author` / `dt-published`
       classes to `page.html` and the homepage list. Invisible to humans, but makes
       posts parseable by webmention receivers, indie readers, and Bridgy.
-- [ ] **Webmentions.** Register at webmention.io, add the
+- [x] **Webmentions.** Register at webmention.io, add the
       `<link rel="webmention">` endpoint tag, and (optionally, later) pull the
       mention JSON at build time to render "N mentions" under posts. Pairs with
       Bridgy to backfeed Mastodon favs/boosts as mentions.

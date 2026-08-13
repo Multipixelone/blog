@@ -36,6 +36,13 @@
   {% block json_ld %}{% endblock json_ld %}
   {% block feed %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} (Atom)" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
   <link rel="alternate" type="application/rss+xml" title="{{ config.title }} (RSS)" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">{% endblock feed %}
+  {#- Webmention endpoint, emitted only when zola.toml actually names one — an
+      advertised endpoint that isn't listening is worse than none. #}
+  {%- set webmention = config.extra.webmention | default(value=false) %}
+  {%- if webmention %}
+  {%- if webmention.endpoint %}<link rel="webmention" href="{{ webmention.endpoint }}">{% endif %}
+  {%- if webmention.pingback %}<link rel="pingback" href="{{ webmention.pingback }}">{% endif %}
+  {%- endif %}
   <link rel="icon" href="{{ get_url(path="favicon.ico") }}">
   <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") }}">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f4ed">

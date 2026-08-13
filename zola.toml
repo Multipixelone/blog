@@ -70,6 +70,18 @@ repo_url = "https://github.com/Multipixelone/blog"
 #       --comment 'Finn Rutis <me@finnrut.is>' \
 #       --comment 'A673 0AC1 3BDD F8FF 95E4  5173 59BF 38D0 5371 C5E9' \
 #       --export 0x59BF38D05371C5E9 > static/pgp.asc
+# Webmention receiving. Left empty on purpose: the tags are only emitted once
+# these are filled in, so nothing advertises an endpoint that isn't listening.
+# To turn it on, sign in at https://webmention.io with this site's URL (it uses
+# the rel="me" links the About page publishes) and set:
+#   endpoint = "https://webmention.io/blog.finnrut.is/webmention"
+#   pingback = "https://webmention.io/blog.finnrut.is/xmlrpc"
+# Pair it with Bridgy (https://brid.gy) to backfeed Mastodon replies, boosts and
+# favourites as mentions.
+[extra.webmention]
+endpoint = ""
+pingback = ""
+
 [extra.pgp]
 fingerprint = "A6730AC13BDDF8FF95E4517359BF38D05371C5E9"
 fingerprint_pretty = "A673 0AC1 3BDD F8FF 95E4  5173 59BF 38D0 5371 C5E9"
