@@ -47,8 +47,15 @@
             packages = [
               pkgs.zola
               # pillow: OG cards. feedparser + libxslt: scripts/check_feeds.py.
-              # pyyaml: scripts/check_frontmatter.py reads YAML front matter.
-              (pkgs.python3.withPackages (ps: [ ps.pillow ps.feedparser ps.pyyaml ]))
+              # pyyaml: scripts/check_frontmatter.py. fonttools + brotli:
+              # scripts/subset_fonts.py (dev-only; the build never subsets).
+              (pkgs.python3.withPackages (ps: [
+                ps.pillow
+                ps.feedparser
+                ps.pyyaml
+                ps.fonttools
+                ps.brotli
+              ]))
               pkgs.woff2
               pkgs.pagefind
               pkgs.libxslt

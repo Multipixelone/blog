@@ -22,3 +22,6 @@ static/fonts/pragmata/
 # Sabon Next — proprietary Linotype font, must not be committed to public repo.
 # Local copies live here for dev only; served from R2 (fonts.finnrut.is) in prod.
 static/fonts/sabon/
+# Python bytecode from the build/check scripts
+__pycache__/
+*.pyc

@@ -114,7 +114,7 @@ The head is already better than most commercial sites. What's left:
 
 Fonts are the whole story here; the rest of the page is effectively free.
 
-- [ ] **Subset the webfonts.** Sabon Regular alone is ~98KB and you ship 4
+- [x] **Subset the webfonts.** Sabon Regular alone is ~98KB and you ship 4
       Sabon weights + 4 PragmataPro styles + 3 Coopers. `pyftsubset`
       (fonttools) with `--unicodes=U+0000-00FF,U+2013-2014,U+2018-201D,U+2026` and
       layout-feature pruning typically cuts serif woff2s by 50–70%. This is the
@@ -138,7 +138,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
       best-practice items you structurally can't fix on Pages today).
       Alternatively CSP can ship as a `<meta http-equiv>` tag now, losing only
       `frame-ancestors`.
-- [ ] **Self-host check for `og.png` weight.** PNG cards with flat color
+- [x] **Self-host check for `og.png` weight.** PNG cards with flat color
       compress well, but verify sizes; if any card crosses ~150KB, quantize with
       `optimize=True` + `img.quantize(64)` — flat-color cards survive palette mode
       perfectly and often shrink 3–4×.

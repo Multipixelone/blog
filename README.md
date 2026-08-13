@@ -163,6 +163,23 @@ The UI assets load on `/search/` and nowhere else. Under `zola serve` there is
 no `/pagefind/` directory, so that page is inert in dev; `nix build` exercises
 it.
 
+## Fonts
+
+Cooper is committed and served from this site; Sabon Next and PragmataPro are
+proprietary, gitignored, and served from Cloudflare R2 (`fonts.finnrut.is`).
+
+`scripts/subset_fonts.py` cuts a family down to the codepoints the site
+actually renders. It refuses to write unless the result still carries every
+codepoint and layout feature the design depends on — notably U+2766 (the fleuron
+under the header, which lives in a CSS `content:` property where no
+text-scanning heuristic would find it) and the `swsh` feature that draws the
+drop cap. Cooper is already subset, 134KB to 74KB. For the R2 families, subset
+locally and upload the result:
+
+```sh
+python3 scripts/subset_fonts.py ~/fonts/sabon --out ~/fonts/sabon-subset
+```
+
 ## Well-known files
 
 `static/.well-known/security.txt` (RFC 9116) points at the same contact address
