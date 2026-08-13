@@ -76,6 +76,11 @@ Entries carry both a summary and the full post text — Atom as `<summary>` plus
 `<content>`, RSS as `<description>` plus `<content:encoded>` — so a reader can
 skim or read without being made to click through.
 
+CI runs `scripts/check_feeds.py` against the built output: it checks that the
+XML declaration is at byte 0, that the feeds are well-formed, that the required
+elements are present on the feed and every entry, and that feedparser — which a
+large share of real readers are built on — accepts them.
+
 Each carries an `<?xml-stylesheet?>` pointing at `static/feed.xsl`, so opening a
 feed in a browser renders a readable page — what a feed is, the URL to copy,
 recent posts — instead of a wall of XML. One stylesheet handles both formats.

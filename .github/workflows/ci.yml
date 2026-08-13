@@ -51,6 +51,19 @@ jobs:
       # index is built. Without this the audited search page is a dead end.
       - name: Build search index
         run: nix develop --command pagefind --site ./public
+      # The feed templates are hand-maintained overrides and their comments
+      # record that byte-level XML problems have shipped before. Also renders
+      # every feed through the XSL, so a broken stylesheet fails here rather
+      # than in someone's browser.
+      - name: Validate feeds
+        run: |
+          nix develop --command python3 scripts/check_feeds.py ./public
+          nix develop --command bash -c '
+            set -e
+            for feed in ./public/atom.xml ./public/rss.xml ./public/tags/*/atom.xml; do
+              xsltproc static/feed.xsl "$feed" > /dev/null
+            done
+          '
       - name: Serve site
         run: |
           nohup python3 -m http.server 8080 --directory ./public >/dev/null 2>&1 &

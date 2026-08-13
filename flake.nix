@@ -62,9 +62,12 @@
           default = pkgs.mkShellNoCC {
             packages = [
               pkgs.zola
-              (pkgs.python3.withPackages (ps: [ ps.pillow ]))
+              # feedparser and libxslt are for scripts/check_feeds.py, which CI
+              # runs against the built output.
+              (pkgs.python3.withPackages (ps: [ ps.pillow ps.feedparser ]))
               pkgs.woff2
               pkgs.pagefind
+              pkgs.libxslt
             ];
             # Give `zola serve` the same footer badge the real build gets from
             # `self.rev` — with the same "-dirty" convention.

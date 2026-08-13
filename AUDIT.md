@@ -185,7 +185,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
       in a PR comment. Nicer: Cloudflare Pages preview deployments (free, automatic
       per-PR URLs) — and it would replace GitHub Pages entirely, unlocking §5's
       headers as a side effect.
-- [ ] **Feed validation in CI.** The Atom/RSS templates are hand-maintained
+- [x] **Feed validation in CI.** The Atom/RSS templates are hand-maintained
       and the comments show you've already been bitten by byte-level XML issues.
       `xmllint --noout` plus the W3C feed validator's CLI cousin
       (`feedvalidator`/`flycheck` via a Python step) would lock in correctness.
