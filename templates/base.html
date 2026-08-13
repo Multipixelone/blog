@@ -43,6 +43,9 @@
   {%- if webmention.endpoint %}<link rel="webmention" href="{{ webmention.endpoint }}">{% endif %}
   {%- if webmention.pingback %}<link rel="pingback" href="{{ webmention.pingback }}">{% endif %}
   {%- endif %}
+  {#- The humans.txt convention: rel="author" is how anyone looking for it
+      knows the file is there. #}
+  <link rel="author" href="{{ get_url(path="humans.txt", trailing_slash=false) }}">
   <link rel="icon" href="{{ get_url(path="favicon.ico") }}">
   <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") }}">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f4ed">

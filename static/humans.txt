@@ -1,0 +1,24 @@
+/* TEAM */
+    Writer, designer, sysadmin: Finn Rutis (they/them)
+    Site:     https://blog.finnrut.is
+    Mastodon: @tunnelmaker@pony.social
+    GitHub:   @Multipixelone
+    Location: New York City
+
+/* THANKS */
+    Zola — the static site generator doing the actual work
+    Nix — for builds that are the same on my laptop and in CI
+    Everyone who has ever written a blog post that unstuck me at 2am
+
+/* SITE */
+    Source:      https://github.com/Multipixelone/blog
+    Generator:   Zola
+    Build:       Nix flake, deployed to GitHub Pages on push to main
+    Standards:   HTML5, CSS3, microformats2, Open Graph, JSON-LD, RFC 9116
+    Components:  none
+    Frameworks:  none
+    JavaScript:  a theme toggle, copy buttons on code blocks, and Mastodon
+                 replies on posts that have a thread. Everything else works
+                 without it.
+    Typefaces:   Sabon Next (body), Cooper (display), PragmataPro Mono (code)
+    Analytics:   none. If you read this, I don't know about it, and that's fine.

@@ -1,0 +1,17 @@
+# Machine-readable security contact for blog.finnrut.is, per RFC 9116.
+#
+# This is a static site with no accounts, no forms and no server-side code, so
+# there is very little here to report against — but the site publishes a PGP
+# key and cares about verifiable contact, and this is the machine-readable
+# version of that.
+#
+# Expires must stay in the future or the whole file is treated as stale, so it
+# needs pushing forward before the date below.
+
+Contact: mailto:me@finnrut.is
+Contact: https://blog.finnrut.is/about/
+Expires: 2027-08-01T00:00:00.000Z
+Encryption: https://blog.finnrut.is/pgp.asc
+Encryption: openpgp4fpr:a6730ac13bddf8ff95e4517359bf38d05371c5e9
+Preferred-Languages: en
+Canonical: https://blog.finnrut.is/.well-known/security.txt

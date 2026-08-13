@@ -168,7 +168,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
       mode) fits the site's ethos; even just Cloudflare's server-side analytics
       (if you adopt §5's proxying) answers "did anyone read this" without any
       client JS.
-- [ ] **`security.txt`.** You publish a PGP key and care about verifiable
+- [x] **`security.txt`.** You publish a PGP key and care about verifiable
       contact — `/.well-known/security.txt` (RFC 9116) is the machine-readable
       version: `Contact:`, `Encryption: https://blog.finnrut.is/pgp.asc`,
       `Expires:`, and sign the file with the key itself. One static file; GitHub
@@ -205,5 +205,5 @@ Fonts are the whole story here; the rest of the page is effectively free.
 - [ ] `author_twitter = "@Multipixelone"` powers `twitter:site`/`creator`;
       if X stops mattering to you, the tags are harmless but the profile row +
       meta could be retired together.
-- [ ] Consider `humans.txt` for the same audience as the build badge — people
+- [x] Consider `humans.txt` for the same audience as the build badge — people
       who view source. You clearly enjoy this class of easter egg.

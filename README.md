@@ -130,6 +130,15 @@ fetch instructions instead of leaving a dead download link. The filename and the
 fingerprint live in `[extra.pgp]` in `zola.toml`, which also feeds the About
 page's fingerprint line.
 
+## Well-known files
+
+`static/.well-known/security.txt` (RFC 9116) points at the same contact address
+and PGP key the About and `/pgp/` pages publish. Its `Expires` field has to stay
+in the future or consumers treat the whole file as stale.
+
+`static/humans.txt` is the counterpart for people rather than machines, linked
+from every page with `<link rel="author">`.
+
 ## Social cards
 
 Open Graph cards (1200×630) are generated at build time by
