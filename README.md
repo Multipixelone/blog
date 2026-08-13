@@ -86,17 +86,18 @@ is unset and the badge degrades to a plain link to the repository.
 
 ## PGP
 
-`/pgp/` publishes the key's fingerprint plus instructions to fetch and verify it.
-The armored key itself is optional and absent by default — export it to
-`static/pgp.asc` and the page grows a download button and the full key block on
-the next build:
+`/pgp/` publishes the key's fingerprint, instructions to fetch and verify it, and
+the armored key from `static/pgp.asc`. To rotate or re-export the key:
 
 ```sh
 gpg --armor --export 0x59BF38D05371C5E9 > static/pgp.asc
 ```
 
-The filename and the fingerprint live in `[extra.pgp]` in `zola.toml`, which also
-feeds the About page's fingerprint line.
+That file is read optionally — the download button and key block appear only
+when it exists, so removing it degrades the page to the fingerprint and the
+fetch instructions instead of leaving a dead download link. The filename and the
+fingerprint live in `[extra.pgp]` in `zola.toml`, which also feeds the About
+page's fingerprint line.
 
 ## Social cards
 

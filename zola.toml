@@ -61,10 +61,11 @@ repo_url = "https://github.com/Multipixelone/blog"
 # OpenPGP key identity, read by templates/pgp.html, templates/about.html and the
 # pgp_fingerprint shortcode. `fingerprint_pretty` keeps gpg's double space in
 # the middle; it renders inside <code>, which minify_html leaves alone.
-# `key_file` names an *optional* file under static/ — commit the armored key
-# there (`gpg --armor --export 0x59BF38D05371C5E9 > static/pgp.asc`) and the PGP
-# page grows a download button and the full key block; until then the page
-# stands on the fingerprint and the fetch instructions.
+# `key_file` names a file under static/ holding the armored key, read
+# *optionally*: the PGP page's download button and key block appear only when it
+# exists, so removing it degrades the page to the fingerprint and the fetch
+# instructions rather than leaving a dead download link. Re-export with
+# `gpg --armor --export 0x59BF38D05371C5E9 > static/pgp.asc`.
 [extra.pgp]
 fingerprint = "A6730AC13BDDF8FF95E4517359BF38D05371C5E9"
 fingerprint_pretty = "A673 0AC1 3BDD F8FF 95E4  5173 59BF 38D0 5371 C5E9"

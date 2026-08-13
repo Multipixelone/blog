@@ -24,7 +24,8 @@
   <p>
     <a class="key-download" href="{{ get_url(path=key_file) }}" download>
       {{ icons::icon(name="download") }}
-      <span>Download {{ key_file }}</span>
+      <span>Download</span>
+      <code>{{ key_file }}</code>
     </a>
   </p>
   <pre class="key-armor" tabindex="0" role="region" aria-label="Armored OpenPGP public key"><code>{{ armored | trim }}</code></pre>
