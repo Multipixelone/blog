@@ -752,6 +752,113 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   display: inline;
 }
 
+/* ------------------------------------------------------------------
+   Heading anchors — rendered by templates/anchor-link.html for every
+   heading (zola.toml: insert_anchor_links = "right").
+   ------------------------------------------------------------------ */
+
+/* Hidden with opacity, not display, so the link keeps its place in the tab
+   order; :focus-visible below brings it back for keyboard readers. */
+.zola-anchor {
+  margin-left: 0.35em;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 0.12s ease-in-out;
+}
+
+h1:hover > .zola-anchor,
+h2:hover > .zola-anchor,
+h3:hover > .zola-anchor,
+h4:hover > .zola-anchor,
+h5:hover > .zola-anchor,
+h6:hover > .zola-anchor,
+.zola-anchor:focus-visible {
+  opacity: 1;
+}
+
+.zola-anchor:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* Touch devices have no hover, so leave the anchors permanently visible but
+   quiet rather than unreachable. */
+@media (hover: none) {
+  .zola-anchor {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zola-anchor {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Footnotes — collected at the end of the post (zola.toml:
+   bottom_footnotes = true). Markup is Zola's: a <section class="footnotes">
+   wrapping <ol class="footnotes-list">, with a ↩ back-link per note.
+   ------------------------------------------------------------------ */
+.footnote-reference {
+  font-size: 0.7em;
+  line-height: 0;
+}
+
+.footnote-reference a {
+  text-decoration: none;
+  padding: 0 0.1em;
+}
+
+.footnotes {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.footnotes::before {
+  content: "Notes";
+  display: block;
+  margin-bottom: 0.75rem;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+}
+
+.footnotes-list {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.footnotes-list li {
+  margin-bottom: 0.5rem;
+}
+
+.footnotes-list li p {
+  margin: 0;
+}
+
+/* Jumping to a note should make it obvious which one you landed on. */
+.footnotes-list li:target {
+  background: var(--selection-bg);
+  border-radius: 3px;
+  box-shadow: 0 0 0 0.35rem var(--selection-bg);
+}
+
+/* The return arrow, back to the paragraph that cited the note. */
+.footnotes-list a[href^="#fr-"] {
+  text-decoration: none;
+  padding-left: 0.15em;
+}
+
+.footnotes-list a[href^="#fr-"]:hover {
+  text-decoration: underline;
+}
+
 /* Homepage subscribe line. The icon is decorative — the links either side of it
    carry the meaning — so it stays aria-hidden like every other .icon. */
 .subscribe {

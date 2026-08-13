@@ -1,0 +1,9 @@
+{#- Heading anchor, rendered by Zola for every heading because zola.toml sets
+    `insert_anchor_links = "right"`. Overrides the built-in, which emits a 🔗
+    emoji — an emoji picks up the system emoji font, ignores the accent colour,
+    and reads as "link link link" in some screen readers.
+
+    `#` matches the tag pages' hash and inherits the palette. The link is hidden
+    with opacity rather than display:none so it stays in the tab order, and
+    `.zola-anchor:focus-visible` brings it back for keyboard users. -#}
+<a class="zola-anchor" href="#{{ id }}" aria-label="Link to this section">#</a>

@@ -151,7 +151,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
       ~10KB JS lazily loaded only when the search box is used. Alternatively
       Zola's built-in `build_search_index` with elasticlunr, but Pagefind's index
       scales better and the UI is nicer.
-- [ ] **Heading anchors.** `insert_anchor_links = "heading"` (or `= "right"`)
+- [x] **Heading anchors.** `insert_anchor_links = "heading"` (or `= "right"`)
       in `[markdown]` gives every heading a copyable link — table stakes for
       technical posts people cite. Style the `.zola-anchor` to appear on hover.
 - [ ] **Table of contents for long posts.** `nixos-for-who` is 7KB of prose;
@@ -160,7 +160,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 - [ ] **Archive/all-posts view.** With `paginate_by = 10`, older posts fall off
       the homepage into pagination limbo. A compact `/archive/` (year → title list,
       no summaries) is the page long-time readers actually bookmark.
-- [ ] **Footnote back-links & styling.** If/when posts use footnotes, Zola's
+- [x] **Footnote back-links & styling.** If/when posts use footnotes, Zola's
       default markup benefits from `[markdown] bottom_footnotes = true` plus a
       return-arrow style. Cheap to do now, before the first footnoted post.
 - [ ] **Privacy-respecting analytics.** Right now you have zero signal on

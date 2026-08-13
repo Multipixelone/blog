@@ -34,6 +34,17 @@ exclude_paginated_pages_in_sitemap = "all"
 [markdown]
 github_alerts = true
 
+# Every heading gets a copyable link, rendered by templates/anchor-link.html and
+# revealed on hover/focus (see `.zola-anchor` in static/style.css). Table stakes
+# for technical posts people quote a section of.
+insert_anchor_links = "right"
+
+# Collect footnotes at the end of the post rather than inline after the
+# paragraph that references them, which is what a reader expects and what the
+# return arrows are for. Set before the first footnoted post so the markup and
+# its styling don't arrive separately.
+bottom_footnotes = true
+
 # style = "class" emits z-* token classes; colors come entirely from
 # static/giallo-{light,dark}.css (Gruvbox). The theme names below are only a
 # fallback if style is switched to inline/enriched — Zola 0.22 ships no

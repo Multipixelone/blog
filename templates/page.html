@@ -76,7 +76,10 @@
   }{% if page.taxonomies.tags %},
   "keywords": {{ page.taxonomies.tags | json_encode | safe }},
   "articleSection": {{ page.taxonomies.tags[0] | json_encode | safe }}{% endif %},
-  "articleBody": {{ page.content | striptags | trim | truncate(length=200) | json_encode | safe }}
+  {#- The summary, not the body: it is the lede rather than a 200-character
+      slice of headings, and stripping tags from the body would now drag the
+      heading anchors' "#" into the structured data with it. -#}
+  "articleBody": {{ page.summary | default(value=page.content) | striptags | trim | truncate(length=200) | json_encode | safe }}
 }
 </script>
 {% endblock json_ld %}
