@@ -206,10 +206,15 @@ from every page with `<link rel="author">`.
 
 ## Social cards
 
-Open Graph cards (1200×630) are generated at build time by
-`scripts/gen_og_cards.py`, which reads the JSON-LD each post emits and draws an
-"accent band" card with Pillow: title, description, tag chips, a meta line, and
-the site's hostname bottom-right so attribution survives a screenshot. Cooper
+Open Graph cards are generated at build time by `scripts/gen_og_cards.py`, which
+reads the JSON-LD each post emits and draws an "accent band" card with Pillow:
+title, description, tag chips, a meta line, and the site's hostname
+bottom-right so attribution survives a screenshot. They use the site's dark
+palette, and render at 2400×1260 — the 1200×630 Open Graph convention at
+`SCALE = 2`, since that convention is the size a card is *displayed* at, so a
+1200px card is upscaled on every retina timeline. Every measurement in the
+script is written in 1200×630 base units and multiplied by `SCALE`, so the
+layout is defined once. The templates declare the real pixel size. Cooper
 (the only build-available font — Sabon Next is served from R2 and absent from CI)
 is decompressed woff2→ttf via `woff2_decompress` first.
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate Open Graph social cards (1200x630) for the blog at build time.
+"""Generate Open Graph social cards (2400x1260) for the blog at build time.
 
 Reads the JSON-LD already embedded in each built post (templates/page.html emits
 a BlogPosting block), so no fragile front-matter parsing — the structured data is
 purpose-built and stable. Renders an "accent band" card with Pillow:
 
-  - paper background, a solid accent band across the top
+  - dark paper background, a solid accent band across the top
   - post title in Cooper Black (accent), auto-fit + greedy word wrap
   - a muted two-line description under the title, when the title leaves room
   - tag chips drawn from the JSON-LD `keywords`
@@ -44,46 +44,60 @@ from urllib.parse import urlsplit
 
 from PIL import Image, ImageDraw, ImageFont
 
-# Palette — mirrors static/style.css :root (light theme). Keep in sync.
-PAPER = (247, 244, 237)   # --paper   #f7f4ed
-ACCENT = (181, 74, 0)     # --accent  #b54a00
-INK = (43, 37, 32)        # --ink     #2b2520
-MUTED = (118, 107, 94)    # --muted   #766b5e
+# Palette — mirrors the dark theme in static/style.css. Keep in sync.
+# Dark rather than light because a card is viewed inside someone else's timeline,
+# where a near-white 1200px rectangle is the brightest thing on the screen; the
+# dark card sits in the feed instead of shouting over it, and the accent on near
+# black clears WCAG AA for large text with room to spare.
+PAPER = (28, 25, 21)      # --paper   #1c1915
+ACCENT = (255, 158, 66)   # --accent  #ff9e42
+INK = (232, 226, 216)     # --ink     #e8e2d8
+MUTED = (158, 148, 134)   # --muted   #9e9486
 
-# Canvas — the Open Graph standard card size declared in the templates.
-W, H = 1200, 630
-MARGIN = 80
-BAND_H = 18              # accent band thickness across the top
+# Canvas. 1200x630 is the Open Graph convention, but it is a *minimum*, and it is
+# the size the card gets composited at — on a 2x display that means every card
+# was being upscaled from its own native resolution and softening the type.
+# Render at SCALE times the convention and declare the true pixel size in the
+# templates; every measurement below is in base units and scaled at definition,
+# so the layout is unchanged and only the pixel density moves.
+SCALE = 2
+BASE_W, BASE_H = 1200, 630
+W, H = BASE_W * SCALE, BASE_H * SCALE
+MARGIN = 80 * SCALE
+BAND_H = 18 * SCALE      # accent band thickness across the top
 CONTENT_W = W - 2 * MARGIN
 
 # Title auto-fit bounds. Post titles are sentences and start at TITLE_MAX; the
 # term/section cards are one short word ("#nix", "About") and would swim in the
 # empty card at that size, so they start much larger and shrink from there.
-TITLE_MAX = 78
-TITLE_DISPLAY_MAX = 148
-TITLE_MIN = 50
+TITLE_MAX = 78 * SCALE
+TITLE_DISPLAY_MAX = 148 * SCALE
+TITLE_MIN = 50 * SCALE
+TITLE_STEP = 2 * SCALE   # auto-fit granularity, in real pixels
 TITLE_MAX_LINES = 4
 TITLE_LINE_RATIO = 1.12  # line height as a multiple of font size
 
 # Description — only drawn when the title is short enough to leave room.
-DESC_SIZE = 32
+# Light-on-dark type reads thinner than the same face dark-on-light, so the
+# secondary text sits a couple of points above where the light card had it.
+DESC_SIZE = 34 * SCALE
 DESC_MAX_LINES = 2
 DESC_LINE_RATIO = 1.30
-DESC_GAP = 30            # space between the title block and the description
+DESC_GAP = 30 * SCALE    # space between the title block and the description
 TITLE_LINES_FOR_DESC = 3  # a 4-line title fills the card on its own
 
 # Bottom row: tag chips above a meta line, hostname opposite the meta line.
-# 34px rather than the eyeballed-at-full-size 30: cards render ~500px wide in
-# most timelines, and 30px did not survive the downscale.
-META_SIZE = 34
-SITE_SIZE = 32
-CHIP_SIZE = 24
-CHIP_H = 40
-CHIP_PAD_X = 18
-CHIP_GAP = 12
+# 34 base units rather than the eyeballed-at-full-size 30: cards render ~500px
+# wide in most timelines, and 30 did not survive the downscale.
+META_SIZE = 34 * SCALE
+SITE_SIZE = 32 * SCALE
+CHIP_SIZE = 26 * SCALE
+CHIP_H = 44 * SCALE
+CHIP_PAD_X = 18 * SCALE
+CHIP_GAP = 12 * SCALE
 CHIP_MAX = 3
-CHIP_META_GAP = 22
-BODY_BOTTOM_GAP = 32
+CHIP_META_GAP = 22 * SCALE
+BODY_BOTTOM_GAP = 32 * SCALE
 
 # Standalone sections that get their own card: <slug>/index.html in the built
 # output becomes og/<slug>.png, titled with the label and described from the
@@ -92,7 +106,8 @@ SECTION_CARDS = (("about", "About"), ("archive", "Archive"))
 
 # Cards are flat color with antialiased text, so they palette-quantize losslessly
 # to the eye. Only bother when one crosses the threshold — most land far under.
-MAX_BYTES = 150 * 1024
+# Scaled with the canvas: four times the pixels is roughly four times the file.
+MAX_BYTES = 150 * 1024 * SCALE * SCALE
 QUANTIZE_COLORS = 64
 
 # Tolerate minified HTML: `minify_html` drops the quotes around the type value
@@ -138,8 +153,16 @@ def lerp(a, b, t):
     return tuple(round(x + (y - x) * t) for x, y in zip(a, b))
 
 
-CHIP_BG = lerp(PAPER, ACCENT, 0.10)
+# A 10% accent tint reads as a chip on paper but disappears into a dark card, so
+# the fill is lifted until the pill has an edge without competing with the title.
+CHIP_BG = lerp(PAPER, ACCENT, 0.18)
 CHIP_FG = lerp(ACCENT, INK, 0.15)
+
+# --muted is tuned for body-adjacent text at reading size on a lit page. The
+# description and meta line are neither: they are small, they are the first
+# things a timeline downscale eats, and light-on-dark makes them look thinner
+# still. Lift them partway to --ink — dimmer than the title, but not dim.
+SECONDARY = lerp(MUTED, INK, 0.4)
 
 
 def text_w(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont) -> float:
@@ -169,7 +192,7 @@ def fit_title(draw, text, font_dir, name, avail_h, start=TITLE_MAX):
     eats into the body region: four 78px lines are taller than what a card with
     chips has left over. Returns (font, lines).
     """
-    for size in range(start, TITLE_MIN - 1, -2):
+    for size in range(start, TITLE_MIN - 1, -TITLE_STEP):
         font = load_font(font_dir, name, size)
         lines = wrap(draw, text, font, CONTENT_W)
         block_h = int(size * TITLE_LINE_RATIO) * len(lines)
@@ -253,7 +276,7 @@ def render_card(out_path, title, meta, font_dir, site="", description="", tags=(
     if desc_lines:
         y += DESC_GAP
         for line in desc_lines:
-            draw.text((MARGIN, y), line, font=desc_font, fill=MUTED, anchor="la")
+            draw.text((MARGIN, y), line, font=desc_font, fill=SECONDARY, anchor="la")
             y += desc_line_h
 
     if tags:
@@ -262,7 +285,7 @@ def render_card(out_path, title, meta, font_dir, site="", description="", tags=(
     # Meta line and site identity share a baseline at the bottom margin, so the
     # attribution travels with a card that gets reshared without its link.
     baseline = H - MARGIN
-    draw.text((MARGIN, baseline), meta, font=meta_font, fill=MUTED, anchor="ls")
+    draw.text((MARGIN, baseline), meta, font=meta_font, fill=SECONDARY, anchor="ls")
     if site:
         site_font = load_font(font_dir, "Cooper-Bold.ttf", SITE_SIZE)
         draw.text((W - MARGIN, baseline), site, font=site_font, fill=ACCENT, anchor="rs")
