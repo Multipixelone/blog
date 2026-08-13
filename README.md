@@ -72,6 +72,12 @@ channel "Finn Rutis - Home" and omit per-item categories):
 All four are advertised with `<link rel="alternate">` on the pages they belong
 to, so readers autodiscover them from the URL alone.
 
+Each carries an `<?xml-stylesheet?>` pointing at `static/feed.xsl`, so opening a
+feed in a browser renders a readable page — what a feed is, the URL to copy,
+recent posts — instead of a wall of XML. One stylesheet handles both formats.
+Feed readers ignore it entirely, and a browser without XSLT falls back to
+showing the raw XML.
+
 ## Comments
 
 There is no comment system. A post gets a comment section by pointing at its

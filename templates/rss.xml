@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="{{ get_url(path="feed.xsl", trailing_slash=false) }}"?>
 {#- Keep the XML declaration on line 1. Tera's trailing whitespace-trim marker
     is honoured on comments anywhere except at the very start of a template, so
     a comment above the declaration leaves a newline behind, pushes it off byte

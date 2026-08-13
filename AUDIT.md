@@ -95,7 +95,7 @@ The head is already better than most commercial sites. What's left:
 
 ## 4. Feeds
 
-- [ ] **Style the feeds with XSL.** Clicking the footer RSS icon today shows
+- [x] **Style the feeds with XSL.** Clicking the footer RSS icon today shows
       raw XML — the single most common "is this broken?" moment for non-feed
       users. An `<?xml-stylesheet?>` pointing at a small XSLT (see the
       "pretty-feed-v3" pattern) renders a human page explaining what a feed is,
