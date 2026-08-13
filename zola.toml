@@ -107,12 +107,12 @@ key_file = "pgp.asc"
 # A block without `url` renders as a plain (unlinked) card on the About page —
 # used for identifiers that have no public URL, like a Signal username.
 #
-# `verify = true` additionally spells the URL out in a visible list on the About
-# page. Every profile here is already rel="me", but IndieAuth providers only
-# resolve a two-way link — this site points at the profile, the profile points
-# back — and a human checking that needs to see the URL, not an icon. Only worth
-# setting on profiles that (a) link back here and (b) IndieLogin can actually
-# authenticate against, which today means GitHub and any Mastodon instance.
+# `verify = true` additionally emits an invisible <link rel="me"> in the <head>
+# of every page. Mastodon and IndieAuth providers only resolve a two-way link —
+# this site points at the profile, the profile points back — and they check
+# whatever URL the profile lists, usually the site root. Only worth setting on
+# profiles that (a) link back here and (b) can actually verify, which today
+# means GitHub and any Mastodon instance.
 [[extra.profiles]]
 name = "GitHub"
 handle = "@Multipixelone"

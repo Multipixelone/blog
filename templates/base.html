@@ -45,6 +45,13 @@
   {%- if webmention.endpoint %}<link rel="webmention" href="{{ webmention.endpoint }}">{% endif %}
   {%- if webmention.pingback %}<link rel="pingback" href="{{ webmention.pingback }}">{% endif %}
   {%- endif %}
+  {#- Invisible rel="me" identity links, on every page. Mastodon (and other
+      IndieAuth-style verifiers) fetch whatever URL the profile lists — usually
+      the site root — and look for a rel="me" link back to the profile. Opt in
+      per profile with `verify = true` in zola.toml. #}
+  {%- for profile in config.extra.profiles | default(value=[]) | filter(attribute="verify", value=true) %}
+  <link rel="me" href="{{ profile.url }}">
+  {%- endfor %}
   {#- The humans.txt convention: rel="author" is how anyone looking for it
       knows the file is there. #}
   <link rel="author" href="{{ get_url(path="humans.txt", trailing_slash=false) }}">
