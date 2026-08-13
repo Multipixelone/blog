@@ -9,8 +9,6 @@ taxonomies:
     - technology
     - llm
     - ethics
-extra:
-  cover_alt: "Social card for 'Fractured Mind: How much can I talk to my friends about my job'"
 ---
 I have completely lost the plot on what the normie take on LLMs is.
 

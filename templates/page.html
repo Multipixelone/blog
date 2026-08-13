@@ -14,6 +14,11 @@
 {% block og_url %}{{ page.permalink }}{% endblock og_url %}
 {% block og_description %}{{ page.description | default(value=config.description) }}{% endblock og_description %}
 {% block canonical %}{{ page.permalink }}{% endblock canonical %}
+{#- Two kinds of card, two kinds of alt. A post with its own `extra.cover`
+    shows a real image, so the alt has to be written by hand (`extra.cover_alt`)
+    — nothing here knows what that picture contains. The generated
+    og/<slug>.png card is only ever the title set in type, so its alt is
+    derived from the title and there is nothing to keep in sync by hand. #}
 {% block og_image %}
 {% if page.extra.cover %}
 <meta property="og:image" content="{{ page.extra.cover }}">
@@ -23,14 +28,15 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/png">
-<meta property="og:image:alt" content="{{ page.title }}">
+<meta property="og:image:alt" content="Social card for '{{ page.title }}'">
 {% endif %}
 {% endblock og_image %}
 {% block twitter_card %}summary_large_image{% endblock twitter_card %}
 {% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
 {% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock twitter_description %}
-{% block twitter_image %}{% if page.extra.cover %}<meta name="twitter:image" content="{{ page.extra.cover }}">{% else %}<meta name="twitter:image" content="{{ get_url(path="og/" ~ page.slug ~ ".png", trailing_slash=false) }}">{% endif %}
-<meta name="twitter:image:alt" content="{{ page.extra.cover_alt | default(value=page.title) }}">{% endblock twitter_image %}
+{% block twitter_image %}{% if page.extra.cover %}<meta name="twitter:image" content="{{ page.extra.cover }}">
+<meta name="twitter:image:alt" content="{{ page.extra.cover_alt | default(value=page.title) }}">{% else %}<meta name="twitter:image" content="{{ get_url(path="og/" ~ page.slug ~ ".png", trailing_slash=false) }}">
+<meta name="twitter:image:alt" content="Social card for '{{ page.title }}'">{% endif %}{% endblock twitter_image %}
 
 {% block article_meta %}
   <meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">

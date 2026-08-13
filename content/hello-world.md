@@ -11,8 +11,6 @@ taxonomies:
     - flakes
     - meta
     - project
-extra:
-  cover_alt: "Social card for 'Flakey blog: or, why Nix Flakes are the only deployment system I hope to ever use again'"
 ---
 
 This is my long overdue blog where I'll post notes, projects, and things that might eventually be helpful to future surfers of the net.

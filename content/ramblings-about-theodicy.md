@@ -8,8 +8,6 @@ taxonomies:
   tags:
     - theology
     - personal
-extra:
-  cover_alt: "Social card for 'Ramblings About Theodicy'"
 ---
 
 From my childhood, I had a pretty weird relationship with religion. My mom had trauma, and my dad is a pretty scientifically minded fella. They always _said_ that if I ever got into God or Religion, that they'd accept it, but I wonder how truthful that is.

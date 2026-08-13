@@ -10,7 +10,6 @@ taxonomies:
     - llm
     - project
 extra:
-  cover_alt: "Social card for 'What a resume generator taught me about making LLM output reliable'"
   mastodon_status: "https://pony.social/@tunnelmaker/117089426226689054"
 ---
 
