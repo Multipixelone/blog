@@ -189,7 +189,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
       and the comments show you've already been bitten by byte-level XML issues.
       `xmllint --noout` plus the W3C feed validator's CLI cousin
       (`feedvalidator`/`flycheck` via a Python step) would lock in correctness.
-- [ ] **OG card visual regression.** Store a reference render of one card and
+- [x] **OG card visual regression.** Store a reference render of one card and
       compare with a perceptual hash in CI — font or Pillow bumps in nixpkgs can
       shift rendering without failing anything today.
 - [x] **Lighthouse URL coverage.** The audit hits `/`, one post, and `/tags/` —

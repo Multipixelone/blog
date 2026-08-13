@@ -18,8 +18,8 @@ sections, all of which otherwise fall back to the generic og.png.
 
 All-Cooper by necessity: Sabon Next / PragmataPro are proprietary and absent from
 the sandboxed build, so only the committed Cooper family is available. Pillow needs
-TTF/OTF, so the caller decompresses Cooper woff2 -> ttf (woff2_decompress) first and
-passes the directory via --font-dir.
+TTF/OTF, so the woff2 faces are decompressed (woff2_decompress) into a temp
+directory first; pass --font-dir to reuse one that already exists.
 
 Output: <out>/og/<slug>.png per post, <out>/og/tags/<term>.png per tag,
 <out>/og/tags.png, one per entry in SECTION_CARDS, plus a site-wide
@@ -34,7 +34,10 @@ import argparse
 import html
 import json
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import unicodedata
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -107,6 +110,23 @@ JSONLD_RE = re.compile(
 # verification pass below a no-op.
 META_TAG_RE = re.compile(r"<meta\b([^>]*)>", re.IGNORECASE)
 ATTR_RE = re.compile(r"""([\w:.-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>=`]+))""")
+
+
+# Cooper is the only build-available family: Sabon Next and PragmataPro are
+# proprietary and absent from the sandboxed build. It ships as woff2 and Pillow
+# needs TTF/OTF, hence the decompress step.
+COOPER_FACES = ("Cooper-Black", "Cooper-Bold", "Cooper-Regular")
+COOPER_SOURCE = Path("static/fonts/cooper")
+
+
+def prepare_fonts(dest: Path, source: Path = COOPER_SOURCE) -> Path:
+    """Decompress the committed Cooper woff2 faces into `dest` as TTF."""
+    dest.mkdir(parents=True, exist_ok=True)
+    for face in COOPER_FACES:
+        copy = dest / f"{face}.woff2"
+        shutil.copy(source / f"{face}.woff2", copy)
+        subprocess.run(["woff2_decompress", str(copy)], check=True)
+    return dest
 
 
 def load_font(font_dir: Path, name: str, size: int) -> ImageFont.FreeTypeFont:
@@ -346,7 +366,11 @@ def verify_cards(out: Path, base_url: str) -> list[str]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True, type=Path, help="built site directory")
-    ap.add_argument("--font-dir", required=True, type=Path, help="dir with Cooper-*.ttf")
+    ap.add_argument(
+        "--font-dir",
+        type=Path,
+        help="dir with Cooper-*.ttf; decompressed into a temp dir when omitted",
+    )
     ap.add_argument("--title", required=True, help="site title for the default card")
     ap.add_argument(
         "--base-url",
@@ -355,8 +379,15 @@ def main():
     )
     args = ap.parse_args()
 
-    out, fonts = args.out, args.font_dir
+    out = args.out
     site = urlsplit(args.base_url).netloc.removeprefix("www.")
+
+    scratch = None
+    if args.font_dir:
+        fonts = args.font_dir
+    else:
+        scratch = tempfile.TemporaryDirectory()
+        fonts = prepare_fonts(Path(scratch.name))
 
     # Posts.
     tag_counts: dict[str, int] = {}

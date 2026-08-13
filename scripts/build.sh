@@ -24,18 +24,9 @@ fi
 
 zola build --base-url "$base_url" --output-dir "$out"
 
-# Pillow needs TTF/OTF and Cooper ships as woff2. Sabon Next and PragmataPro are
-# proprietary and absent from the sandboxed build, so the cards are all-Cooper.
-fonts=$(mktemp -d)
-trap 'rm -rf "$fonts"' EXIT
-for face in Cooper-Black Cooper-Bold Cooper-Regular; do
-  cp "static/fonts/cooper/$face.woff2" "$fonts/"
-  woff2_decompress "$fonts/$face.woff2"
-done
-
+# Social cards. The generator handles the woff2 -> ttf step Pillow needs.
 python3 scripts/gen_og_cards.py \
-  --out "$out" --font-dir "$fonts" \
-  --title "Finn Rutis" --base-url "$base_url"
+  --out "$out" --title "Finn Rutis" --base-url "$base_url"
 
 # Search index, built from the finished HTML so it can't disagree with it.
 pagefind --site "$out"

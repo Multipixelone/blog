@@ -53,7 +53,10 @@ The Nix flake runs these checks automatically:
 - **feed validity** — `scripts/check_feeds.py`, plus an XSL render of every feed
 - **accessibility** — pa11y-ci over every page in the sitemap
 - **Lighthouse** — one URL per template; a11y and SEO block, perf warns
-- **social cards** — the build fails if a page names a card that wasn'''t generated
+- **social cards** — the build fails if a page names a card that wasn'''t
+  generated, and `scripts/check_og_render.py` compares a fixed reference render
+  against `tests/og-reference.png` so a Pillow or font bump can'''t change how
+  cards look unnoticed (`--update` adopts an intended change)
 
 Pull requests also get the built site as a downloadable artifact, linked from a
 comment on the PR. A weekly `Maintenance` workflow re-checks external links

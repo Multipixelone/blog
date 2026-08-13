@@ -35,6 +35,10 @@ jobs:
       # Catches the class of bug where a post ships another post's metadata.
       - name: Front-matter consistency
         run: nix develop --command python3 scripts/check_frontmatter.py content
+      # Nothing else in CI looks at the cards, so a Pillow/FreeType/font bump
+      # could change how they render without failing anything.
+      - name: Social card render
+        run: nix develop --command python3 scripts/check_og_render.py
 
   audit:
     name: audit
