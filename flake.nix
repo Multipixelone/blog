@@ -62,9 +62,9 @@
           default = pkgs.mkShellNoCC {
             packages = [
               pkgs.zola
-              # feedparser and libxslt are for scripts/check_feeds.py, which CI
-              # runs against the built output.
-              (pkgs.python3.withPackages (ps: [ ps.pillow ps.feedparser ]))
+              # pillow: OG cards. feedparser + libxslt: scripts/check_feeds.py.
+              # pyyaml: scripts/check_frontmatter.py reads YAML front matter.
+              (pkgs.python3.withPackages (ps: [ ps.pillow ps.feedparser ps.pyyaml ]))
               pkgs.woff2
               pkgs.pagefind
               pkgs.libxslt

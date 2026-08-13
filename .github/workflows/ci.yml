@@ -32,6 +32,9 @@ jobs:
         run: nix develop --command zola check
       - name: Spell check
         run: nix run nixpkgs#typos -- .
+      # Catches the class of bug where a post ships another post's metadata.
+      - name: Front-matter consistency
+        run: nix develop --command python3 scripts/check_frontmatter.py content
 
   audit:
     name: audit
