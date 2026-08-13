@@ -72,6 +72,10 @@ channel "Finn Rutis - Home" and omit per-item categories):
 All four are advertised with `<link rel="alternate">` on the pages they belong
 to, so readers autodiscover them from the URL alone.
 
+Entries carry both a summary and the full post text — Atom as `<summary>` plus
+`<content>`, RSS as `<description>` plus `<content:encoded>` — so a reader can
+skim or read without being made to click through.
+
 Each carries an `<?xml-stylesheet?>` pointing at `static/feed.xsl`, so opening a
 feed in a browser renders a readable page — what a feed is, the URL to copy,
 recent posts — instead of a wall of XML. One stylesheet handles both formats.

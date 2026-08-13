@@ -101,7 +101,7 @@ The head is already better than most commercial sites. What's left:
       "pretty-feed-v3" pattern) renders a human page explaining what a feed is,
       listing recent posts, with the copyable URL. Works for both Atom and RSS
       templates since they're already local overrides.
-- [ ] **Consider full-content feeds.** Entries are summary-only by design
+- [x] **Consider full-content feeds.** Entries are summary-only by design
       ("mirrors the homepage"). Feed readers are your most loyal audience, and
       making them click through is a tax that mostly sheds readers. If you want a
       middle path: full `<content>` plus the summary — Atom supports both on one

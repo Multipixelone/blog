@@ -7,12 +7,14 @@
 
     RSS 2.0 feed, the counterpart to templates/atom.xml for readers that only
     speak RSS. Adapted from Zola's built-in templates/rss.xml with the same
-    three changes (no " - Home" suffix, "#tag" titles for tag feeds, tags as
-    per-item categories), plus a channel <image> and an isPermaLink guid.
+    four changes (no " - Home" suffix, "#tag" titles for tag feeds, tags as
+    per-item categories, full text alongside the summary), plus a channel
+    <image> and an isPermaLink guid.
 
     Dates are RFC 822 per the RSS spec, not RFC 3339. Tera autoescapes .xml
     templates, so bare `{{ }}` is safe and only pre-escaped URLs need `| safe`. -#}
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<rss xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
     <channel>
       <title>{{ config.title }}{%- if term %} — #{{ term.name }}{%- endif %}</title>
       <link>
@@ -50,7 +52,13 @@
           {%- for tag in page.taxonomies.tags | default(value=[]) %}
           <category>{{ tag }}</category>
           {%- endfor %}
+          {#- RSS has no second body element of its own, so the full text goes
+              in content:encoded — the de facto standard every reader supports —
+              and <description> stays the summary for the ones that don't. -#}
           <description xml:base="{{ page.permalink | escape_xml | safe }}">{% if page.summary %}{{ page.summary }}{% else %}{{ page.content }}{% endif %}</description>
+          {%- if page.summary %}
+          <content:encoded xml:base="{{ page.permalink | escape_xml | safe }}">{{ page.content }}</content:encoded>
+          {%- endif %}
       </item>
       {%- endfor %}
     </channel>

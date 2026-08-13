@@ -5,11 +5,11 @@
     a comment above the declaration leaves a newline behind, pushes it off byte
     0, and every feed reader rejects the result as malformed.
 
-    Atom feed. Adapted from Zola's built-in templates/atom.xml, with three
+    Atom feed. Adapted from Zola's built-in templates/atom.xml, with four
     changes: the channel title drops the " - Home" suffix the built-in appends
     from the section title, tag feeds are titled "#tag" to match the tag pages,
-    and entries carry their tags as categories. Entry bodies stay summary-first
-    (every post here sets `<!-- more -->`), so the feed mirrors the homepage.
+    entries carry their tags as categories, and each entry ships both its
+    summary and its full content.
 
     Rendered for the homepage section and for every tag; `term` is only defined
     in the latter. Tera autoescapes .xml templates, so bare `{{ }}` is safe and
@@ -51,11 +51,13 @@
         {%- for tag in page.taxonomies.tags | default(value=[]) %}
         <category term="{{ tag }}"/>
         {%- endfor %}
+        {#- Atom allows both on one entry, so readers get the choice: a
+            summary for skimming a river of posts, the full text for actually
+            reading. Nobody has to click through to find out if they care. -#}
         {%- if page.summary %}
         <summary type="html">{{ page.summary }}</summary>
-        {%- else %}
-        <content type="html" xml:base="{{ page.permalink | escape_xml | safe }}">{{ page.content }}</content>
         {%- endif %}
+        <content type="html" xml:base="{{ page.permalink | escape_xml | safe }}">{{ page.content }}</content>
     </entry>
     {%- endfor %}
 </feed>
