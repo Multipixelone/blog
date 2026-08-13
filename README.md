@@ -72,6 +72,27 @@ channel "Finn Rutis - Home" and omit per-item categories):
 All four are advertised with `<link rel="alternate">` on the pages they belong
 to, so readers autodiscover them from the URL alone.
 
+## Comments
+
+There is no comment system. A post gets a comment section by pointing at its
+announcement thread on Mastodon:
+
+```yaml
+extra:
+  mastodon_status: "https://pony.social/@tunnelmaker/113456789012345678"
+```
+
+Without the key the section doesn't render at all. With it, the page ships a
+plain link to the thread, and a script upgrades that in place by reading the
+thread's public replies from the instance's API (`/api/v1/statuses/:id` and
+`/api/v1/statuses/:id/context`). Reply bodies are rebuilt node by node against
+a tag allowlist rather than assigned to `innerHTML`, content warnings stay
+collapsed, and avatars are not loaded — they would mean image requests to every
+instance a replier happens to be on.
+
+Moderation is whatever the instance already does: delete a reply there and it
+disappears here on the next load.
+
 ## Build provenance
 
 The footer carries a "built from this repo at `<sha>`" badge linking to the exact

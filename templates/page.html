@@ -132,4 +132,163 @@
   </nav>
   {% endif %}
 </article>
+
+{#- Comments, when a post has an announcement thread. Set the toot's URL in
+    front matter:
+
+      extra:
+        mastodon_status: "https://pony.social/@tunnelmaker/113…"
+
+    The zero-JS baseline is the link below; the script upgrades it in place by
+    reading the thread's public replies from the instance's API. No comment
+    infrastructure, no database, and moderation is whatever the instance and
+    the block list already do.
+
+    Avatars are deliberately not rendered: they would pull images from every
+    instance a replier happens to be on, which is a pile of third-party
+    requests and a reader-IP leak on a site that otherwise makes none. #}
+{%- if page.extra.mastodon_status %}
+<section class="comments" id="comments" aria-labelledby="comments-heading"
+         data-status="{{ page.extra.mastodon_status }}">
+  <h2 id="comments-heading">Comments</h2>
+  <p class="comments-intro">
+    This post has <a href="{{ page.extra.mastodon_status }}" rel="nofollow">a thread on
+    Mastodon</a>. Reply there with any fediverse account and it shows up here.
+  </p>
+  <p class="comments-count" hidden></p>
+  <ol class="comment-list" hidden></ol>
+</section>
+<script>
+// Mastodon thread -> comments. Two public GETs against the instance the toot
+// lives on: the status (for the counts) and its context (for the replies).
+(function () {
+  var root = document.getElementById('comments');
+  if (!root || !window.fetch || !window.DOMParser) return;
+
+  var status;
+  try { status = new URL(root.dataset.status); } catch (e) { return; }
+  var id = status.pathname.split('/').filter(Boolean).pop();
+  if (!id) return;
+  var api = status.origin + '/api/v1/statuses/' + encodeURIComponent(id);
+
+  var list = root.querySelector('.comment-list');
+  var count = root.querySelector('.comments-count');
+
+  // Reply bodies are HTML from a remote server, so they are rebuilt node by
+  // node against an allowlist rather than assigned to innerHTML. Anything not
+  // on the list is dropped and its children are kept, so text always survives.
+  var ALLOWED = {
+    P: 1, BR: 1, A: 1, SPAN: 1, EM: 1, I: 1, STRONG: 1, B: 1, DEL: 1,
+    CODE: 1, PRE: 1, BLOCKQUOTE: 1, UL: 1, OL: 1, LI: 1
+  };
+
+  function sanitize(html) {
+    var doc = new DOMParser().parseFromString(html || '', 'text/html');
+    var out = document.createDocumentFragment();
+    (function walk(src, dst) {
+      Array.prototype.forEach.call(src.childNodes, function (node) {
+        if (node.nodeType === 3) {
+          dst.appendChild(document.createTextNode(node.nodeValue));
+          return;
+        }
+        if (node.nodeType !== 1) return;
+        if (!ALLOWED[node.tagName]) { walk(node, dst); return; }
+        var el = document.createElement(node.tagName.toLowerCase());
+        if (node.tagName === 'A') {
+          var href = node.getAttribute('href') || '';
+          if (/^https?:\/\//i.test(href)) {
+            el.setAttribute('href', href);
+            el.setAttribute('rel', 'nofollow ugc noopener');
+          }
+        }
+        walk(node, el);
+        dst.appendChild(el);
+      });
+    })(doc.body, out);
+    return out;
+  }
+
+  function link(href, text, className) {
+    var a = document.createElement('a');
+    a.href = href;
+    a.rel = 'nofollow ugc noopener';
+    a.className = className;
+    a.textContent = text;
+    return a;
+  }
+
+  function render(reply) {
+    var account = reply.account || {};
+    var li = document.createElement('li');
+    li.className = 'comment';
+
+    var meta = document.createElement('p');
+    meta.className = 'comment-meta';
+    meta.appendChild(link(
+      account.url || reply.url,
+      account.display_name || account.username || 'someone',
+      'comment-author'
+    ));
+    if (account.acct) {
+      var handle = document.createElement('span');
+      handle.className = 'comment-handle';
+      handle.textContent = '@' + account.acct;
+      meta.appendChild(handle);
+    }
+    if (reply.created_at) {
+      var when = document.createElement('time');
+      when.dateTime = reply.created_at;
+      when.textContent = reply.created_at.slice(0, 10);
+      meta.appendChild(when);
+    }
+    li.appendChild(meta);
+
+    var body = document.createElement('div');
+    body.className = 'comment-body';
+    body.appendChild(sanitize(reply.content));
+
+    // Honour content warnings rather than flattening them away.
+    if (reply.spoiler_text) {
+      var details = document.createElement('details');
+      var summary = document.createElement('summary');
+      summary.textContent = reply.spoiler_text;
+      details.appendChild(summary);
+      details.appendChild(body);
+      li.appendChild(details);
+    } else {
+      li.appendChild(body);
+    }
+    return li;
+  }
+
+  function json(url) {
+    return fetch(url, { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+  }
+
+  function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+  Promise.all([json(api), json(api + '/context')]).then(function (results) {
+    var post = results[0];
+    var replies = (results[1] && results[1].descendants) || [];
+
+    if (post) {
+      count.textContent = [
+        plural(replies.length, 'reply', 'replies'),
+        plural(post.reblogs_count || 0, 'boost', 'boosts'),
+        plural(post.favourites_count || 0, 'favourite', 'favourites')
+      ].join('  ·  ');
+      count.hidden = false;
+    }
+
+    if (!replies.length) return;
+    // Flat, oldest first: threads here are short enough that indenting by
+    // in_reply_to_id would cost more than it explains.
+    replies.forEach(function (reply) { list.appendChild(render(reply)); });
+    list.hidden = false;
+  });
+})();
+</script>
+{%- endif %}
 {% endblock %}

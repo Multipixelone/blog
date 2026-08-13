@@ -752,6 +752,92 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   display: inline;
 }
 
+/* ------------------------------------------------------------------
+   Comments — replies to the post's Mastodon thread, fetched client-side
+   by the script in templates/page.html. Everything below the intro line
+   is absent without JS, so it all has to be additive.
+   ------------------------------------------------------------------ */
+.comments {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.comments-intro {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.comments-count {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+}
+
+.comment-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 1.75rem 0 0;
+}
+
+.comment {
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+  background: var(--paper-shade);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+}
+
+.comment-author {
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.comment-author:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.comment-handle,
+.comment-meta time {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.comment-meta time {
+  margin-left: auto;
+}
+
+.comment-body > :first-child {
+  margin-top: 0;
+}
+
+.comment-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* Content warnings stay collapsed until the reader opens them. */
+.comment summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
 /* Tags — inline clickable cross-links on posts and tag listing pages. */
 .tags {
   margin-top: 1.5rem;

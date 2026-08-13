@@ -46,7 +46,7 @@ cheap and visible.
       carries `<meta name="fediverse:creator" content="@tunnelmaker@pony.social">`.
       One line in `base.html`; derive it from the Mastodon entry in
       `config.extra.profiles` so it can't drift.
-- [ ] **Mastodon-thread comments.** The classic static-site pattern: add an
+- [x] **Mastodon-thread comments.** The classic static-site pattern: add an
       optional `extra.mastodon_status` front-matter key holding the toot URL for a
       post's announcement; the template renders "Discuss on Mastodon" (zero JS) or,
       fancier, fetches the thread's replies client-side from the pony.social API
