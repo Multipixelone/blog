@@ -13,26 +13,26 @@ section.
 The generated cards (accent band, Cooper Black title, meta line) are clean and
 on-brand, but they're anonymous — nothing on the card says where it came from.
 
-- [ ] **Put the site identity on the card.** Add `blog.finnrut.is` (or a small
+- [x] **Put the site identity on the card.** Add `blog.finnrut.is` (or a small
       wordmark) in the bottom-right corner, opposite the meta line. When a card
       gets screenshotted and reshared without the link, the attribution should
       travel with it. One `draw.text` anchored `rb` in `scripts/gen_og_cards.py`.
-- [ ] **Use the description.** The JSON-LD the script already parses contains
+- [x] **Use the description.** The JSON-LD the script already parses contains
       `description`; a 1–2 line muted summary under the title would make cards for
       short titles (lots of empty middle space today) feel composed instead of
       sparse. Wrap at ~2 lines, drop it when the title needs 4 lines.
-- [ ] **Tag chips.** `keywords` is also already in the JSON-LD. Two or three
+- [x] **Tag chips.** `keywords` is also already in the JSON-LD. Two or three
       small rounded-rect chips (`#nix #flakes`) near the meta line add texture and
       say what the post is about at a glance.
-- [ ] **Per-tag and section cards.** Tag pages, `/tags/`, and `/about/` all
+- [x] **Per-tag and section cards.** Tag pages, `/tags/`, and `/about/` all
       fall back to the generic `og.png`. The script already loops the built output —
       render a card per taxonomy term (`#nix — 3 posts`) and one for About. Tag
       URLs get shared more than you'd think when someone says "their Nix posts".
-- [ ] **A card-regression check in CI.** The script only warns when _zero_
+- [x] **A card-regression check in CI.** The script only warns when _zero_
       cards are generated. Assert instead that every `BlogPosting` page produced
       `og/<slug>.png`, and fail the build otherwise — a silent regex mismatch after
       a Zola upgrade would currently ship posts with 404 card URLs.
-- [ ] **Larger meta line.** At preview sizes (~500px wide in most timelines)
+- [x] **Larger meta line.** At preview sizes (~500px wide in most timelines)
       the 30px meta line is on the edge of legibility. 34–36px still reads as
       "muted" but survives the downscale.
 
@@ -200,7 +200,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 
 - [x] Two posts (`fractured-mind.md`, `ramblings-about-theodicy.md`) have
       uncommitted local modifications — commit or stash so deploys match the tree.
-- [ ] `--base-url` flag in `gen_og_cards.py` is declared "(unused)" — drop it
+- [x] `--base-url` flag in `gen_og_cards.py` is declared "(unused)" — drop it
       or use it, half-dead flags confuse future-you.
 - [ ] `author_twitter = "@Multipixelone"` powers `twitter:site`/`creator`;
       if X stops mattering to you, the tags are harmless but the profile row +

@@ -4,6 +4,17 @@
 {% block description %}Posts tagged "{{ term.name }}".{% endblock %}
 {% block og_title %}{{ term.name }} — {{ config.title }}{% endblock og_title %}
 {% block og_description %}Posts tagged "{{ term.name }}".{% endblock og_description %}
+{# Per-term card rendered by scripts/gen_og_cards.py; the script skips terms it
+   can't find a built page for, and the build fails if a page here points at a
+   card that was never written. #}
+{% block og_image %}
+<meta property="og:image" content="{{ config.base_url }}og/tags/{{ term.slug }}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Social card for the #{{ term.name }} tag">
+{% endblock og_image %}
+{% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og/tags/{{ term.slug }}.png">
+<meta name="twitter:image:alt" content="Social card for the #{{ term.name }} tag">{% endblock twitter_image %}
 {# Tera scopes `set` to the block it's in — a top-level one wouldn't reach
    either block — so the feed base is derived once per block that needs it. #}
 {% block feed %}{% set feed_base = term.permalink | trim_end_matches(pat='/') | safe %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} — #{{ term.name }} (Atom)" href="{{ feed_base }}/atom.xml">

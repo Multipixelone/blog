@@ -4,6 +4,14 @@
 {% block description %}All tags used on {{ config.title }}.{% endblock %}
 {% block og_title %}Tags — {{ config.title }}{% endblock og_title %}
 {% block og_description %}All tags used on {{ config.title }}.{% endblock og_description %}
+{% block og_image %}
+<meta property="og:image" content="{{ config.base_url }}og/tags.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Social card for the tag index">
+{% endblock og_image %}
+{% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og/tags.png">
+<meta name="twitter:image:alt" content="Social card for the tag index">{% endblock twitter_image %}
 
 {% block content %}
 <h1>Tags</h1>
