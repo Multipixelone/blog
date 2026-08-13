@@ -136,24 +136,11 @@
     stops at three. O(tags x posts) with both numbers tiny, and the resulting
     order is obvious by construction. #}
 {%- if page.taxonomies and page.taxonomies.tags %}
-{#- Candidates come from the taxonomy, not from the section: Zola leaves
-    `section.pages` empty on a paginated section, and the homepage is
-    paginated. Every post here is tagged, so the taxonomy covers all of them. #}
-{%- set_global candidates = [] %}
-{%- set_global candidate_urls = [] %}
-{%- set tags_taxonomy = get_taxonomy(kind="tags") %}
-{%- for term in tags_taxonomy.items %}
-  {%- for post in term.pages %}
-    {%- if post.permalink not in candidate_urls %}
-      {%- set_global candidates = candidates | concat(with=post) %}
-      {%- set_global candidate_urls = candidate_urls | concat(with=post.permalink) %}
-    {%- endif %}
-  {%- endfor %}
-{%- endfor %}
+{%- set blog = get_section(path="_index.md") %}
 {%- set_global related = [] %}
 {%- set_global related_urls = [] %}
 {%- for needed in [5, 4, 3, 2, 1] %}
-  {%- for candidate in candidates %}
+  {%- for candidate in blog.pages %}
     {%- if related | length < 3 and candidate.permalink != page.permalink and candidate.permalink not in related_urls %}
       {#- Tera won't take a filter on the right of `in`, so bind it first. #}
       {%- set candidate_tags = candidate.taxonomies.tags | default(value=[]) %}
