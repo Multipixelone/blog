@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% import "macros/jsonld.html" as jsonld %}
+{% import "macros/fonts.html" as fonts %}
+
+{#- A post that opens on a code block otherwise gets a visible mono swap partway
+    through first paint. Zola has no "has code blocks" flag, but the rendered
+    content is right here and Zola's highlighter marks every block .z-code. -#}
+{% block preload %}{% if page.content is containing("z-code") %}{{ fonts::mono_preload() }}{% endif %}{% endblock preload %}
 
 {% block title %}{{ page.title }} — {{ config.title }}{% endblock title %}
 {% block description %}{{ page.description | default(value=config.description) }}{% endblock description %}

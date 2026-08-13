@@ -119,12 +119,12 @@ Fonts are the whole story here; the rest of the page is effectively free.
       (fonttools) with `--unicodes=U+0000-00FF,U+2013-2014,U+2018-201D,U+2026` and
       layout-feature pruning typically cuts serif woff2s by 50–70%. This is the
       biggest byte win available on the site.
-- [ ] **Load PragmataPro styles on demand, or drop unused faces.** All four
+- [x] **Load PragmataPro styles on demand, or drop unused faces.** All four
       mono styles are declared site-wide, but pages without code blocks never use
       them (and `font-display: swap` means they still may be fetched depending on
       content). Verify with DevTools coverage which weights actually appear —
       bold-italic mono is almost certainly never rendered.
-- [ ] **Preload the mono font on post pages only.** You preload Sabon Regular
+- [x] **Preload the mono font on post pages only.** You preload Sabon Regular
       globally (good). Posts that open with a code block get a late mono swap;
       a conditional preload in `page.html` when the post has code would remove it.
       (Zola doesn't expose "has code blocks" directly — a cheap heuristic is a

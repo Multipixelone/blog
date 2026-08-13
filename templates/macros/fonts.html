@@ -1,0 +1,23 @@
+{#- Font preloads.
+
+    The href has to byte-match the @font-face url() in static/style.css exactly
+    — including the %20 escapes in the Sabon filenames — or the browser treats
+    them as two resources and downloads the font twice. That is why these are
+    literal URLs rather than get_url() calls: the stylesheet points at R2, not
+    at this site, so there is nothing for Zola to resolve. Changing a font URL
+    means changing it in both places.
+
+    Only faces that are render-critical on the page in question belong here.
+    Everything else stays lazy: an @font-face declaration costs nothing until a
+    glyph actually needs it. -#}
+
+{# The body serif, needed by every page before first paint. #}
+{% macro serif_preload() %}
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/Sabon%20Next%20Regular.woff2" crossorigin>
+{%- endmacro serif_preload %}
+
+{# Regular mono. Worth preloading only where a code block is above or near the
+   fold, otherwise it is a download nobody is waiting on. #}
+{% macro mono_preload() %}
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/PragmataPro_Mono_Regular_ligatures_0827.woff2" crossorigin>
+{%- endmacro mono_preload %}

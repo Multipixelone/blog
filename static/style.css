@@ -115,7 +115,19 @@
 
 /* PragmataPro Mono Liga — served from Cloudflare R2 with CORS locked to
    blog.finnrut.is (FSD Web Site license §7.1 access control). local() first
-   so users who own the desktop font skip the download. */
+   so users who own the desktop font skip the download.
+
+   All four styles stay declared. An @font-face declaration is lazy: the browser
+   fetches a face only when a glyph on the page actually needs it, so declaring
+   a face nobody hits costs zero bytes. Checked against the built output rather
+   than assumed — the Gruvbox syntax theme reaches regular everywhere, bold via
+   .z-entity.z-name and italic via .z-invalid.z-illegal, both of which appear in
+   posts today. No rule sets both, so bold-italic is currently unreachable; it
+   stays declared so that a future theme rule gets the real face instead of a
+   synthesised slant, at no cost until then.
+
+   templates/macros/fonts.html preloads the regular face, but only on pages
+   whose content actually contains a code block. */
 @font-face {
   font-family: "PragmataPro Mono Liga";
   src:

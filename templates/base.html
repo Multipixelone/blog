@@ -1,14 +1,16 @@
 {% import "macros/icons.html" as icons %}
+{% import "macros/fonts.html" as fonts %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Warm the R2 font origin and preload the render-critical body serif.
-       The preload href must byte-match the @font-face url() (incl. %20) or
-       the font downloads twice. -->
+  {#- Warm the R2 font origin, then preload the body serif every page needs.
+      Templates whose page leads with monospace add to this via the `preload`
+      block; see templates/macros/fonts.html for why the URLs are literal. -#}
   <link rel="preconnect" href="https://fonts.finnrut.is" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/Sabon%20Next%20Regular.woff2" crossorigin>
+  {{ fonts::serif_preload() }}
+  {%- block preload %}{% endblock preload %}
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
   <link rel="canonical" href="{% block canonical %}{{ current_url | default(value=config.base_url) }}{% endblock canonical %}">
