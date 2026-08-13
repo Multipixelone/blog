@@ -77,6 +77,22 @@
     </li>
   </ul>
 
+  {#- Spelled-out rel="me" links. The icon row above already carries rel="me",
+      but IndieAuth is a two-way check — this page points at the profile, the
+      profile points back — and anyone verifying that by hand needs to read the
+      URL. Opt in per profile with `verify = true` in zola.toml. #}
+  {%- set verified = config.extra.profiles | default(value=[]) | filter(attribute="verify", value=true) %}
+  {%- if verified | length > 0 %}
+  <p class="rel-me">
+    These are <code>rel="me"</code> links and each profile links back here, so
+    <a href="https://indielogin.com/">IndieLogin</a> can sign me in as
+    <code>{{ config.base_url | trim_start_matches(pat="https://") | trim_end_matches(pat="/") }}</code>:
+    {%- for profile in verified %}
+    <a class="u-url" rel="me" href="{{ profile.url }}">{{ profile.url | trim_start_matches(pat="https://") | trim_end_matches(pat="/") }}</a>{% if not loop.last %},{% else %}.{% endif %}
+    {%- endfor %}
+  </p>
+  {%- endif %}
+
   <h2 id="pgp">PGP</h2>
   <p>
     If you want to send me something private, or check a signature of mine, my

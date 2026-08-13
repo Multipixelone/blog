@@ -83,12 +83,20 @@ key_file = "pgp.asc"
 # rss, commit, download; anything else falls back to a generic link glyph).
 # A block without `url` renders as a plain (unlinked) card on the About page —
 # used for identifiers that have no public URL, like a Signal username.
+#
+# `verify = true` additionally spells the URL out in a visible list on the About
+# page. Every profile here is already rel="me", but IndieAuth providers only
+# resolve a two-way link — this site points at the profile, the profile points
+# back — and a human checking that needs to see the URL, not an icon. Only worth
+# setting on profiles that (a) link back here and (b) IndieLogin can actually
+# authenticate against, which today means GitHub and any Mastodon instance.
 [[extra.profiles]]
 name = "GitHub"
 handle = "@Multipixelone"
 url = "https://github.com/Multipixelone"
 icon = "github"
 footer = true
+verify = true
 
 [[extra.profiles]]
 name = "Mastodon"
@@ -96,6 +104,7 @@ handle = "@tunnelmaker@pony.social"
 url = "https://pony.social/@tunnelmaker"
 icon = "mastodon"
 footer = true
+verify = true
 
 [[extra.profiles]]
 name = "X"

@@ -988,6 +988,25 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   color: var(--accent);
 }
 
+/* Spelled-out rel="me" links under the icon grid. Deliberately quiet — it is
+   a machine-verification footnote that happens to be readable. */
+.rel-me {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.rel-me code {
+  font-size: 0.85em;
+}
+
+.rel-me a[rel="me"] {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
 /* ------------------------------------------------------------------
    PGP: fingerprint callout, key download, armored key block
    ------------------------------------------------------------------ */
