@@ -21,11 +21,21 @@
   <ul class="elsewhere" role="list">
     {%- for profile in config.extra.profiles | default(value=[]) %}
     <li>
+      {#- A profile without `url` is an identifier with no public page (e.g. a
+          Signal username) — same card, just not a link. #}
+      {%- if profile.url %}
       <a href="{{ profile.url }}" rel="me">
         {{ icons::icon(name=profile.icon) }}
         <span class="elsewhere-name">{{ profile.name }}</span>
         {%- if profile.handle %}<span class="elsewhere-handle">{{ profile.handle }}</span>{% endif %}
       </a>
+      {%- else %}
+      <span class="elsewhere-static">
+        {{ icons::icon(name=profile.icon) }}
+        <span class="elsewhere-name">{{ profile.name }}</span>
+        {%- if profile.handle %}<span class="elsewhere-handle">{{ profile.handle }}</span>{% endif %}
+      </span>
+      {%- endif %}
     </li>
     {%- endfor %}
     <li>

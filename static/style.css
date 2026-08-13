@@ -912,7 +912,8 @@ article:has(> h1) > p:first-of-type::first-letter {
   margin-bottom: 0;
 }
 
-.elsewhere a {
+.elsewhere a,
+.elsewhere-static {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -941,6 +942,12 @@ article:has(> h1) > p:first-of-type::first-letter {
 .elsewhere a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* Unlinked card (a profile with no public URL, e.g. a Signal username):
+   same chrome as the links, none of the hover affordance. */
+.elsewhere-static {
+  cursor: default;
 }
 
 .elsewhere-name {

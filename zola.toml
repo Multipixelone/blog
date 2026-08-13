@@ -79,8 +79,10 @@ key_file = "pgp.asc"
 # `footer = true`) and as the About page's "Elsewhere" list. To add somewhere
 # new: append a block here, and add a matching `icon` arm to
 # templates/macros/icons.html if the name isn't one it already draws
-# (github, x, resume, mail, key, rss, commit, download; anything else falls
-# back to a generic link glyph).
+# (github, x, mastodon, linkedin, signal, lastfm, steam, resume, mail, key,
+# rss, commit, download; anything else falls back to a generic link glyph).
+# A block without `url` renders as a plain (unlinked) card on the About page —
+# used for identifiers that have no public URL, like a Signal username.
 [[extra.profiles]]
 name = "GitHub"
 handle = "@Multipixelone"
@@ -89,10 +91,24 @@ icon = "github"
 footer = true
 
 [[extra.profiles]]
+name = "Mastodon"
+handle = "@tunnelmaker@pony.social"
+url = "https://pony.social/@tunnelmaker"
+icon = "mastodon"
+footer = true
+
+[[extra.profiles]]
 name = "X"
 handle = "@Multipixelone"
 url = "https://x.com/Multipixelone"
 icon = "x"
+footer = true
+
+[[extra.profiles]]
+name = "LinkedIn"
+handle = "Finn Rutis"
+url = "https://www.linkedin.com/in/finn-rutis-44a951304/"
+icon = "linkedin"
 footer = true
 
 [[extra.profiles]]
@@ -108,3 +124,35 @@ handle = "me@finnrut.is"
 url = "mailto:me@finnrut.is"
 icon = "mail"
 footer = true
+
+# The signal.me URL is the app-generated share link for the username below
+# (the #eu/ token is an encrypted blob; it can't be derived from the handle).
+# Regenerate in-app: Settings → Profile → tap username → share link.
+[[extra.profiles]]
+name = "Signal"
+handle = "@tunnelmaker.01"
+url = "https://signal.me/#eu/KANlYjiR9R26oHzL9crl757IIzq7Y2WL3fqgVVkjx1UaWlxLCQ1HXpc2wcVZ0veL"
+icon = "signal"
+footer = false
+
+[[extra.profiles]]
+name = "Last.fm"
+handle = "Tunnelmaker"
+url = "https://www.last.fm/user/Tunnelmaker"
+icon = "lastfm"
+footer = false
+
+[[extra.profiles]]
+name = "Steam"
+handle = "tunnelmaker"
+url = "https://steamcommunity.com/id/tunnelmaker/"
+icon = "steam"
+footer = false
+
+# The /users/ URL takes the numeric user ID, not the username.
+[[extra.profiles]]
+name = "Discord"
+handle = "@tunnelmaker"
+url = "https://discord.com/users/167098595357491200"
+icon = "discord"
+footer = false
