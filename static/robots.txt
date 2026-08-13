@@ -1,4 +1,84 @@
+# blog.finnrut.is
+#
+# This stance is a decision, not a default. Crawlers that harvest pages into
+# training corpora are turned away. Crawlers that fetch a page because a reader
+# asked a question about it — and cite it back — are welcome, because that is
+# increasingly how someone arrives at a post at all. Search engines are
+# unaffected by either rule.
+#
+# There is no umbrella switch for this: every vendor honours its own
+# user-agent string and ships new ones without notice, so the lists below are
+# hand-maintained and will always be a little behind. Nothing here is
+# enforcement; robots.txt is a request that well-behaved crawlers honour.
+
 User-agent: *
+Allow: /
+
+# --- Training corpora: no ---
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+# --- Answering someone's question, right now: yes ---
+#
+# Spelled out rather than left to the wildcard, so that tightening the rules
+# above later can't quietly sweep these up with them.
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Meta-ExternalFetcher
 Allow: /
 
 Sitemap: https://blog.finnrut.is/sitemap.xml

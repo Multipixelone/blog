@@ -87,7 +87,7 @@ The head is already better than most commercial sites. What's left:
       (chronological). A "related" section — pick 2–3 posts sharing the most tags —
       is easy in Tera and does more for both readers and crawl depth than
       chronology does.
-- [ ] **Decide an AI-crawler policy in `robots.txt`.** Currently allow-all.
+- [x] **Decide an AI-crawler policy in `robots.txt`.** Currently allow-all.
       Either stance is fine, but it should be a decision, not a default (GPTBot,
       ClaudeBot, CCBot, Google-Extended each honor their own UA rules).
 - [x] **`og:image:type` (`image/png`)** on the image blocks — trivial, a few
