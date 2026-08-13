@@ -155,6 +155,9 @@ handle = "@tunnelmaker.01"
 url = "https://signal.me/#eu/KANlYjiR9R26oHzL9crl757IIzq7Y2WL3fqgVVkjx1UaWlxLCQ1HXpc2wcVZ0veL"
 icon = "signal"
 footer = false
+# A share link is a way to reach me, not a page that identifies me, so it stays
+# out of the Person JSON-LD's sameAs the way the mailto: entry does.
+same_as = false
 
 [[extra.profiles]]
 name = "Last.fm"

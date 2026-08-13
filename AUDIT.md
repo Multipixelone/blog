@@ -74,7 +74,7 @@ The head is already better than most commercial sites. What's left:
     ("…and I want more!").
     A tiny CI guard could catch this class of bug: warn when `cover_alt` doesn't
     contain the post title.
-- [ ] **Derive `sameAs` from profiles.** The `Person` JSON-LD in `page.html`
+- [x] **Derive `sameAs` from profiles.** The `Person` JSON-LD in `page.html`
       hardcodes only the GitHub URL. Loop `config.extra.profiles` (skip mailto /
       no-URL entries) so Google/knowledge-graph consumers see Mastodon, LinkedIn,
       etc. Same for a `Person` block on the About page itself, which currently has

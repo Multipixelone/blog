@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "macros/icons.html" as icons %}
+{% import "macros/jsonld.html" as jsonld %}
 
 {% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
 {% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
@@ -16,6 +17,32 @@
 {% endblock og_image %}
 {% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og/about.png">
 <meta name="twitter:image:alt" content="Social card for the About page">{% endblock twitter_image %}
+
+{#- This is the canonical "who is this" URL and had no structured data at all.
+    Same @id as the author block on every post, so a consumer resolves them to
+    one entity instead of two people who happen to share a name. #}
+{% block json_ld %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "{{ section.permalink | safe }}",
+  "url": "{{ section.permalink | safe }}",
+  "name": {{ section.title | json_encode | safe }},
+  "description": {{ section.description | default(value=config.description) | json_encode | safe }},
+  "inLanguage": "en",
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "{{ config.base_url | safe }}#website",
+    "url": "{{ config.base_url | safe }}",
+    "name": {{ config.title | json_encode | safe }}
+  },
+  "mainEntity": {
+    {{ jsonld::person(config=config) }}
+  }
+}
+</script>
+{% endblock json_ld %}
 
 {% block content %}
 {# "Elsewhere" is rendered from config.extra.profiles so the footer icon row and

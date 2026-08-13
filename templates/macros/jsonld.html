@@ -1,0 +1,32 @@
+{# Structured-data fragments shared between templates, so the same facts can't
+   be stated two different ways in two places.
+
+   Tera macros don't inherit the calling template's context, so `config` is
+   passed in explicitly rather than reached for. Each macro emits *properties*,
+   not the surrounding braces: the caller owns the object it is building. #}
+
+{# The site's Person. Used by page.html as a post's author/publisher and by
+   about.html as the page's own subject — both carry the same @id, which is what
+   tells a consumer they are one entity.
+
+   `sameAs` is derived from config.extra.profiles rather than hardcoded, so
+   adding somewhere to zola.toml lands in the knowledge-graph data too. Skipped:
+   entries with no `url`, mailto: links (the address is published as `email`
+   instead), and anything marked `same_as = false` — sameAs is for pages that
+   identify the person, not for contact links that happen to be URLs. #}
+{% macro person(config) %}
+{%- set_global same_as = [] -%}
+{%- for profile in config.extra.profiles | default(value=[]) -%}
+{%- if profile.url and profile.url is not starting_with("mailto:") and profile.same_as | default(value=true) -%}
+{%- set_global same_as = same_as | concat(with=profile.url) -%}
+{%- endif -%}
+{%- endfor -%}
+"@type": "Person",
+    "@id": "{{ config.base_url | safe }}about/#person",
+    "name": {{ config.author | json_encode | safe }},
+    "url": "{{ config.base_url | safe }}about/",
+    {%- if config.extra.author_email %}
+    "email": {{ config.extra.author_email | json_encode | safe }},
+    {%- endif %}
+    "sameAs": {{ same_as | json_encode | safe }}
+{%- endmacro person %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/jsonld.html" as jsonld %}
 
 {% block title %}{{ page.title }} — {{ config.title }}{% endblock title %}
 {% block description %}{{ page.description | default(value=config.description) }}{% endblock description %}
@@ -56,19 +57,10 @@
   "inLanguage": "en",
   "wordCount": {{ page.word_count }},
   "author": {
-    "@type": "Person",
-    "@id": "{{ config.base_url | safe }}about/#person",
-    "name": {{ config.author | json_encode | safe }},
-    "url": "{{ config.base_url | safe }}about/",
-    "sameAs": [
-      "https://github.com/Multipixelone"
-    ]
+    {{ jsonld::person(config=config) }}
   },
   "publisher": {
-    "@type": "Person",
-    "@id": "{{ config.base_url | safe }}about/#person",
-    "name": {{ config.author | json_encode | safe }},
-    "url": "{{ config.base_url | safe }}about/"
+    {{ jsonld::person(config=config) }}
   },
   "image": {
     "@type": "ImageObject",
