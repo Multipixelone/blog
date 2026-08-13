@@ -11,6 +11,7 @@ taxonomies:
     - project
 extra:
   cover_alt: "Social card for 'What a resume generator taught me about making LLM output reliable'"
+  mastodon_status: "https://pony.social/@tunnelmaker/117089426226689054"
 ---
 
 One thing about me is I am obsessed with overengineering personal projects. Even when I am the singular consumer of a given project, I like to play pretend that I am leading a team of developers who are all following the trail of bread crumbs I left months ago.
