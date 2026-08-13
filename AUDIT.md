@@ -64,7 +64,7 @@ cheap and visible.
 
 The head is already better than most commercial sites. What's left:
 
-- [ ] **Fix metadata drift in existing posts.** Concrete instances:
+- [x] **Fix metadata drift in existing posts.** Concrete instances:
   - `content/fractured-mind.md` — the `description` ("Building a Nix-flake
     resume generator…") and `cover_alt` describe the _resume-gen_ post, not
     this one. Since `description` feeds the meta description, OG description,

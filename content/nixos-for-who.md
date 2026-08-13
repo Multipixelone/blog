@@ -11,7 +11,7 @@ taxonomies:
     - declarative
     - project
 extra:
-  cover_alt: "Social card for 'Declarative systems are the future and I want more!'"
+  cover_alt: "Social card for 'Declarative systems are the future of systems administration'"
 ---
 
 I first tried NixOS way before I was ready to appreciate the concept. I didn't understand it, I thought it was clunky, I bounced off the concept **hard**. Fast forward to today, my [Multipixelone/infra](https://github.com/Multipixelone/infra) repo now sits at 3,773 commits. Who is this technology for?
