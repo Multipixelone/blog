@@ -153,16 +153,12 @@
 
           <div class="feed-banner">
             <p>
-              <strong>This is a web feed</strong>, not a broken page. Feeds let
-              you follow a site without an account or an algorithm: paste the
-              address below into a feed reader and new posts arrive there.
-            </p>
+              <strong>This is a web feed</strong>. Feeds let
+              you follow a site in the reader of your choice</p>
             <code class="feed-url"><xsl:value-of select="$self"/></code>
             <p style="margin-top:0.75rem">
               New to this? <a href="https://aboutfeeds.com/">aboutfeeds.com</a>
-              explains it properly. Or just
-              <a href="{$site}">read the site in a browser</a>.
-            </p>
+              explains it properly.</p>
           </div>
 
           <h2>Recent posts</h2>
