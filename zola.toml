@@ -65,7 +65,11 @@ repo_url = "https://github.com/Multipixelone/blog"
 # *optionally*: the PGP page's download button and key block appear only when it
 # exists, so removing it degrades the page to the fingerprint and the fetch
 # instructions rather than leaving a dead download link. Re-export with
-# `gpg --armor --export 0x59BF38D05371C5E9 > static/pgp.asc`.
+# (the --comment headers are informational armor headers, not signed data):
+#   gpg --armor \
+#       --comment 'Finn Rutis <me@finnrut.is>' \
+#       --comment 'A673 0AC1 3BDD F8FF 95E4  5173 59BF 38D0 5371 C5E9' \
+#       --export 0x59BF38D05371C5E9 > static/pgp.asc
 [extra.pgp]
 fingerprint = "A6730AC13BDDF8FF95E4517359BF38D05371C5E9"
 fingerprint_pretty = "A673 0AC1 3BDD F8FF 95E4  5173 59BF 38D0 5371 C5E9"
