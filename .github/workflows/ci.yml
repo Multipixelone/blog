@@ -60,6 +60,11 @@ jobs:
         run: npx --yes pa11y-ci --sitemap http://localhost:8080/sitemap.xml
       # Lighthouse: a11y + SEO block (minScore 0.9); perf + best-practices warn
       # (network/font variance). See .github/lighthouserc.json.
+      #
+      # One URL per distinct template, since a template that nothing audits is a
+      # template whose regressions nobody catches. /search/ is deliberately
+      # absent: it is noindex and empty until someone types, so there is nothing
+      # for the SEO or a11y categories to judge.
       - name: Lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
@@ -67,6 +72,9 @@ jobs:
             http://localhost:8080/
             http://localhost:8080/nixos-for-who/
             http://localhost:8080/tags/
+            http://localhost:8080/tags/nix/
+            http://localhost:8080/archive/
+            http://localhost:8080/about/
           configPath: .github/lighthouserc.json
       # External links can break or rate-limit outside our control, so report
       # but don't fail the build.

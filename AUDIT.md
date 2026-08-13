@@ -192,7 +192,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 - [ ] **OG card visual regression.** Store a reference render of one card and
       compare with a perceptual hash in CI — font or Pillow bumps in nixpkgs can
       shift rendering without failing anything today.
-- [ ] **Lighthouse URL coverage.** The audit hits `/`, one post, and `/tags/` —
+- [x] **Lighthouse URL coverage.** The audit hits `/`, one post, and `/tags/` —
       add `/about/` (custom template, icon grid) and one _tag_ page, the two
       templates currently never audited.
 
