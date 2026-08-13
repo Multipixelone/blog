@@ -890,6 +890,185 @@ article:has(> h1) > p:first-of-type::first-letter {
   text-underline-offset: 0.15em;
 }
 
+.tag-feed .sep {
+  margin: 0 0.35rem;
+  color: var(--border);
+}
+
+/* ------------------------------------------------------------------
+   About: "Elsewhere" — one card per place, rendered from
+   config.extra.profiles (see templates/about.html)
+   ------------------------------------------------------------------ */
+.elsewhere {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.5rem;
+}
+
+.elsewhere li {
+  margin-bottom: 0;
+}
+
+.elsewhere a,
+.elsewhere-static {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.8rem;
+  color: var(--ink);
+  background: var(--paper-shade);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.elsewhere a:hover {
+  color: var(--accent);
+  background: var(--paper);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+.elsewhere a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Unlinked card (a profile with no public URL, e.g. a Signal username):
+   same chrome as the links, none of the hover affordance. */
+.elsewhere-static {
+  cursor: default;
+}
+
+.elsewhere-name {
+  font-variant: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+/* Handle sits hard right and stays monospace — it's an identifier, and the
+   column of them lines up across the grid. */
+.elsewhere-handle {
+  margin-left: auto;
+  padding-left: 0.5rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.elsewhere a:hover .elsewhere-handle {
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------------
+   PGP: fingerprint callout, key download, armored key block
+   ------------------------------------------------------------------ */
+
+/* The fingerprint is meant to be compared character by character, so give it
+   room to breathe and let it wrap rather than scroll on narrow screens. */
+.fingerprint code {
+  display: block;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.8em;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  text-align: center;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.key-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem 0.45rem;
+  color: var(--muted);
+  background: var(--paper-shade);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.key-download:hover {
+  color: var(--accent);
+  background: var(--paper);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+/* A filename is a literal, not prose — keep small-caps off it, same as the
+   sha in the build badge. */
+.key-download code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 0.95em;
+  font-variant: normal;
+  letter-spacing: 0;
+}
+
+/* Armored key: fixed-width block, capped like a code block, scrollable by
+   keyboard (the copy-button script only wires up Zola's pre.z-code). */
+.key-armor {
+  max-height: 24rem;
+  overflow: auto;
+  font-size: 0.72em;
+  line-height: 1.5;
+}
+
+.key-armor:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+/* Inline SVG icons (templates/macros/icons.html). Stroke weight and paint match
+   the header's theme toggle so the two icon sets read as one hand. */
+.icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Brand marks are solid glyphs, and a solid shape reads heavier than a
+   1.7-weight outline at the same box size — trim them so the row is optically
+   even rather than mathematically equal. */
+.icon-solid {
+  width: 1.02rem;
+  height: 1.02rem;
+  fill: currentColor;
+  stroke: none;
+}
+
 footer {
   margin-top: 4rem;
   padding-top: 1.25rem;
@@ -899,32 +1078,106 @@ footer {
   letter-spacing: 0.05em;
 }
 
+/* Icon row. The boxes are 2.75rem (44px at the default root size) so each link
+   clears the minimum touch target; the icons themselves stay small, and the
+   negative margin keeps that padding from inflating the footer's height. */
 footer .footer-links {
-  margin: 0 0 0.35rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  margin: -0.4rem 0 0.5rem;
 }
 
 footer .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  /* This is a <nav>, so the header's `nav a` rule reaches it — drop the
+     inter-item margin it adds or the row spreads out and wraps on phones. */
+  margin: 0;
   color: var(--muted);
   text-decoration: none;
+  border-radius: 6px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 footer .footer-links a:hover {
   color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  background: var(--paper-shade);
 }
 
-footer .footer-links .sep {
-  margin: 0 0.5rem;
-  color: var(--border);
+footer .footer-links a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
-footer .copyright {
+/* Copyright and build badge share one centered line; on narrow screens the
+   badge wraps under the copyright and the separator dot drops out with it. */
+footer .footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
   margin: 0;
   font-size: 0.85rem;
   color: var(--muted);
+}
+
+footer .footer-meta .sep {
+  color: var(--border);
+}
+
+/* Build provenance badge — same chip vocabulary as the tag cloud. */
+.build-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.28rem 0.8rem 0.32rem;
+  color: var(--muted);
+  background: var(--paper-shade);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.build-badge:hover {
+  color: var(--accent);
+  background: var(--paper);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+.build-badge .icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+/* The sha is data, not prose: undo the footer's small-caps and the global
+   <code> chrome so it sits inside the pill as bare monospace. */
+.build-badge code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 0.95em;
+  font-variant: normal;
+  letter-spacing: 0;
 }
 
 @media (max-width: 600px) {
