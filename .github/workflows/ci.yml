@@ -49,11 +49,7 @@ jobs:
         # ships (the nix build gets this from the flake's `self.rev` instead).
         env:
           SITE_COMMIT: ${{ github.sha }}
-        run: nix develop --command zola build --base-url http://localhost:8080 --output-dir ./public
-      # /search/ loads its assets from /pagefind/, which only exists once the
-      # index is built. Without this the audited search page is a dead end.
-      - name: Build search index
-        run: nix develop --command pagefind --site ./public
+        run: nix develop --command bash scripts/build.sh ./public http://localhost:8080
       # The feed templates are hand-maintained overrides and their comments
       # record that byte-level XML problems have shipped before. Also renders
       # every feed through the XSL, so a broken stylesheet fails here rather

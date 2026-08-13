@@ -33,25 +33,9 @@
               # Static search: indexes the built HTML, no service and no runtime.
               pkgs.pagefind
             ];
-            buildPhase = ''
-              zola build --output-dir $out
-
-              # Decompress the committed Cooper fonts (woff2 -> ttf) for Pillow.
-              mkdir -p fonts-ttf
-              for f in Cooper-Black Cooper-Bold Cooper-Regular; do
-                cp static/fonts/cooper/$f.woff2 fonts-ttf/
-                woff2_decompress fonts-ttf/$f.woff2
-              done
-
-              python3 scripts/gen_og_cards.py \
-                --out $out --font-dir fonts-ttf \
-                --title "Finn Rutis" --base-url "https://blog.finnrut.is/"
-
-              # Search index, built from the finished HTML. Only elements marked
-              # data-pagefind-body are indexed (see templates/page.html), so
-              # listing pages don't drown the results in duplicates.
-              pagefind --site $out
-            '';
+            # Pages, social cards and search index. Shared with CI's audit job,
+            # which builds the same site against a localhost base URL.
+            buildPhase = "bash scripts/build.sh $out";
             dontInstall = true;
           };
         });
