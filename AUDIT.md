@@ -90,7 +90,7 @@ The head is already better than most commercial sites. What's left:
 - [ ] **Decide an AI-crawler policy in `robots.txt`.** Currently allow-all.
       Either stance is fine, but it should be a decision, not a default (GPTBot,
       ClaudeBot, CCBot, Google-Extended each honor their own UA rules).
-- [ ] **`og:image:type` (`image/png`)** on the image blocks — trivial, a few
+- [x] **`og:image:type` (`image/png`)** on the image blocks — trivial, a few
       scrapers use it to skip a HEAD request.
 
 ## 4. Feeds
