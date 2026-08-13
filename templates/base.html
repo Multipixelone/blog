@@ -73,6 +73,14 @@
   })();
   </script>
   <meta name="author" content="{{ config.author }}">
+  {#- Mastodon 4.3+ renders a "More from @handle" byline on link previews when
+      the page names its author's fediverse account. Derived from the Mastodon
+      row in config.extra.profiles rather than a second copy of the handle, so
+      moving instances is a one-line edit in zola.toml. #}
+  {%- set fediverse = config.extra.profiles | default(value=[]) | filter(attribute="icon", value="mastodon") %}
+  {%- if fediverse | length > 0 and fediverse[0].handle %}
+  <meta name="fediverse:creator" content="{{ fediverse[0].handle }}">
+  {%- endif %}
   {% block article_meta %}{% endblock article_meta %}
 </head>
 <body>

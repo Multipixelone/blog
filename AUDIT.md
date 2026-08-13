@@ -41,7 +41,7 @@ on-brand, but they're anonymous — nothing on the card says where it came from.
 You're on Mastodon and already emit `rel="me"` — the remaining pieces are
 cheap and visible.
 
-- [ ] **`fediverse:creator` meta tag.** Mastodon (4.3+) shows a "More from
+- [x] **`fediverse:creator` meta tag.** Mastodon (4.3+) shows a "More from
       @tunnelmaker@pony.social" author byline on link previews when the page
       carries `<meta name="fediverse:creator" content="@tunnelmaker@pony.social">`.
       One line in `base.html`; derive it from the Mastodon entry in
