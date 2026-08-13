@@ -180,7 +180,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
       rot silently between posts. Add a weekly `schedule:` workflow that runs
       lychee against the _built site_ (not just markdown) and opens an issue on
       failure (`lycheeverse/lychee-action` has `createIssue` built in).
-- [ ] **PR preview deploys.** CI builds the site but reviewers can't see it.
+- [x] **PR preview deploys.** CI builds the site but reviewers can't see it.
       Cheapest: upload the `--base-url`-rewritten build as an artifact and link it
       in a PR comment. Nicer: Cloudflare Pages preview deployments (free, automatic
       per-PR URLs) — and it would replace GitHub Pages entirely, unlocking §5's

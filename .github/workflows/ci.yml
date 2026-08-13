@@ -39,6 +39,11 @@ jobs:
   audit:
     name: audit
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Only used by the preview comment at the end, and only on PRs from this
+      # repo — a fork's token is read-only and the step is skipped for it.
+      pull-requests: write
     steps:
       - uses: actions/checkout@v7.0.0
       - uses: nixbuild/nix-quick-install-action@v35
@@ -89,7 +94,59 @@ jobs:
             http://localhost:8080/about/
           configPath: .github/lighthouserc.json
       # External links can break or rate-limit outside our control, so report
-      # but don't fail the build.
+      # but don't fail the build. The weekly Maintenance workflow runs the same
+      # check against the built site and files an issue when it finds rot.
       - name: External links (lychee)
         continue-on-error: true
         run: nix run nixpkgs#lychee -- --no-progress 'content/**/*.md'
+
+      # Reviewers can read a diff but can't see the site it produces. The build
+      # already exists and already points its absolute URLs at localhost:8080,
+      # so it is self-contained: download, serve, look.
+      - name: Upload preview build
+        id: preview
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.event.pull_request.number }}
+          path: ./public
+          retention-days: 14
+
+      # Skipped for forks: their GITHUB_TOKEN is read-only, so this would fail
+      # the run over a comment.
+      - name: Link the preview on the PR
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          ARTIFACT_URL: ${{ steps.preview.outputs.artifact-url }}
+        run: |
+          marker='<!-- ci:preview -->'
+          body=$(cat <<EOF
+          $marker
+          ### Preview build
+
+          [Download the built site]($ARTIFACT_URL) (kept for 14 days), unzip it
+          and serve it:
+
+          \`\`\`sh
+          python3 -m http.server 8080 -d site-preview-$PR
+          \`\`\`
+
+          Then open <http://localhost:8080/>. Absolute URLs in this build point
+          at \`localhost:8080\`, so it stands alone — apart from the webfonts,
+          which come from R2 here exactly as they do in production.
+
+          Built from ${{ github.event.pull_request.head.sha }}.
+          EOF
+          )
+          # One comment, edited in place, rather than a new one per push.
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" \
+                --jq "[.[] | select(.body | contains(\"$marker\")) | .id] | first // empty")
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$body"
+          else
+            gh pr comment "$PR" --body "$body"
+          fi

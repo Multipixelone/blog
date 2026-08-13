@@ -49,6 +49,16 @@ The Nix flake runs these checks automatically:
 
 - **nix flake check** — validates the flake and its outputs
 - **site build** — the static site builds successfully from `.#default`
+- **front-matter consistency** — `scripts/check_frontmatter.py`
+- **feed validity** — `scripts/check_feeds.py`, plus an XSL render of every feed
+- **accessibility** — pa11y-ci over every page in the sitemap
+- **Lighthouse** — one URL per template; a11y and SEO block, perf warns
+- **social cards** — the build fails if a page names a card that wasn'''t generated
+
+Pull requests also get the built site as a downloadable artifact, linked from a
+comment on the PR. A weekly `Maintenance` workflow re-checks external links
+against the built site and files an issue when they rot, and fails if
+`security.txt` is within 30 days of expiring.
 
 ## Profile links
 
