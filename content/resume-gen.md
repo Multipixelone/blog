@@ -10,7 +10,7 @@ taxonomies:
     - llm
     - project
 extra:
-  mastodon_status: "https://pony.social/@tunnelmaker/117089426226689054"
+  mastodon_status: "https://pony.social/@tunnelmaker/117089516242982693"
 ---
 
 One thing about me is I am obsessed with overengineering personal projects. Even when I am the singular consumer of a given project, I like to play pretend that I am leading a team of developers who are all following the trail of bread crumbs I left months ago.
