@@ -58,6 +58,15 @@
               (pkgs.python3.withPackages (ps: [ ps.pillow ]))
               pkgs.woff2
             ];
+            # Give `zola serve` the same footer badge the real build gets from
+            # `self.rev` — with the same "-dirty" convention.
+            shellHook = ''
+              SITE_COMMIT="$(git rev-parse HEAD 2>/dev/null || true)"
+              if [ -n "$SITE_COMMIT" ] && ! git diff --quiet HEAD 2>/dev/null; then
+                SITE_COMMIT="$SITE_COMMIT-dirty"
+              fi
+              export SITE_COMMIT
+            '';
           };
         });
     };

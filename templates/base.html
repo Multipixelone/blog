@@ -107,16 +107,19 @@
     </nav>
 
     {# Build provenance. SITE_COMMIT comes from the flake's git revision (see
-       flake.nix); it's absent under `zola serve` and in ad-hoc builds, which
-       degrade to a plain link to the repo. A dirty tree yields "<sha>-dirty",
-       so split off the sha for the URL and keep the marker in the label. #}
+       flake.nix) or the dev shell's shellHook under `zola serve`; ad-hoc builds
+       without it degrade to a plain link to the repo. A dirty tree yields
+       "<sha>-dirty", so split off the sha for the URL and keep the marker in
+       the label. #}
     {%- set commit = get_env(name="SITE_COMMIT", default="") %}
     {%- set parts = commit | split(pat="-") %}
-    <p class="footer-build">
+    <p class="footer-meta">
+      <span class="copyright">&copy; {{ now() | date(format="%Y") }} {{ config.author }}</span>
+      <span class="sep" aria-hidden="true">&middot;</span>
       {%- if commit %}
       <a class="build-badge" href="{{ config.extra.repo_url }}/commit/{{ parts | first }}">
         {{ icons::icon(name="commit") }}
-        <span>built from this repo at</span>
+        <span>built from</span>
         <code>{{ parts | first | truncate(length=7, end="") }}{% if parts | length > 1 %}-dirty{% endif %}</code>
       </a>
       {%- else %}
@@ -126,8 +129,6 @@
       </a>
       {%- endif %}
     </p>
-
-    <p class="copyright">&copy; {{ now() | date(format="%Y") }} {{ config.author }}</p>
   </footer>
 
   <script>

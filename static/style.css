@@ -1110,8 +1110,21 @@ footer .footer-links a:focus-visible {
   outline-offset: -2px;
 }
 
-footer .footer-build {
-  margin: 0 0 0.6rem;
+/* Copyright and build badge share one centered line; on narrow screens the
+   badge wraps under the copyright and the separator dot drops out with it. */
+footer .footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+footer .footer-meta .sep {
+  color: var(--border);
 }
 
 /* Build provenance badge — same chip vocabulary as the tag cloud. */
@@ -1158,12 +1171,6 @@ footer .footer-build {
   font-size: 0.95em;
   font-variant: normal;
   letter-spacing: 0;
-}
-
-footer .copyright {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--muted);
 }
 
 @media (max-width: 600px) {
