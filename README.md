@@ -122,12 +122,24 @@ page's fingerprint line.
 
 ## Social cards
 
-Per-post Open Graph cards (1200×630) are generated at build time by
+Open Graph cards (1200×630) are generated at build time by
 `scripts/gen_og_cards.py`, which reads the JSON-LD each post emits and draws an
-"accent band" card with Pillow. Cooper (the only build-available font — Sabon Next
-is served from R2 and absent from CI) is decompressed woff2→ttf via `woff2_decompress`
-first. Output lands at `/og/<slug>.png`, with a site-wide `/og.png` default for the
-homepage, tags, and about pages.
+"accent band" card with Pillow: title, description, tag chips, a meta line, and
+the site's hostname bottom-right so attribution survives a screenshot. Cooper
+(the only build-available font — Sabon Next is served from R2 and absent from CI)
+is decompressed woff2→ttf via `woff2_decompress` first.
+
+| Page | Card |
+| --- | --- |
+| Post | `/og/<slug>.png` |
+| Tag | `/og/tags/<slug>.png` |
+| `/tags/` | `/og/tags.png` |
+| `/about/` | `/og/about.png` |
+| Everything else | `/og.png` |
+
+After generating, the script re-reads every built page's `og:image` and fails
+the build if the file it names is missing — so a template or regex change that
+stops producing cards breaks CI instead of shipping 404 card URLs.
 
 <details>
 <summary>Project structure</summary>
