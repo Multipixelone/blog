@@ -176,7 +176,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 
 ## 7. CI / infrastructure polish
 
-- [ ] **Scheduled link checking.** lychee runs only on push, so external links
+- [x] **Scheduled link checking.** lychee runs only on push, so external links
       rot silently between posts. Add a weekly `schedule:` workflow that runs
       lychee against the _built site_ (not just markdown) and opens an issue on
       failure (`lycheeverse/lychee-action` has `createIssue` built in).

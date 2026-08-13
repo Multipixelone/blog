@@ -1,0 +1,97 @@
+name: Maintenance
+
+# Things that rot on their own schedule rather than when someone pushes.
+#
+# lychee runs in CI too, but only on push and only over content/**/*.md, so an
+# external link that dies between posts dies silently — and on a blog that can
+# be months. This runs weekly against the *built* site, which also covers links
+# that only exist in templates (the footer profile row, the About page).
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: maintenance
+  cancel-in-progress: false
+
+jobs:
+  links:
+    name: external links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
+      - uses: nixbuild/nix-quick-install-action@v35
+      - name: Build site
+        run: nix build .#default --print-build-logs
+
+      # Deliberately non-fatal: a red X on a schedule is noise nobody reads.
+      # The report becomes an issue instead, which is a thing with a state.
+      #
+      # 403 and 999 are accepted because LinkedIn (999) and a handful of other
+      # hosts answer bots that way regardless of whether the page exists;
+      # treating them as rot would make the report permanently useless.
+      - name: Check links (lychee)
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-concurrency 4
+            --exclude-mail
+            --accept 200,206,301,302,403,999
+            --exclude '^https://signal\.me/'
+            './result/**/*.html'
+          output: lychee/out.md
+          fail: false
+
+      # One issue, reopened and commented on, rather than a fresh one every
+      # Monday until someone gets round to it.
+      - name: Report broken links
+        if: steps.lychee.outputs.exit_code != 0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create link-rot \
+            --description "External links that stopped resolving" \
+            --color D93F0B 2>/dev/null || true
+          existing=$(gh issue list --label link-rot --state open --limit 1 \
+            --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file lychee/out.md
+          else
+            gh issue create --label link-rot \
+              --title "Broken links found by the weekly check" \
+              --body-file lychee/out.md
+          fi
+
+  security-txt:
+    name: security.txt freshness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.0
+      # RFC 9116: once Expires is in the past the whole file is stale and
+      # consumers are told to ignore it. Thirty days is enough warning to
+      # notice and push the date forward.
+      - name: Check Expires
+        run: |
+          set -euo pipefail
+          file=static/.well-known/security.txt
+          expires=$(sed -n 's/^Expires:[[:space:]]*//p' "$file" | head -1)
+          if [ -z "$expires" ]; then
+            echo "::error file=$file::no Expires field (required by RFC 9116)"
+            exit 1
+          fi
+          days=$(( ( $(date -u -d "$expires" +%s) - $(date -u +%s) ) / 86400 ))
+          echo "security.txt expires in $days days ($expires)"
+          if [ "$days" -lt 30 ]; then
+            echo "::error file=$file::Expires is $days days away — push it forward"
+            exit 1
+          fi

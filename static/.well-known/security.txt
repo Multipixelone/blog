@@ -5,8 +5,8 @@
 # key and cares about verifiable contact, and this is the machine-readable
 # version of that.
 #
-# Expires must stay in the future or the whole file is treated as stale, so it
-# needs pushing forward before the date below.
+# Expires must stay in the future or the whole file is treated as stale. The
+# weekly Maintenance workflow fails once the date below is within 30 days.
 
 Contact: mailto:me@finnrut.is
 Contact: https://blog.finnrut.is/about/
