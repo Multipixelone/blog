@@ -83,7 +83,7 @@ The head is already better than most commercial sites. What's left:
       (`article:modified_time`, `dateModified`, feed `<updated>`, sitemap lastmod)
       all keys off `page.updated` and it's never set. Worth adopting as a habit for
       substantive edits — freshness signals are real for evergreen technical posts.
-- [ ] **Related-posts block.** Internal linking is currently only prev/next
+- [x] **Related-posts block.** Internal linking is currently only prev/next
       (chronological). A "related" section — pick 2–3 posts sharing the most tags —
       is easy in Tera and does more for both readers and crawl depth than
       chronology does.

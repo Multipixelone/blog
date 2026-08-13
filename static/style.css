@@ -752,6 +752,52 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   display: inline;
 }
 
+/* Related posts — the ones sharing the most tags, not the ones that happen to
+   sit next to this in the archive. */
+.related {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.related h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.related ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.related li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.related a {
+  text-decoration: none;
+}
+
+.related a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.related-meta {
+  margin-left: auto;
+  flex: none;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
 /* ------------------------------------------------------------------
    Comments — replies to the post's Mastodon thread, fetched client-side
    by the script in templates/page.html. Everything below the intro line

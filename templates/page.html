@@ -125,6 +125,63 @@
   {% endif %}
 </article>
 
+{#- Related posts — the three sharing the most tags with this one. Internal
+    linking was prev/next only, which is chronology, not relevance.
+
+    Tera can't sort by a computed score, so rather than score-then-sort this
+    sweeps the candidate list once per shared-tag count, highest first, and
+    stops at three. O(tags x posts) with both numbers tiny, and the resulting
+    order is obvious by construction. #}
+{%- if page.taxonomies and page.taxonomies.tags %}
+{#- Candidates come from the taxonomy, not from the section: Zola leaves
+    `section.pages` empty on a paginated section, and the homepage is
+    paginated. Every post here is tagged, so the taxonomy covers all of them. #}
+{%- set_global candidates = [] %}
+{%- set_global candidate_urls = [] %}
+{%- set tags_taxonomy = get_taxonomy(kind="tags") %}
+{%- for term in tags_taxonomy.items %}
+  {%- for post in term.pages %}
+    {%- if post.permalink not in candidate_urls %}
+      {%- set_global candidates = candidates | concat(with=post) %}
+      {%- set_global candidate_urls = candidate_urls | concat(with=post.permalink) %}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+{%- set_global related = [] %}
+{%- set_global related_urls = [] %}
+{%- for needed in [5, 4, 3, 2, 1] %}
+  {%- for candidate in candidates %}
+    {%- if related | length < 3 and candidate.permalink != page.permalink and candidate.permalink not in related_urls %}
+      {#- Tera won't take a filter on the right of `in`, so bind it first. #}
+      {%- set candidate_tags = candidate.taxonomies.tags | default(value=[]) %}
+      {%- set_global shared = 0 %}
+      {%- for tag in page.taxonomies.tags %}
+        {%- if tag in candidate_tags %}
+          {%- set_global shared = shared + 1 %}
+        {%- endif %}
+      {%- endfor %}
+      {%- if shared >= needed %}
+        {%- set_global related = related | concat(with=candidate) %}
+        {%- set_global related_urls = related_urls | concat(with=candidate.permalink) %}
+      {%- endif %}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+{%- if related | length > 0 %}
+<nav class="related" aria-labelledby="related-heading">
+  <h2 id="related-heading">Related posts</h2>
+  <ul>
+    {%- for post in related %}
+    <li>
+      <a href="{{ post.permalink | safe }}">{{ post.title }}</a>
+      <span class="related-meta">{{ post.date | date(format="%Y-%m-%d") }}</span>
+    </li>
+    {%- endfor %}
+  </ul>
+</nav>
+{%- endif %}
+{%- endif %}
+
 {#- Comments, when a post has an announcement thread. Set the toot's URL in
     front matter:
 
