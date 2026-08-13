@@ -8,16 +8,16 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "{{ config.base_url | safe }}#website",
-  "url": "{{ config.base_url | safe }}",
+  "@id": "{{ get_url(path="/", trailing_slash=true) | safe }}#website",
+  "url": "{{ get_url(path="/", trailing_slash=true) | safe }}",
   "name": {{ config.title | json_encode | safe }},
   "description": {{ config.description | json_encode | safe }},
   "inLanguage": "en",
   "publisher": {
     "@type": "Person",
-    "@id": "{{ config.base_url | safe }}about/#person",
+    "@id": "{{ get_url(path="@/about/_index.md") | safe }}#person",
     "name": {{ config.author | json_encode | safe }},
-    "url": "{{ config.base_url | safe }}about/"
+    "url": "{{ get_url(path="@/about/_index.md") | safe }}"
   }
 }
 </script>
@@ -49,7 +49,7 @@
   {% endif %}
   <span class="p-author h-card">
     <data class="p-name" value="{{ config.author }}"></data>
-    <data class="u-url" value="{{ config.base_url }}about/"></data>
+    <data class="u-url" value="{{ get_url(path="@/about/_index.md") }}"></data>
   </span>
   {% if page.summary %}<div class="e-summary">{{ page.summary | safe }}</div>{% endif %} {% if
   page.taxonomies and page.taxonomies.tags %}

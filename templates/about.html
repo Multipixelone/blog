@@ -9,13 +9,13 @@
 {% block og_description %}{{ section.description | default(value=config.description) }}{% endblock %}
 {% block canonical %}{{ section.permalink }}{% endblock canonical %}
 {% block og_image %}
-<meta property="og:image" content="{{ config.base_url }}og/about.png">
+<meta property="og:image" content="{{ get_url(path="og/about.png", trailing_slash=false) }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:alt" content="Social card for the About page">
 {% endblock og_image %}
-{% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og/about.png">
+{% block twitter_image %}<meta name="twitter:image" content="{{ get_url(path="og/about.png", trailing_slash=false) }}">
 <meta name="twitter:image:alt" content="Social card for the About page">{% endblock twitter_image %}
 
 {#- This is the canonical "who is this" URL and had no structured data at all.
@@ -33,8 +33,8 @@
   "inLanguage": "en",
   "isPartOf": {
     "@type": "WebSite",
-    "@id": "{{ config.base_url | safe }}#website",
-    "url": "{{ config.base_url | safe }}",
+    "@id": "{{ get_url(path="/", trailing_slash=true) | safe }}#website",
+    "url": "{{ get_url(path="/", trailing_slash=true) | safe }}",
     "name": {{ config.title | json_encode | safe }}
   },
   "mainEntity": {

@@ -13,7 +13,7 @@
 <meta property="og:image" content="{{ page.extra.cover }}">
 <meta property="og:image:alt" content="{{ page.extra.cover_alt | default(value=page.title) }}">
 {% else %}
-<meta property="og:image" content="{{ config.base_url }}og/{{ page.slug }}.png">
+<meta property="og:image" content="{{ get_url(path="og/" ~ page.slug ~ ".png", trailing_slash=false) }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/png">
@@ -23,13 +23,13 @@
 {% block twitter_card %}summary_large_image{% endblock twitter_card %}
 {% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
 {% block twitter_description %}{{ page.description | default(value=config.description) }}{% endblock twitter_description %}
-{% block twitter_image %}{% if page.extra.cover %}<meta name="twitter:image" content="{{ page.extra.cover }}">{% else %}<meta name="twitter:image" content="{{ config.base_url }}og/{{ page.slug }}.png">{% endif %}
+{% block twitter_image %}{% if page.extra.cover %}<meta name="twitter:image" content="{{ page.extra.cover }}">{% else %}<meta name="twitter:image" content="{{ get_url(path="og/" ~ page.slug ~ ".png", trailing_slash=false) }}">{% endif %}
 <meta name="twitter:image:alt" content="{{ page.extra.cover_alt | default(value=page.title) }}">{% endblock twitter_image %}
 
 {% block article_meta %}
   <meta property="article:published_time" content="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">
   <meta property="article:modified_time" content="{{ page.updated | default(value=page.date) | date(format="%Y-%m-%dT%H:%M:%S%z") }}">
-  <meta property="article:author" content="{{ config.base_url }}about/">
+  <meta property="article:author" content="{{ get_url(path="@/about/_index.md") }}">
   {% if page.taxonomies.tags %}
   <meta property="article:section" content="{{ page.taxonomies.tags[0] }}">
   {% for tag in page.taxonomies.tags %}
@@ -64,15 +64,15 @@
   },
   "image": {
     "@type": "ImageObject",
-    "url": "{% if page.extra.cover %}{{ page.extra.cover | safe }}{% else %}{{ config.base_url | safe }}og/{{ page.slug | safe }}.png{% endif %}",
+    "url": "{% if page.extra.cover %}{{ page.extra.cover | safe }}{% else %}{{ get_url(path="og/" ~ page.slug ~ ".png", trailing_slash=false) | safe }}{% endif %}",
     "width": 1200,
     "height": 630
   },
   "isPartOf": {
     "@type": "Blog",
-    "@id": "{{ config.base_url | safe }}#blog",
+    "@id": "{{ get_url(path="/", trailing_slash=true) | safe }}#blog",
     "name": {{ config.title | json_encode | safe }},
-    "url": "{{ config.base_url | safe }}"
+    "url": "{{ get_url(path="/", trailing_slash=true) | safe }}"
   }{% if page.taxonomies.tags %},
   "keywords": {{ page.taxonomies.tags | json_encode | safe }},
   "articleSection": {{ page.taxonomies.tags[0] | json_encode | safe }}{% endif %},
@@ -107,7 +107,7 @@
   {%- endif %}
   <span class="p-author h-card">
     <data class="p-name" value="{{ config.author }}"></data>
-    <data class="u-url" value="{{ config.base_url }}about/"></data>
+    <data class="u-url" value="{{ get_url(path="@/about/_index.md") }}"></data>
   </span>
   {#- Table of contents, for posts long enough to need one. Collapsed by
       default: on a short post it would be noise between the title and the

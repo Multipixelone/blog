@@ -6,12 +6,12 @@
 
 {% block robots_meta %}<meta name="robots" content="noindex, follow">{% endblock robots_meta %}
 
-{% block canonical %}{{ config.base_url }}404.html{% endblock canonical %}
+{% block canonical %}{{ get_url(path="404.html", trailing_slash=false) }}{% endblock canonical %}
 
 {% block content %}
 <div class="error-page">
   <h1>404 — Page not found</h1>
   <p>The page you were looking for does not exist.</p>
-  <p><a href="{{ config.base_url }}">Go back home</a></p>
+  <p><a href="{{ get_url(path="/", trailing_slash=true) }}">Go back home</a></p>
 </div>
 {% endblock content %}

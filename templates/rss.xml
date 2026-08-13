@@ -37,7 +37,7 @@
       {% if last_updated is defined %}<lastBuildDate>{{ last_updated | date(format="%a, %d %b %Y %H:%M:%S %z") }}</lastBuildDate>{% endif %}
       {%- if config.extra.og_image %}
       <image>
-        <url>{{ config.base_url ~ config.extra.og_image | escape_xml | safe }}</url>
+        <url>{{ get_url(path=config.extra.og_image, trailing_slash=false) | escape_xml | safe }}</url>
         <title>{{ config.title }}</title>
         <link>{{ config.base_url | escape_xml | safe }}</link>
       </image>

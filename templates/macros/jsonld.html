@@ -22,9 +22,9 @@
 {%- endif -%}
 {%- endfor -%}
 "@type": "Person",
-    "@id": "{{ config.base_url | safe }}about/#person",
+    "@id": "{{ get_url(path="@/about/_index.md") | safe }}#person",
     "name": {{ config.author | json_encode | safe }},
-    "url": "{{ config.base_url | safe }}about/",
+    "url": "{{ get_url(path="@/about/_index.md") | safe }}",
     {%- if config.extra.author_email %}
     "email": {{ config.extra.author_email | json_encode | safe }},
     {%- endif %}
