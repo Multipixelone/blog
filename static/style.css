@@ -752,6 +752,23 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   display: inline;
 }
 
+/* Homepage subscribe line. The icon is decorative — the links either side of it
+   carry the meaning — so it stays aria-hidden like every other .icon. */
+.subscribe {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.subscribe .icon {
+  flex: none;
+  align-self: center;
+  color: var(--accent);
+}
+
 /* Related posts — the ones sharing the most tags, not the ones that happen to
    sit next to this in the archive. */
 .related {

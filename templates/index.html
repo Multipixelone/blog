@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/icons.html" as icons %}
 {% block canonical %}{% if paginator and paginator.current_index == 1 %}{{ section.permalink }}{% else %}{{ current_url }}{% endif %}{% endblock canonical %}
 
 {% block json_ld %}
@@ -26,6 +27,16 @@
 {% block content %}
 <h1>{{ config.title }}{% if config.extra.pronouns %} <span class="pronouns">{{ config.extra.pronouns }}</span>{% endif %}</h1>
 <p>Finn's space for ramblings. Enjoy your stay.</p>
+
+{#- The feeds were only reachable from the footer icon row, which nobody scrolls
+    to on a listing page. Full text goes out over both, so subscribing is a real
+    alternative to visiting rather than a teaser. #}
+<p class="subscribe">
+  {{ icons::icon(name="rss") }}
+  Follow along by <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}">RSS</a>
+  or <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}">Atom</a> —
+  posts arrive in full, no account and no algorithm.
+</p>
 
 {# Each listing is an h-entry too, so an indie reader subscribed to the
    homepage sees the same structure a permalink gives it. See page.html for

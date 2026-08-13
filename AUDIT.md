@@ -106,7 +106,7 @@ The head is already better than most commercial sites. What's left:
       making them click through is a tax that mostly sheds readers. If you want a
       middle path: full `<content>` plus the summary — Atom supports both on one
       entry.
-- [ ] **Feed icon distinction on About.** Both RSS and Atom rows use the same
+- [x] **Feed icon distinction on About.** Both RSS and Atom rows use the same
       icon; fine, but the _homepage_ has no visible feed affordance at all (footer
       only). A one-liner under the intro ("Subscribe via RSS") is worth testing.
 
