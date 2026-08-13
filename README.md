@@ -144,7 +144,7 @@ is decompressed woff2→ttf via `woff2_decompress` first.
 | Post | `/og/<slug>.png` |
 | Tag | `/og/tags/<slug>.png` |
 | `/tags/` | `/og/tags.png` |
-| `/about/` | `/og/about.png` |
+| Sections in `SECTION_CARDS` (`/about/`, `/archive/`) | `/og/<slug>.png` |
 | Everything else | `/og.png` |
 
 After generating, the script re-reads every built page's `og:image` and fails

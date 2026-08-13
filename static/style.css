@@ -753,6 +753,59 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
 }
 
 /* ------------------------------------------------------------------
+   Archive — every post, by year. Deliberately dense: no summaries, no
+   tags, one line per post, so a long-time reader can scan it.
+   ------------------------------------------------------------------ */
+.archive-count {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.archive-year {
+  margin-top: 2.25rem;
+}
+
+.archive-year h2 {
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.1rem;
+  font-variant: small-caps;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.archive-year ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.archive-year li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+.archive-year time {
+  flex: none;
+  width: 3.5em;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.archive-year a {
+  text-decoration: none;
+}
+
+.archive-year a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* ------------------------------------------------------------------
    Table of contents — a <details> above the post body, rendered only
    when the post has three or more headings.
    ------------------------------------------------------------------ */

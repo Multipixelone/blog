@@ -157,7 +157,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 - [x] **Table of contents for long posts.** `nixos-for-who` is 7KB of prose;
       a `page.toc`-driven `<details>` TOC above the fold (rendered only when the
       post has 3+ headings) costs ~10 template lines.
-- [ ] **Archive/all-posts view.** With `paginate_by = 10`, older posts fall off
+- [x] **Archive/all-posts view.** With `paginate_by = 10`, older posts fall off
       the homepage into pagination limbo. A compact `/archive/` (year → title list,
       no summaries) is the page long-time readers actually bookmark.
 - [x] **Footnote back-links & styling.** If/when posts use footnotes, Zola's

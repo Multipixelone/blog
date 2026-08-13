@@ -13,8 +13,8 @@ purpose-built and stable. Renders an "accent band" card with Pillow:
   - the site's hostname bottom-right, so a screenshotted card still says where
     it came from
 
-Cards are also rendered for each taxonomy term, the tag index and the About
-section, all of which otherwise fall back to the generic og.png.
+Cards are also rendered for each taxonomy term, the tag index and the standalone
+sections, all of which otherwise fall back to the generic og.png.
 
 All-Cooper by necessity: Sabon Next / PragmataPro are proprietary and absent from
 the sandboxed build, so only the committed Cooper family is available. Pillow needs
@@ -22,7 +22,8 @@ TTF/OTF, so the caller decompresses Cooper woff2 -> ttf (woff2_decompress) first
 passes the directory via --font-dir.
 
 Output: <out>/og/<slug>.png per post, <out>/og/tags/<term>.png per tag,
-<out>/og/tags.png, <out>/og/about.png, plus a site-wide <out>/og.png default.
+<out>/og/tags.png, one per entry in SECTION_CARDS, plus a site-wide
+<out>/og.png default.
 
 Before exiting the script re-reads every built page's og:image and asserts the
 file it points at exists, so a regex or template drift that silently stops
@@ -80,6 +81,11 @@ CHIP_GAP = 12
 CHIP_MAX = 3
 CHIP_META_GAP = 22
 BODY_BOTTOM_GAP = 32
+
+# Standalone sections that get their own card: <slug>/index.html in the built
+# output becomes og/<slug>.png, titled with the label and described from the
+# page's own og:description. Anything not listed falls back to og.png.
+SECTION_CARDS = (("about", "About"), ("archive", "Archive"))
 
 # Cards are flat color with antialiased text, so they palette-quantize losslessly
 # to the eye. Only bother when one crosses the threshold — most land far under.
@@ -408,20 +414,23 @@ def main():
         sections += 1
         print("  og/tags.png   ←  Tags")
 
-    about_html = out / "about" / "index.html"
-    if about_html.is_file():
-        page = about_html.read_text(encoding="utf-8")
+    for slug, label in SECTION_CARDS:
+        page_path = out / slug / "index.html"
+        if not page_path.is_file():
+            continue
         render_card(
-            out / "og" / "about.png",
-            meta_content(page, "og:title") or "About",
-            "FINN RUTIS  ·  About",
+            out / "og" / f"{slug}.png",
+            label,
+            f"FINN RUTIS  ·  {label}",
             fonts,
             site=site,
-            description=meta_content(page, "og:description"),
+            description=meta_content(
+                page_path.read_text(encoding="utf-8"), "og:description"
+            ),
             title_max=TITLE_DISPLAY_MAX,
         )
         sections += 1
-        print("  og/about.png  ←  About")
+        print(f"  og/{slug}.png  ←  {label}")
 
     # Site-wide default card (homepage, 404, anything without its own).
     render_card(

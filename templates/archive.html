@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
+{% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block og_title %}{{ section.title }} — {{ config.title }}{% endblock og_title %}
+{% block og_url %}{{ section.permalink }}{% endblock og_url %}
+{% block og_description %}{{ section.description | default(value=config.description) }}{% endblock og_description %}
+{% block canonical %}{{ section.permalink }}{% endblock canonical %}
+{% block og_image %}
+<meta property="og:image" content="{{ config.base_url }}og/archive.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="Social card for the archive">
+{% endblock og_image %}
+{% block twitter_image %}<meta name="twitter:image" content="{{ config.base_url }}og/archive.png">
+<meta name="twitter:image:alt" content="Social card for the archive">{% endblock twitter_image %}
+
+{% block content %}
+{#- Every post in one list, grouped by year. The homepage paginates at 10, which
+    means older posts fall off it into pagination limbo; this is the page that
+    stays bookmarkable.
+
+    Years are collected by walking the (date-descending) page list rather than
+    with `group_by`, whose iteration order over the resulting map isn't
+    something to rely on. Costs one extra pass per year over a list this size. #}
+{%- set blog = get_section(path="_index.md") %}
+{%- set_global years = [] %}
+{%- for post in blog.pages %}
+{%- if post.year not in years %}
+{%- set_global years = years | concat(with=post.year) %}
+{%- endif %}
+{%- endfor %}
+
+<h1>{{ section.title }}</h1>
+{{ section.content | safe }}
+<p class="archive-count">{{ blog.pages | length }} post{% if blog.pages | length != 1 %}s{% endif %} across {{ years | length }} year{% if years | length != 1 %}s{% endif %}.</p>
+
+{%- for year in years %}
+<section class="archive-year" aria-labelledby="year-{{ year }}">
+  <h2 id="year-{{ year }}">{{ year }}</h2>
+  <ul>
+    {%- for post in blog.pages %}
+    {%- if post.year == year %}
+    <li>
+      <time datetime="{{ post.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ post.date | date(format="%m-%d") }}</time>
+      <a href="{{ post.permalink | safe }}">{{ post.title }}</a>
+    </li>
+    {%- endif %}
+    {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}
+{% endblock %}
