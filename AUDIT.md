@@ -52,7 +52,7 @@ cheap and visible.
       fancier, fetches the thread's replies client-side from the pony.social API
       and renders them as a comment section. Gives the blog a social surface
       without any comment infrastructure.
-- [ ] **Microformats2.** Add `h-entry` / `h-card` / `p-author` / `dt-published`
+- [x] **Microformats2.** Add `h-entry` / `h-card` / `p-author` / `dt-published`
       classes to `page.html` and the homepage list. Invisible to humans, but makes
       posts parseable by webmention receivers, indie readers, and Bridgy.
 - [ ] **Webmentions.** Register at webmention.io, add the

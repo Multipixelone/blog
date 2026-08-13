@@ -35,10 +35,10 @@
 </header>
 
 {% for page in term.pages %}
-<article>
-  <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
-  <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
-  {% if page.summary %}{{ page.summary | safe }}{% endif %}
+<article class="h-entry">
+  <h2><a class="u-url p-name" href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+  <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}</time>
+  {% if page.summary %}<div class="e-summary">{{ page.summary | safe }}</div>{% endif %}
 </article>
 {% endfor %}
 

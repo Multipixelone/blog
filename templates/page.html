@@ -90,17 +90,38 @@
 {% endblock json_ld %}
 
 {% block content %}
-<article>
-  <h1>{{ page.title }}</h1>
+{# Microformats2. The post is an h-entry; its author is an h-card pointing at
+   /about/, which is the site's representative h-card (it carries the rel="me"
+   links). This is what makes posts legible to webmention receivers, indie
+   readers and Bridgy without changing a pixel.
+
+   <data> is the spec's element for a property with no visible text: both the
+   p-* and u-* parsing algorithms read its `value` attribute, and it renders
+   nothing. Beats the usual trick of hiding an empty <a>. #}
+<article class="h-entry">
+  <h1 class="p-name">{{ page.title }}</h1>
   {% if page.date %}
-  <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
+  <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
   {% endif %}
-  {{ page.content | safe }}
+  {%- if page.updated %}
+  <data class="dt-updated" value="{{ page.updated | date(format="%Y-%m-%dT%H:%M:%S%z") }}"></data>
+  {%- endif %}
+  <data class="u-url u-uid" value="{{ page.permalink | safe }}"></data>
+  {%- if page.description %}
+  <data class="p-summary" value="{{ page.description }}"></data>
+  {%- endif %}
+  <span class="p-author h-card">
+    <data class="p-name" value="{{ config.author }}"></data>
+    <data class="u-url" value="{{ config.base_url }}about/"></data>
+  </span>
+  <div class="e-content">
+    {{ page.content | safe }}
+  </div>
   {% if page.taxonomies and page.taxonomies.tags %}
   <nav class="tags" aria-label="Tags">
     {% for tag in page.taxonomies.tags %}
     {% set term = get_taxonomy_term(kind="tags", term=tag) %}
-    <a href="{{ term.permalink | safe }}">#{{ tag }}</a>
+    <a class="p-category" href="{{ term.permalink | safe }}">{{ tag }}</a>
     {% endfor %}
   </nav>
   {% endif %}

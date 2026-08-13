@@ -22,9 +22,22 @@
    this list can never drift apart — add a place in zola.toml and it shows up in
    both. The PGP entry is separate: it points at an internal page, not a
    profile, and leads with the fingerprint because that's the useful part. #}
+{#- Microformats2: this page is the site's representative h-card. Posts point
+    their `p-author` here, and the rel="me" links below are what an IndieAuth
+    consumer follows to prove the same person owns both ends. The invisible
+    properties are <data> elements — the p-*/u-* parsing algorithms read their
+    `value` attribute and they render nothing. #}
 {%- set pgp_page = get_section(path="pgp/_index.md") %}
-<article>
+<article class="h-card">
   <h1>{{ section.title }}</h1>
+  <data class="p-name" value="{{ config.author }}"></data>
+  <data class="u-url u-uid" value="{{ section.permalink | safe }}"></data>
+  {%- if config.extra.pronouns %}
+  <data class="p-pronouns" value="{{ config.extra.pronouns }}"></data>
+  {%- endif %}
+  {%- if section.description %}
+  <data class="p-note" value="{{ section.description }}"></data>
+  {%- endif %}
   {{ section.content | safe }}
 
   <h2 id="elsewhere">Elsewhere</h2>
@@ -34,7 +47,7 @@
       {#- A profile without `url` is an identifier with no public page (e.g. a
           Signal username) — same card, just not a link. #}
       {%- if profile.url %}
-      <a href="{{ profile.url }}" rel="me">
+      <a class="{% if profile.url is starting_with("mailto:") %}u-email{% else %}u-url{% endif %}" href="{{ profile.url }}" rel="me">
         {{ icons::icon(name=profile.icon) }}
         <span class="elsewhere-name">{{ profile.name }}</span>
         {%- if profile.handle %}<span class="elsewhere-handle">{{ profile.handle }}</span>{% endif %}

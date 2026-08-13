@@ -672,15 +672,21 @@ article h2 a:hover {
 }
 
 /* Contain the floated drop cap so a short first paragraph still pushes the
-   next paragraph below the 3-line float box instead of letting it wrap up. */
-article:has(> h1) > p:first-of-type {
+   next paragraph below the 3-line float box instead of letting it wrap up.
+
+   Two shapes match: page.html wraps the post body in `.e-content` (microformats2
+   needs one element to carry the entry content), while about.html and pgp.html
+   drop their section content straight into the article. */
+article:has(> h1) > p:first-of-type,
+article:has(> h1) > .e-content > p:first-of-type {
   display: flow-root;
 }
 
 /* Float fallback: Firefox and older browsers without initial-letter support.
    WebKit/Blink vertically center a floated ::first-letter on the line box,
    so we only use this hack where initial-letter is unavailable. */
-article:has(> h1) > p:first-of-type::first-letter {
+article:has(> h1) > p:first-of-type::first-letter,
+article:has(> h1) > .e-content > p:first-of-type::first-letter {
   float: left;
   font-family: "Cooper*", Georgia, serif;
   /* glyph fits inside float box when line-height == 1;
@@ -697,7 +703,8 @@ article:has(> h1) > p:first-of-type::first-letter {
 /* Native drop cap for Safari/WebKit/Blink: initial-letter aligns the cap to
    the top of the paragraph and spans 3 lines without float hacks. */
 @supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
-  article:has(> h1) > p:first-of-type::first-letter {
+  article:has(> h1) > p:first-of-type::first-letter,
+  article:has(> h1) > .e-content > p:first-of-type::first-letter {
     -webkit-initial-letter: 3;
     initial-letter: 3;
 
@@ -759,6 +766,13 @@ article:has(> h1) > p:first-of-type::first-letter {
   color: var(--muted);
   font-variant: small-caps;
   letter-spacing: 0.04em;
+}
+
+/* The hash is decoration, not part of the tag. Keeping it out of the anchor
+   text means the microformats2 `p-category` on these links parses as "nix"
+   rather than "#nix". */
+.tags a::before {
+  content: "#";
 }
 
 .tags a:hover {

@@ -27,18 +27,25 @@
 <h1>{{ config.title }}{% if config.extra.pronouns %} <span class="pronouns">{{ config.extra.pronouns }}</span>{% endif %}</h1>
 <p>Finn's space for ramblings. Enjoy your stay.</p>
 
+{# Each listing is an h-entry too, so an indie reader subscribed to the
+   homepage sees the same structure a permalink gives it. See page.html for
+   why the invisible properties are <data> elements. #}
 {% for page in paginator.pages %}
-<article>
-  <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+<article class="h-entry">
+  <h2><a class="u-url p-name" href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
   {% if page.date %}
-  <time datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
+  <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
   {% endif %}
-  {% if page.summary %}{{ page.summary | safe }}{% endif %} {% if
+  <span class="p-author h-card">
+    <data class="p-name" value="{{ config.author }}"></data>
+    <data class="u-url" value="{{ config.base_url }}about/"></data>
+  </span>
+  {% if page.summary %}<div class="e-summary">{{ page.summary | safe }}</div>{% endif %} {% if
   page.taxonomies and page.taxonomies.tags %}
   <nav class="tags" aria-label="Tags">
     {% for tag in page.taxonomies.tags %} {% set term =
     get_taxonomy_term(kind="tags", term=tag) %}
-    <a href="{{ term.permalink | safe }}">#{{ tag }}</a>
+    <a class="p-category" href="{{ term.permalink | safe }}">{{ tag }}</a>
     {% endfor %}
   </nav>
   {% endif %}
