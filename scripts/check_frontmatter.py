@@ -15,9 +15,18 @@ Checks, all fatal:
      and identical descriptions are also worth avoiding on their own.
   3. `extra.cover_alt`, where set, mentions the post's own title.
 
-Usage:  python3 scripts/check_frontmatter.py [content-dir]
+And one advisory check, with `--since <ref>`: a post whose *body* changed since
+that ref without `updated` moving. The machinery that consumes `updated`
+(article:modified_time, dateModified, the feed's <updated>, sitemap lastmod)
+has always been there and has never been fed, because remembering is the hard
+part. This is the reminder, not a rule — plenty of edits are typo fixes that
+have no business claiming freshness — so it warns and exits 0.
+
+Usage:  python3 scripts/check_frontmatter.py [content-dir] [--since REF]
 """
 
+import argparse
+import subprocess
 import sys
 import tomllib
 from pathlib import Path
@@ -40,6 +49,51 @@ def split_front_matter(text: str):
     return None
 
 
+def strip_front_matter(text: str) -> str:
+    """The body of a content file, with its front matter removed."""
+    for fence in ("+++", "---"):
+        if text.startswith(fence + "\n"):
+            end = text.find("\n" + fence, len(fence))
+            if end != -1:
+                return text[end + len(fence) + 1:]
+    return text
+
+
+def git(*args: str) -> str | None:
+    result = subprocess.run(
+        ("git", *args), capture_output=True, text=True, check=False
+    )
+    return result.stdout if result.returncode == 0 else None
+
+
+def stale_updated(content: Path, ref: str) -> list[str]:
+    """Posts whose body moved since `ref` while `updated` stayed put."""
+    changed = git("diff", "--name-only", ref, "--", str(content))
+    if changed is None:
+        print(f"note: cannot diff against {ref}; skipping the updated check")
+        return []
+
+    notices = []
+    for name in changed.splitlines():
+        path = Path(name)
+        if path.name == "_index.md" or path.suffix != ".md" or not path.is_file():
+            continue
+        before = git("show", f"{ref}:{name}")
+        if before is None:  # newly added; nothing to be stale about
+            continue
+        now = path.read_text(encoding="utf-8")
+        if strip_front_matter(before).strip() == strip_front_matter(now).strip():
+            continue  # front-matter-only edit
+        old_meta = split_front_matter(before) or {}
+        new_meta = split_front_matter(now) or {}
+        if old_meta.get("updated") == new_meta.get("updated"):
+            notices.append(
+                f"{path}: body changed but `updated` did not. Set "
+                f"`updated: YYYY-MM-DD` if this was a substantive revision."
+            )
+    return notices
+
+
 def posts(content: Path):
     """Every page in content/ that is a post rather than a section index."""
     for path in sorted(content.rglob("*.md")):
@@ -51,7 +105,16 @@ def posts(content: Path):
 
 
 def main() -> int:
-    content = Path(sys.argv[1] if len(sys.argv) > 1 else "content")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("content", nargs="?", type=Path, default=Path("content"))
+    parser.add_argument(
+        "--since",
+        metavar="REF",
+        help="also warn about posts edited since REF without bumping `updated`",
+    )
+    args = parser.parse_args()
+
+    content = args.content
     if not content.is_dir():
         print(f"error: {content} is not a directory", file=sys.stderr)
         return 2
@@ -92,6 +155,12 @@ def main() -> int:
         return 1
 
     print(f"ok: front matter consistent across {count} posts")
+
+    # Advisory, and last, so it never obscures a real failure above.
+    if args.since:
+        for notice in stale_updated(content, args.since):
+            # GitHub renders this as an annotation; a plain shell just sees it.
+            print(f"::warning::{notice}")
     return 0
 
 

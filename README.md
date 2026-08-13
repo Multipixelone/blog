@@ -100,6 +100,21 @@ recent posts — instead of a wall of XML. One stylesheet handles both formats.
 Feed readers ignore it entirely, and a browser without XSLT falls back to
 showing the raw XML.
 
+## Revising a post
+
+Set `updated` in the front matter when an edit is substantive:
+
+```yaml
+updated: 2026-08-13
+```
+
+It feeds `article:modified_time`, the JSON-LD `dateModified`, the feed's
+`<updated>` and the sitemap's `lastmod` — all of which have been wired up since
+the beginning and never fed. On pull requests CI warns (without failing) when a
+post's body changed and `updated` didn't, since remembering is the whole
+difficulty. Typo fixes have no business claiming freshness, so it stays a
+warning.
+
 ## Comments
 
 There is no comment system. A post gets a comment section by pointing at its

@@ -79,7 +79,7 @@ The head is already better than most commercial sites. What's left:
       no-URL entries) so Google/knowledge-graph consumers see Mastodon, LinkedIn,
       etc. Same for a `Person` block on the About page itself, which currently has
       no JSON-LD despite being the canonical "who is this" URL.
-- [ ] **Use `updated` front-matter when you revise posts.** The machinery
+- [x] **Use `updated` front-matter when you revise posts.** The machinery
       (`article:modified_time`, `dateModified`, feed `<updated>`, sitemap lastmod)
       all keys off `page.updated` and it's never set. Worth adopting as a habit for
       substantive edits — freshness signals are real for evergreen technical posts.
@@ -163,11 +163,10 @@ Fonts are the whole story here; the rest of the page is effectively free.
 - [x] **Footnote back-links & styling.** If/when posts use footnotes, Zola's
       default markup benefits from `[markdown] bottom_footnotes = true` plus a
       return-arrow style. Cheap to do now, before the first footnoted post.
-- [ ] **Privacy-respecting analytics.** Right now you have zero signal on
-      readership. GoatCounter (free, no-cookie, ~3KB script or even pixel-only
-      mode) fits the site's ethos; even just Cloudflare's server-side analytics
-      (if you adopt §5's proxying) answers "did anyone read this" without any
-      client JS.
+- [x] **Privacy-respecting analytics.** _Decided against, for now._ No
+      client-side counter; `humans.txt` says so out loud. Cloudflare's
+      server-side numbers are there if the question ever becomes pressing, and
+      cost the reader nothing.
 - [x] **`security.txt`.** You publish a PGP key and care about verifiable
       contact — `/.well-known/security.txt` (RFC 9116) is the machine-readable
       version: `Contact:`, `Encryption: https://blog.finnrut.is/pgp.asc`,
@@ -202,8 +201,10 @@ Fonts are the whole story here; the rest of the page is effectively free.
       uncommitted local modifications — commit or stash so deploys match the tree.
 - [x] `--base-url` flag in `gen_og_cards.py` is declared "(unused)" — drop it
       or use it, half-dead flags confuse future-you.
-- [ ] `author_twitter = "@Multipixelone"` powers `twitter:site`/`creator`;
+- [x] `author_twitter = "@Multipixelone"` powers `twitter:site`/`creator`;
       if X stops mattering to you, the tags are harmless but the profile row +
-      meta could be retired together.
+      meta could be retired together. _Kept, deliberately._ Both the profile row
+      and the meta tags stay; retiring them is a two-line change in `zola.toml`
+      whenever that changes.
 - [x] Consider `humans.txt` for the same audience as the build badge — people
       who view source. You clearly enjoy this class of easter egg.
