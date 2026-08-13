@@ -145,7 +145,7 @@ Fonts are the whole story here; the rest of the page is effectively free.
 
 ## 6. Site features
 
-- [ ] **Search.** Five posts don't need it yet, but the nice-fit option for
+- [x] **Search.** Five posts don't need it yet, but the nice-fit option for
       this stack is [Pagefind](https://pagefind.app/) — runs over the built output
       (drop it into the flake's `buildPhase` like the OG script), fully static,
       ~10KB JS lazily loaded only when the search box is used. Alternatively

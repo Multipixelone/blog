@@ -47,6 +47,10 @@ jobs:
         env:
           SITE_COMMIT: ${{ github.sha }}
         run: nix develop --command zola build --base-url http://localhost:8080 --output-dir ./public
+      # /search/ loads its assets from /pagefind/, which only exists once the
+      # index is built. Without this the audited search page is a dead end.
+      - name: Build search index
+        run: nix develop --command pagefind --site ./public
       - name: Serve site
         run: |
           nohup python3 -m http.server 8080 --directory ./public >/dev/null 2>&1 &

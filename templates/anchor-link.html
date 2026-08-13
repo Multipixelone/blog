@@ -5,5 +5,8 @@
 
     `#` matches the tag pages' hash and inherits the palette. The link is hidden
     with opacity rather than display:none so it stays in the tab order, and
-    `.zola-anchor:focus-visible` brings it back for keyboard users. -#}
-<a class="zola-anchor" href="#{{ id }}" aria-label="Link to this section">#</a>
+    `.zola-anchor:focus-visible` brings it back for keyboard users.
+
+    data-pagefind-ignore keeps the "#" out of the search index, where it
+    would otherwise appear once per heading in every excerpt. -#}
+<a class="zola-anchor" href="#{{ id }}" aria-label="Link to this section" data-pagefind-ignore>#</a>

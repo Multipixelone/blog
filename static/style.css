@@ -753,6 +753,29 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
 }
 
 /* ------------------------------------------------------------------
+   Search — Pagefind's default UI, retinted. It exposes its own custom
+   properties for exactly this, so the whole theme is a variable block
+   rather than a fight with its selectors. Loaded only on /search/.
+   ------------------------------------------------------------------ */
+.search-intro {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.search-ui {
+  --pagefind-ui-scale: 0.9;
+  --pagefind-ui-primary: var(--accent);
+  --pagefind-ui-text: var(--ink);
+  --pagefind-ui-background: var(--paper);
+  --pagefind-ui-border: var(--border);
+  --pagefind-ui-tag: var(--paper-shade);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 4px;
+  --pagefind-ui-font: "Sabon Next", Georgia, "Times New Roman", serif;
+  margin-top: 1.5rem;
+}
+
+/* ------------------------------------------------------------------
    Archive — every post, by year. Deliberately dense: no summaries, no
    tags, one line per post, so a long-time reader can scan it.
    ------------------------------------------------------------------ */

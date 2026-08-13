@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
+{% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block og_title %}{{ section.title }} — {{ config.title }}{% endblock og_title %}
+{% block og_url %}{{ section.permalink }}{% endblock og_url %}
+{% block og_description %}{{ section.description | default(value=config.description) }}{% endblock og_description %}
+{% block canonical %}{{ section.permalink }}{% endblock canonical %}
+{#- Nothing here to index or rank: the page is empty until the reader types. #}
+{% block robots_meta %}<meta name="robots" content="noindex, follow">{% endblock robots_meta %}
+
+{% block content %}
+{#- Pagefind (https://pagefind.app). The index is built from the finished HTML
+    by `pagefind --site $out` in flake.nix, so it always matches what shipped.
+    Its assets are loaded here and only here — no other page pays for search.
+
+    Under `zola serve` there is no /pagefind/ directory, so this page stays
+    empty in dev; run `nix build` to exercise it. #}
+<link rel="stylesheet" href="{{ get_url(path="pagefind/pagefind-ui.css", trailing_slash=false) }}">
+
+<h1>{{ section.title }}</h1>
+<p class="search-intro">Full text of every post. The index loads when you start typing.</p>
+
+<div id="search" class="search-ui"></div>
+
+<noscript>
+  <p>
+    Search needs JavaScript. Without it, <a href="{{ get_url(path="@/archive/_index.md") }}">the
+    archive</a> lists every post on one page and <a href="{{ get_url(path="/tags/") }}">the
+    tags</a> group them by subject.
+  </p>
+</noscript>
+
+<script src="{{ get_url(path="pagefind/pagefind-ui.js", trailing_slash=false) }}"></script>
+<script>
+(function () {
+  function init() {
+    if (typeof PagefindUI !== 'function') return;
+    new PagefindUI({
+      element: '#search',
+      showImages: false,
+      showSubResults: true,
+      excerptLength: 25,
+      resetStyles: false
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+{% endblock %}

@@ -55,7 +55,7 @@
     properties are <data> elements — the p-*/u-* parsing algorithms read their
     `value` attribute and they render nothing. #}
 {%- set pgp_page = get_section(path="pgp/_index.md") %}
-<article class="h-card">
+<article class="h-card" data-pagefind-body>
   <h1>{{ section.title }}</h1>
   <data class="p-name" value="{{ config.author }}"></data>
   <data class="u-url u-uid" value="{{ section.permalink | safe }}"></data>

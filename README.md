@@ -130,6 +130,21 @@ fetch instructions instead of leaving a dead download link. The filename and the
 fingerprint live in `[extra.pgp]` in `zola.toml`, which also feeds the About
 page's fingerprint line.
 
+## Search
+
+`/search/` is served by [Pagefind](https://pagefind.app/), which indexes the
+*built* HTML — so the index can never disagree with what shipped. `flake.nix`
+runs `pagefind --site $out` as the last build step.
+
+Only elements marked `data-pagefind-body` are indexed: post articles and the
+About page. Listing pages therefore stay out of the results instead of
+duplicating every post's summary, and the table of contents and heading anchors
+carry `data-pagefind-ignore` so neither pollutes the excerpts.
+
+The UI assets load on `/search/` and nowhere else. Under `zola serve` there is
+no `/pagefind/` directory, so that page is inert in dev; `nix build` exercises
+it.
+
 ## Well-known files
 
 `static/.well-known/security.txt` (RFC 9116) points at the same contact address

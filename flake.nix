@@ -30,6 +30,8 @@
               # woff2_decompress (Cooper ships as woff2; Pillow needs ttf).
               (pkgs.python3.withPackages (ps: [ ps.pillow ]))
               pkgs.woff2
+              # Static search: indexes the built HTML, no service and no runtime.
+              pkgs.pagefind
             ];
             buildPhase = ''
               zola build --output-dir $out
@@ -44,6 +46,11 @@
               python3 scripts/gen_og_cards.py \
                 --out $out --font-dir fonts-ttf \
                 --title "Finn Rutis" --base-url "https://blog.finnrut.is/"
+
+              # Search index, built from the finished HTML. Only elements marked
+              # data-pagefind-body are indexed (see templates/page.html), so
+              # listing pages don't drown the results in duplicates.
+              pagefind --site $out
             '';
             dontInstall = true;
           };
@@ -57,6 +64,7 @@
               pkgs.zola
               (pkgs.python3.withPackages (ps: [ ps.pillow ]))
               pkgs.woff2
+              pkgs.pagefind
             ];
             # Give `zola serve` the same footer badge the real build gets from
             # `self.rev` — with the same "-dirty" convention.

@@ -93,7 +93,7 @@
    <data> is the spec's element for a property with no visible text: both the
    p-* and u-* parsing algorithms read its `value` attribute, and it renders
    nothing. Beats the usual trick of hiding an empty <a>. #}
-<article class="h-entry">
+<article class="h-entry" data-pagefind-body>
   <h1 class="p-name">{{ page.title }}</h1>
   {% if page.date %}
   <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
@@ -121,7 +121,7 @@
   {%- set_global heading_count = heading_count + child_count %}
   {%- endfor %}
   {%- if heading_count >= 3 %}
-  <details class="toc">
+  <details class="toc" data-pagefind-ignore>
     <summary>Contents</summary>
     <nav aria-label="Table of contents">
       <ol>
