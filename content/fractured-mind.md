@@ -1,7 +1,7 @@
 ---
 title: "Fractured Mind: Who can I talk to about this"
 date: 2026-08-12
-description: A musical theatre performer who does devrel at an AI company, trying to work out how much of the job is sayable out loud to the people I love.
+description: a theatre kid who works w/ AI has a couple opinions abt robots
 slug: fractured-mind
 template: page.html
 taxonomies:
@@ -30,4 +30,4 @@ I'm going to have to ignore the ethical concerns about AI just for this blog pos
 
 I don't think AI should be used for anything that could be interpreted as coming from a real person. Voiceover, marketing prose, 
 
-AI has no soul, no creative edge. Any creative prowess it _might_ exhibit is just a natural consequence of having consumed as much as we can gather of the entirety of human knowledge and creation. It's simply dragging together pieces in _slightly_ novel ways. Sometimes, these novel ways appear to be, for lack of a better word, magical. But they are no more magical than a magic 8-ball. LLMs are the exact same object but on a truly obscene scale. A die with a billion, billion faces. Every side carved but something a human wrote once upon a time. Words floating up out of the dark purple liquid(...?).  
+AI has no soul, no creative edge. Any creative prowess it _might_ exhibit is just a natural consequence of having consumed as much as we can gather of the entirety of human knowledge and creation. It's simply dragging together pieces in _slightly_ novel ways. Sometimes, these novel ways appear to be, for lack of a better word, magical. But they are no more magical than a magic 8-ball. LLMs are the exact same object but on a truly obscene scale. A die with a billion, billion faces. Every side carved but something a human wrote once upon a time. Words floating up out of the dark purple liquid(...?) 
