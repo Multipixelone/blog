@@ -18,4 +18,4 @@ Finally got around to mapping my whole music library into a visualizer. You can 
 
 <!-- more -->
 
-Find it at [albums.finnrut.is](albums.finnrut.is). More ramblings to come.
+Find it at [albums.finnrut.is](https://albums.finnrut.is). More ramblings to come.
