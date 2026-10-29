@@ -1596,33 +1596,38 @@ h6:hover > .zola-anchor,
 }
 
 .site-footer .footer-meta > * {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.site-footer .footer-meta > a {
+.footer-meta-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.footer-meta-right {
+  justify-content: flex-end;
+  margin-left: auto;
+  text-align: right;
+}
+
+.site-footer .footer-meta > span > a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   color: inherit;
 }
 
-.site-footer .footer-meta > a:is(:hover, :focus-visible) {
+.site-footer .footer-meta > span > a:is(:hover, :focus-visible) {
   color: var(--accent-hover);
-}
-
-.build-credit {
-  margin-left: auto;
 }
 
 .build-heart {
   color: var(--accent);
-}
-
-@container site-footer (width < 48rem) {
-  .build-credit {
-    margin-left: 0;
-  }
 }
 
 .build-badge {

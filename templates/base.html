@@ -154,8 +154,14 @@
     {%- set commit = get_env(name="SITE_COMMIT", default="") %}
     {%- set parts = commit | split(pat="-") %}
     <p class="footer-meta">
+      <span class="footer-meta-left">
       <span class="copyright">&copy; {{ now() | date(format="%Y") }} Finn Rutis</span>
       <a href="{{ get_url(path="fonts/LICENSE.md", trailing_slash=false) }}">Cooper* license</a>
+      </span>
+      <span class="footer-meta-right">
+      <span class="build-credit">
+        made by Finn with Zola <span class="build-heart" role="img" aria-label="love">&lt;3</span>
+      </span>
       {%- if commit %}
       <a class="build-badge" href="{{ config.extra.repo_url }}/commit/{{ parts | first }}">
         {{ icons::icon(name="commit") }}
@@ -168,8 +174,6 @@
         <span>built from this repo</span>
       </a>
       {%- endif %}
-      <span class="build-credit">
-        made by Finn with Zola <span class="build-heart" role="img" aria-label="love">&lt;3</span>
       </span>
     </p>
   </footer>
