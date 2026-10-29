@@ -126,7 +126,7 @@
   <footer class="site-footer">
     <div class="footer-directory">
     <h2 id="footer-title">Elsewhere.</h2>
-    <nav class="footer-links" aria-labelledby="footer-title">
+    <nav class="footer-directory-links" aria-labelledby="footer-title">
       {%- for profile in config.extra.profiles | default(value=[]) %}
       {%- if profile.footer %}
       <a href="{{ profile.url }}" rel="me">
@@ -154,7 +154,8 @@
     {%- set commit = get_env(name="SITE_COMMIT", default="") %}
     {%- set parts = commit | split(pat="-") %}
     <p class="footer-meta">
-      <span class="copyright">Made by Finn with Zola ♡</span>
+      <span class="copyright">&copy; {{ now() | date(format="%Y") }} Finn Rutis</span>
+      <a href="{{ get_url(path="fonts/LICENSE.md", trailing_slash=false) }}">Cooper* license</a>
       {%- if commit %}
       <a class="build-badge" href="{{ config.extra.repo_url }}/commit/{{ parts | first }}">
         {{ icons::icon(name="commit") }}
@@ -167,6 +168,9 @@
         <span>built from this repo</span>
       </a>
       {%- endif %}
+      <span class="build-credit">
+        made by Finn with Zola <span class="build-heart" role="img" aria-label="love">&lt;3</span>
+      </span>
     </p>
   </footer>
 

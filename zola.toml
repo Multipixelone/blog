@@ -126,7 +126,7 @@ name = "Mastodon"
 handle = "@tunnelmaker@pony.social"
 url = "https://pony.social/@tunnelmaker"
 icon = "mastodon"
-footer = true
+footer = false
 verify = true
 
 [[extra.profiles]]
@@ -134,7 +134,7 @@ name = "X"
 handle = "@Multipixelone"
 url = "https://x.com/Multipixelone"
 icon = "x"
-footer = true
+footer = false
 
 [[extra.profiles]]
 name = "LinkedIn"
@@ -145,8 +145,8 @@ footer = true
 
 [[extra.profiles]]
 name = "Resume"
-handle = "resume.finnrut.is"
-url = "https://resume.finnrut.is/"
+handle = "finnrut.is/resumes"
+url = "https://finnrut.is/resumes/"
 icon = "resume"
 footer = true
 

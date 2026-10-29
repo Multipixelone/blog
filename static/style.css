@@ -1493,20 +1493,24 @@ h6:hover > .zola-anchor,
   letter-spacing: -0.02em;
 }
 
-.site-footer .footer-links {
-  display: flex;
-  flex-wrap: wrap;
+.site-footer .footer-directory-links {
+  /* Use a distinct name from the old 44px icon-only row: cached legacy CSS
+     must not squeeze the new text labels into fixed-width icon boxes. */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
   gap: 0.5rem 0.75rem;
-  margin-inline-start: -0.65rem;
+  margin: 0;
 }
 
-.site-footer .footer-links a {
+.site-footer .footer-directory-links a {
   position: relative;
   isolation: isolate;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   min-width: 0;
+  width: auto;
+  height: auto;
   min-height: 44px;
   padding: 0.6rem 0.9rem 0.6rem 0.65rem;
   /* Reset the header's generic nav typography without changing the header. */
@@ -1555,24 +1559,24 @@ h6:hover > .zola-anchor,
   border-inline-start: 1px dashed var(--border);
 }
 
-.footer-links a:nth-child(even) {
+.footer-directory-links a:nth-child(even) {
   --slip-angle: 1.5deg;
 }
 
-.site-footer .footer-links a:is(:hover, :focus-visible, [aria-current="page"]) {
+.site-footer .footer-directory-links a:is(:hover, :focus-visible, [aria-current="page"]) {
   color: var(--accent-hover);
 }
 
-.footer-links a:is(:hover, :focus-visible, [aria-current="page"]) .footer-link-paper {
+.footer-directory-links a:is(:hover, :focus-visible, [aria-current="page"]) .footer-link-paper {
   opacity: 1;
 }
 
-.footer-links a:is(:hover, :focus-visible, [aria-current="page"]) .footer-link-label {
+.footer-directory-links a:is(:hover, :focus-visible, [aria-current="page"]) .footer-link-label {
   text-decoration-color: currentColor;
   text-decoration-thickness: 2px;
 }
 
-.site-footer .footer-links a:focus-visible {
+.site-footer .footer-directory-links a:focus-visible {
   z-index: 1;
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -1583,12 +1587,42 @@ h6:hover > .zola-anchor,
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 0.25rem 1.5rem;
   margin: 1rem 0 0;
   padding-top: 0.75rem;
   border-top: 1px dashed var(--border);
   font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.site-footer .footer-meta > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.site-footer .footer-meta > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: inherit;
+}
+
+.site-footer .footer-meta > a:is(:hover, :focus-visible) {
+  color: var(--accent-hover);
+}
+
+.build-credit {
+  margin-left: auto;
+}
+
+.build-heart {
+  color: var(--accent);
+}
+
+@container site-footer (width < 48rem) {
+  .build-credit {
+    margin-left: 0;
+  }
 }
 
 .build-badge {
@@ -1629,15 +1663,8 @@ h6:hover > .zola-anchor,
     transition: opacity 150ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .footer-links a:is(:hover, :focus-visible, [aria-current="page"]) .footer-link-paper {
+  .footer-directory-links a:is(:hover, :focus-visible, [aria-current="page"]) .footer-link-paper {
     transform: rotate(var(--slip-angle, -2deg));
-  }
-}
-
-@container site-footer (width < 28rem) {
-  .site-footer .footer-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
   }
 }
 
