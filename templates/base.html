@@ -123,18 +123,28 @@
     {% block content %}{% endblock %}
   </main>
 
-  <footer>
-    {# Icon row. Each link carries its own aria-label/title — the SVGs are
-       aria-hidden, so the label is the only accessible name. #}
-    <nav class="footer-links" aria-label="Elsewhere">
+  <footer class="site-footer">
+    <div class="footer-directory">
+    <h2 id="footer-title">Elsewhere.</h2>
+    <nav class="footer-links" aria-labelledby="footer-title">
       {%- for profile in config.extra.profiles | default(value=[]) %}
       {%- if profile.footer %}
-      <a href="{{ profile.url }}" rel="me" title="{{ profile.name }}" aria-label="{{ profile.name }}">{{ icons::icon(name=profile.icon) }}</a>
+      <a href="{{ profile.url }}" rel="me">
+        <span class="footer-link-paper" aria-hidden="true"></span>
+        {{ icons::icon(name=profile.icon) }}<span class="footer-link-label">{{ profile.name }}</span>
+      </a>
       {%- endif %}
       {%- endfor %}
-      <a href="{{ get_url(path="@/pgp/_index.md") }}" title="PGP key" aria-label="PGP key">{{ icons::icon(name="key") }}</a>
-      <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}" type="application/rss+xml" title="RSS feed" aria-label="RSS feed">{{ icons::icon(name="rss") }}</a>
+      <a href="{{ get_url(path="@/pgp/_index.md") }}"{% if current_path | default(value="") == "/pgp/" %} aria-current="page"{% endif %}>
+        <span class="footer-link-paper" aria-hidden="true"></span>
+        {{ icons::icon(name="key") }}<span class="footer-link-label">PGP key</span>
+      </a>
+      <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}" type="application/rss+xml">
+        <span class="footer-link-paper" aria-hidden="true"></span>
+        {{ icons::icon(name="rss") }}<span class="footer-link-label">RSS feed</span>
+      </a>
     </nav>
+    </div>
 
     {# Build provenance. SITE_COMMIT comes from the flake's git revision (see
        flake.nix) or the dev shell's shellHook under `zola serve`; ad-hoc builds
@@ -144,8 +154,7 @@
     {%- set commit = get_env(name="SITE_COMMIT", default="") %}
     {%- set parts = commit | split(pat="-") %}
     <p class="footer-meta">
-      <span class="copyright">&copy; {{ now() | date(format="%Y") }} {{ config.author }}</span>
-      <span class="sep" aria-hidden="true">&middot;</span>
+      <span class="copyright">Made by Finn with Zola ♡</span>
       {%- if commit %}
       <a class="build-badge" href="{{ config.extra.repo_url }}/commit/{{ parts | first }}">
         {{ icons::icon(name="commit") }}
