@@ -1,7 +1,7 @@
 ---
 title: "Exploring my Library: Album Graph"
 date: 2026-10-06
-description:
+description: "I mapped my whole music library into a graph you can fly around and search with plain-language questions."
 slug: album-graph
 template: page.html
 taxonomies:

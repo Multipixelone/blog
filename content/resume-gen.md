@@ -28,7 +28,7 @@ Here's a laundry list of things that make me despise resume construction:
 
 It all came to a head when I got a new job and wanted to add it to my resume. Four different files to open. Four different summaries to write. I sat on it and knew there had to be a better way. From years of managing infrastructure-as-code, I instinctively wanted a single source of truth for everything. Change a fact about a previous gig, and I should just have to push that change to see it reflected on all my resumes.
 
-I overengineered the _heck_ out of this. I set up CI so every commit rebuilds all my resumes. Page-count checks catch any layout that spills over. A Nix flake pins every dependency so it builds the same way on any machine. It works everywhere, and nothing hits my [resume website](https://resume.finnrut.is/) before I am absolutely sure it's my best work.
+I overengineered the _heck_ out of this. I set up CI so every commit rebuilds all my resumes. Page-count checks catch any layout that spills over. A Nix flake pins every dependency so it builds the same way on any machine. It works everywhere, and nothing hits my [resume website](https://finnrut.is/resumes/) before I am absolutely sure it's my best work.
 
 That one metadata file now feeds around thirty variants covering acting, tech, work, nanny, and a bunch of theatre and startup spins, so a single date change rebuilds all of them.
 
