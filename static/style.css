@@ -683,6 +683,116 @@ article h2 a:hover {
   text-decoration: underline;
 }
 
+/* Home — a journal's contents, with the opening paragraph doing the inviting.
+   Keep these rules local: tag feeds and full posts use the same h-entry markup. */
+.home-posts .home-entry {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  padding-block: 2rem;
+  overflow-wrap: anywhere;
+}
+
+.home-posts .home-entry:first-child {
+  padding-top: 0.5rem;
+}
+
+.home-posts .home-entry--latest:first-child {
+  padding-block: 1.5rem 3rem;
+}
+
+.home-entry h2 {
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
+}
+
+.home-entry--latest h2 {
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2rem);
+}
+
+.home-entry-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.65rem;
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.home-entry-meta time,
+.home-entry-meta .reading-time {
+  margin: 0;
+  font-size: inherit;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.home-entry-meta .reading-time > span {
+  margin-right: 0.65rem;
+}
+
+.home-entry .e-summary > :first-child {
+  margin-top: 0;
+}
+
+.home-entry .e-summary > :last-child {
+  margin-bottom: 0;
+}
+
+.home-entry--latest .e-summary {
+  font-size: 1.1875rem;
+}
+
+.home-entry .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin-top: 1rem;
+}
+
+.home-entry .tags a {
+  margin: 0;
+  padding-block: 0.25rem;
+  font-weight: 400;
+}
+
+/* One native post link covers the entry, including its whitespace. Existing
+   summary and tag links stay above it, with their own destinations and focus. */
+.home-entry-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 4px;
+}
+
+.home-entry .e-summary a,
+.home-entry .tags a {
+  position: relative;
+  z-index: 1;
+}
+
+.home-entry-link {
+  text-underline-offset: 0.15em;
+}
+
+.home-entry-link:focus-visible {
+  outline: none;
+}
+
+.home-entry-link:focus-visible::after,
+.home-entry .e-summary a:focus-visible,
+.home-entry .tags a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.home-entry-link:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 /* Contain the floated drop cap so a short first paragraph still pushes the
    next paragraph below the 3-line float box instead of letting it wrap up.
 

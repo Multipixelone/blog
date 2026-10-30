@@ -39,18 +39,32 @@
 {# Each listing is an h-entry too, so an indie reader subscribed to the
    homepage sees the same structure a permalink gives it. See page.html for
    why the invisible properties are <data> elements. #}
+<div class="home-posts">
 {% for page in paginator.pages %}
-<article class="h-entry">
-  <h2><a class="u-url p-name" href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
-  {% if page.date %}
-  <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
-  {% endif %}
+<article class="h-entry home-entry{% if loop.first and paginator.current_index == 1 %} home-entry--latest{% endif %}">
+  <h2><a class="u-url p-name home-entry-link" href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+  <p class="home-entry-meta">
+    {% if page.date %}
+    <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%B %-d, %Y") }}</time>
+    {% endif %}
+    <span class="reading-time">{% if page.date %}<span aria-hidden="true">·</span> {% endif %}{{ page.reading_time }} min read</span>
+  </p>
   <span class="p-author h-card">
     <data class="p-name" value="{{ config.author }}"></data>
     <data class="u-url" value="{{ get_url(path="@/about/_index.md") }}"></data>
   </span>
-  {% if page.summary %}<div class="e-summary">{{ page.summary | safe }}</div>{% endif %} {% if
-  page.taxonomies and page.taxonomies.tags %}
+  {% if page.summary %}
+  <div class="e-summary">{{ page.summary | safe }}</div>
+  {% else %}
+  {# An unmarked post still opens in Finn's voice, not its search description.
+     Stop at the first paragraph and strip markup before truncating. Rendered
+     text is already escaped, so safe keeps entities from being escaped twice. #}
+  {% set opening = page.content | split(pat="</p>") | first | striptags | trim %}
+  {% if opening %}
+  <div class="e-summary"><p>{{ opening | truncate(length=360) | safe }}</p></div>
+  {% endif %}
+  {% endif %}
+  {% if page.taxonomies and page.taxonomies.tags %}
   <nav class="tags" aria-label="Tags">
     {% for tag in page.taxonomies.tags %} {% set term =
     get_taxonomy_term(kind="tags", term=tag) %}
@@ -59,7 +73,9 @@
   </nav>
   {% endif %}
 </article>
-{% endfor %} {% if paginator.previous or paginator.next %}
+{% endfor %}
+</div>
+{% if paginator.previous or paginator.next %}
 <nav class="pagination">
   {% if paginator.previous %}
   <a href="{{ paginator.previous }}">← Newer</a>
