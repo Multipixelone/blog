@@ -25,3 +25,8 @@ static/fonts/sabon/
 # Python bytecode from the build/check scripts
 __pycache__/
 *.pyc
+
+# Impeccable platform executables (launchers fetch pinned binaries as needed)
+/.agents/skills/impeccable/scripts/bin/
+/.claude/skills/impeccable/scripts/bin/
+/.opencode/skills/impeccable/scripts/bin/

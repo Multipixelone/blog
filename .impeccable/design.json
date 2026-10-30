@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-30T05:12:02Z",
+  "title": "Design System: Finn Rutis — Blog",
+  "extensions": {
+    "colorMeta": {
+      "wings-black": { "role": "neutral", "displayName": "Wings Black", "edition": "dark", "cssVar": "--paper" },
+      "wings-shade": { "role": "neutral", "displayName": "Wings Shade", "edition": "dark", "cssVar": "--paper-shade" },
+      "chalk-ink": { "role": "neutral", "displayName": "Chalk Ink", "edition": "dark", "cssVar": "--ink" },
+      "dust-ink": { "role": "neutral", "displayName": "Dust Ink", "edition": "dark", "cssVar": "--muted" },
+      "footlight-amber": { "role": "primary", "displayName": "Footlight Amber", "edition": "dark", "cssVar": "--accent" },
+      "bright-footlight": { "role": "primary", "displayName": "Bright Footlight", "edition": "dark", "cssVar": "--accent-hover" },
+      "ember-blush": { "role": "neutral", "displayName": "Ember Blush", "edition": "dark", "cssVar": "--selection-bg" },
+      "dark-rule-line": { "role": "neutral", "displayName": "Dark Rule Line", "edition": "dark", "cssVar": "--border" },
+      "dark-code-border": { "role": "neutral", "displayName": "Dark Code Border", "edition": "dark", "cssVar": "--code-border" },
+      "gruvbox-dark": { "role": "neutral", "displayName": "Gruvbox Dark", "edition": "dark", "cssVar": "--z-bg" },
+      "playbill-paper": { "role": "neutral", "displayName": "Playbill Paper", "edition": "light", "cssVar": "--paper" },
+      "callboard-card": { "role": "neutral", "displayName": "Callboard Card", "edition": "light", "cssVar": "--paper-shade" },
+      "program-ink": { "role": "neutral", "displayName": "Program Ink", "edition": "light", "cssVar": "--ink" },
+      "faded-ink": { "role": "neutral", "displayName": "Faded Ink", "edition": "light", "cssVar": "--muted" },
+      "marquee-rust": { "role": "primary", "displayName": "Marquee Rust", "edition": "light", "cssVar": "--accent" },
+      "deep-marquee-rust": { "role": "primary", "displayName": "Deep Marquee Rust", "edition": "light", "cssVar": "--accent-hover" },
+      "stub-blush": { "role": "neutral", "displayName": "Stub Blush", "edition": "light", "cssVar": "--selection-bg" },
+      "rule-line": { "role": "neutral", "displayName": "Rule Line", "edition": "light", "cssVar": "--border" },
+      "light-code-bg": { "role": "neutral", "displayName": "Light Code Bg", "edition": "light", "cssVar": "--code-bg" },
+      "light-code-border": { "role": "neutral", "displayName": "Light Code Border", "edition": "light", "cssVar": "--code-border" },
+      "alert-note": { "role": "status", "displayName": "Note Blue", "edition": "dark", "lightValue": "#4a6fa5", "surface": { "dark": "#1a2230", "light": "#f0f4fa" } },
+      "alert-tip": { "role": "status", "displayName": "Tip Green", "edition": "dark", "lightValue": "#4a7a4a", "surface": { "dark": "#182218", "light": "#f0f7f0" } },
+      "alert-important": { "role": "status", "displayName": "Important Violet", "edition": "dark", "lightValue": "#6a4a8a", "surface": { "dark": "#221a2a", "light": "#f5f0fa" } },
+      "alert-warning": { "role": "status", "displayName": "Warning Ochre", "edition": "dark", "lightValue": "#a07a2a", "surface": { "dark": "#221e14", "light": "#faf6ee" } },
+      "alert-caution": { "role": "status", "displayName": "Caution Red", "edition": "dark", "lightValue": "#a04a4a", "surface": { "dark": "#221616", "light": "#faf0f0" } }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page and post h1, once per page. Cooper. 1.85rem under 600px." },
+      "headline": { "displayName": "Headline", "purpose": "h2 section heads and index post titles." },
+      "title": { "displayName": "Title", "purpose": "h3; h4-h6 step down at weight 600." },
+      "body": { "displayName": "Body", "purpose": "All prose. 17px under 600px." },
+      "meta": { "displayName": "Meta", "purpose": "Dates, reading time, footnotes, counts; often italic, Dust Ink." },
+      "label": { "displayName": "Label", "purpose": "Small-caps interface labels: nav, tags, pagination, TOC summary." },
+      "code": { "displayName": "Code", "purpose": "Inline code and code blocks." },
+      "mono-label": { "displayName": "Mono Label", "purpose": "Code headers, copy button, counts, handles." }
+    },
+    "shadows": [
+      { "name": "code-card", "value": "inset 0 0 0 1px var(--paper-shade), 0 2px 6px var(--shadow)", "purpose": "Every pre: a code card resting on the page." },
+      { "name": "lift", "value": "0 2px 6px var(--shadow)", "purpose": "Hover on tag chips, Elsewhere cards, key download pill; paired with translateY(-1px)." },
+      { "name": "slip", "value": "drop-shadow(0 2px 2px var(--shadow))", "purpose": "Torn paper slip behind hovered/current footer links." },
+      { "name": "shadow-dark", "value": "rgba(0, 0, 0, 0.2)", "purpose": "--shadow in the dark edition." },
+      { "name": "shadow-light", "value": "rgba(43, 37, 32, 0.06)", "purpose": "--shadow in the light edition." }
+    ],
+    "motion": [
+      { "name": "color-shift", "value": "150ms ease", "purpose": "Link, chip, card and button colour/border/background transitions." },
+      { "name": "anchor-fade", "value": "120ms ease-in-out", "purpose": "Heading anchor opacity." },
+      { "name": "slip-in", "value": "220ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Footer slip rotating in; opacity 150ms ease alongside." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "description": "Footlight Amber with a thin underline; brightens on hover.",
+      "html": "<p class=\"ds-p\">Read the <a class=\"ds-link\" href=\"#\">flake notes</a> first.</p>",
+      "css": ".ds-p { margin: 0; padding: 16px; background: #1c1915; color: #e8e2d8; font: 400 18px/1.75 \"Sabon Next\", Georgia, serif; } .ds-link { color: #ff9e42; text-underline-offset: 0.12em; text-decoration-thickness: 1px; transition: color 0.15s ease; } .ds-link:hover { color: #ffb366; }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "tag-chip",
+      "description": "Pill on the /tags/ index with a mono post count; lifts on hover.",
+      "html": "<div class=\"ds-wrap\"><a class=\"ds-chip\" href=\"#\">nix <span class=\"ds-count\">4</span></a></div>",
+      "css": ".ds-wrap { padding: 16px; background: #1c1915; } .ds-chip { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.3rem 0.7rem 0.4rem; color: #e8e2d8; background: #242019; border: 1px solid #3b342c; border-radius: 999px; text-decoration: none; font: 400 18px/1.15 \"Sabon Next\", Georgia, serif; font-variant: small-caps; letter-spacing: 0.04em; transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease; } .ds-chip:hover { color: #ff9e42; background: #1c1915; border-color: #ff9e42; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.2); } .ds-count { color: #9e9486; font: 400 0.75rem \"PragmataPro Mono Liga\", ui-monospace, monospace; } .ds-chip:hover .ds-count { color: #ff9e42; }"
+    },
+    {
+      "name": "Code Block",
+      "kind": "card",
+      "refersTo": "code-block",
+      "description": "Gruvbox card with sticky filename header and ghost copy button.",
+      "html": "<div class=\"ds-wrap\"><pre class=\"ds-pre\"><div class=\"ds-head\">flake.nix</div><button class=\"ds-copy\" type=\"button\">copy</button><code>{ inputs.nixpkgs.url = \"github:NixOS/nixpkgs\"; }</code></pre></div>",
+      "css": ".ds-wrap { padding: 16px; background: #1c1915; } .ds-pre { position: relative; margin: 0; background: #282828; color: #ebdbb2; border: 1px solid #332d26; border-radius: 4px; font: 400 0.85em/1.6 \"PragmataPro Mono Liga\", ui-monospace, monospace; box-shadow: inset 0 0 0 1px #242019, 0 2px 6px rgba(0,0,0,0.2); overflow: auto; } .ds-head { padding: 0.6rem 0.85rem; font-size: 0.75rem; letter-spacing: 0.03em; color: #9e9486; border-bottom: 1px solid #332d26; } .ds-pre code { display: block; padding: 1rem; } .ds-copy { position: absolute; top: 0.35rem; right: 0.5rem; padding: 0.15rem 0.5rem; font: 400 0.7rem/1.4 \"PragmataPro Mono Liga\", ui-monospace, monospace; color: #9e9486; background: transparent; border: 1px solid #332d26; border-radius: 3px; cursor: pointer; transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease; } .ds-copy:hover, .ds-copy:focus-visible { color: #ff9e42; border-color: #ff9e42; background: #242019; outline: none; }"
+    },
+    {
+      "name": "Table of Contents",
+      "kind": "custom",
+      "refersTo": "toc",
+      "description": "Collapsible details with an amber left stripe.",
+      "html": "<div class=\"ds-wrap\"><details class=\"ds-toc\" open><summary>Contents</summary><ol><li><a href=\"#\">Why flakes</a></li><li><a href=\"#\">The overlay</a></li></ol></details></div>",
+      "css": ".ds-wrap { padding: 16px; background: #1c1915; } .ds-toc { padding: 0.75rem 1rem; border: 1px solid #3b342c; border-left: 3px solid #ff9e42; border-radius: 4px; background: #242019; font: 400 0.9rem/1.6 \"Sabon Next\", Georgia, serif; color: #e8e2d8; } .ds-toc summary { cursor: pointer; color: #9e9486; font-variant: small-caps; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.6rem; } .ds-toc ol { margin: 0; padding-left: 1.2rem; } .ds-toc a { color: #e8e2d8; text-decoration: none; } .ds-toc a:hover { color: #ff9e42; text-decoration: underline; text-underline-offset: 0.15em; }"
+    },
+    {
+      "name": "Markdown Alert (Note)",
+      "kind": "card",
+      "refersTo": "markdown-alert",
+      "description": "Left-border callout; each kind has its own hue.",
+      "html": "<div class=\"ds-wrap\"><div class=\"ds-alert\"><p>Note</p><p>This needs flakes enabled.</p></div></div>",
+      "css": ".ds-wrap { padding: 16px; background: #1c1915; } .ds-alert { border-left: 3px solid #6a8fc5; background: #1a2230; padding: 0.5em 1em; border-radius: 2px; color: #e8e2d8; font: 400 18px/1.75 \"Sabon Next\", Georgia, serif; } .ds-alert p { margin: 0; } .ds-alert p:first-child { font-weight: 600; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Small-caps header nav closed by a rule carrying the ❦ ornament.",
+      "html": "<div class=\"ds-wrap\"><header class=\"ds-header\"><nav><a href=\"#\">Posts</a><a href=\"#\">Archive</a><a href=\"#\">About</a></nav></header></div>",
+      "css": ".ds-wrap { padding: 16px 16px 32px; background: #1c1915; } .ds-header { position: relative; border-bottom: 1px solid #3b342c; padding-bottom: 1rem; } .ds-header::after { content: \"❦\"; position: absolute; left: 50%; bottom: -0.6em; transform: translateX(-50%); padding: 0.1em 0.75rem; background: #1c1915; color: #ff9e42; font: 400 1.15rem/1 \"Cooper*\", Georgia, serif; } .ds-header a { display: inline-block; margin-right: 1.75rem; color: #e8e2d8; text-decoration: none; font: 600 0.95rem \"Sabon Next\", Georgia, serif; font-variant: small-caps; letter-spacing: 0.06em; } .ds-header a:hover { color: #ff9e42; text-decoration: underline; text-underline-offset: 0.15em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Ghost Light",
+    "overview": "The ghost light is the single lamp left burning on an empty stage. The blog is what gets written under it: warm dark paper, a book serif at a comfortable measure, and one footlight amber for everything you can touch. It is the quieter sibling of finnrut.is (The Callboard), sharing Cooper, Sabon Next, PragmataPro, one warm accent and the torn-paper footer slips. Dark is the default edition; the daylight edition is one toggle away.",
+    "keyCharacteristics": [
+      "Warm dark paper with chalky warm ink; never #000 or pure white.",
+      "One accent per edition: Footlight Amber (dark), Marquee Rust (light).",
+      "Cooper for titles and the drop cap; Sabon Next for reading; PragmataPro for code.",
+      "Flat tonal surfaces with hairline rules; shadows only on paper objects.",
+      "Small warm motion, removed under reduced motion."
+    ],
+    "rules": [
+      { "name": "The One Lamp Rule", "body": "Each edition has exactly one accent, used for interactive affordances, focus, the drop cap and the fleuron. Never a fill, body text or heading colour.", "section": "colors" },
+      { "name": "The Ghost Light Rule", "body": "Dark is the default edition for every new reader; light is opt-in and remembered.", "section": "colors" },
+      { "name": "The Warm Dark Rule", "body": "Brown-black darks and bone lights; no #000, #fff or cool greys.", "section": "colors" },
+      { "name": "The Playbill Rule", "body": "Cooper sets page titles, the drop cap, the ornament and the footer heading only.", "section": "typography" },
+      { "name": "The Small Caps Label Rule", "body": "Interface labels are Sabon small caps; mono is for literals.", "section": "typography" },
+      { "name": "The Measure Rule", "body": "Everything, including code, stays inside the 700px column.", "section": "typography" },
+      { "name": "The Paper Casts, Words Don't Rule", "body": "Shadows only on code cards, chips and slips.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do ship the dark edition as the first paint for every new reader.",
+      "Do define every new colour for both editions and keep both passing pa11y contrast.",
+      "Do use var(--accent) for interactive affordances and 2px focus outlines.",
+      "Do keep prose at 18px Sabon Next, 1.75 line height, inside 700px.",
+      "Do use small-caps Sabon for labels and PragmataPro for literals.",
+      "Do guard motion behind prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't introduce a second accent, component gradients, or neon/terminal styling.",
+      "Don't use #000, #fff or cool greys outside print.",
+      "Don't set body text, labels or h2+ in Cooper.",
+      "Don't put shadows on text, rules or icons.",
+      "Don't break content out of the 700px column.",
+      "Don't import the main site's tilted prints, ticket stubs or playbill-scale name into posts."
+    ]
+  }
+}
