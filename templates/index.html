@@ -58,10 +58,17 @@
   {% else %}
   {# An unmarked post still opens in Finn's voice, not its search description.
      Stop at the first paragraph and strip markup before truncating. Rendered
-     text is already escaped, so safe keeps entities from being escaped twice. #}
+     text is already escaped, so safe keeps entities from being escaped twice.
+     A cutoff can land inside an entity such as &amp;, so drop any incomplete
+     trailing entity before adding the ellipsis. #}
   {% set opening = page.content | split(pat="</p>") | first | striptags | trim %}
   {% if opening %}
-  <div class="e-summary"><p>{{ opening | truncate(length=360) | safe }}</p></div>
+  {% set excerpt = opening | truncate(length=360, end="") %}
+  {% if excerpt == opening %}
+  <div class="e-summary"><p>{{ opening | safe }}</p></div>
+  {% else %}
+  <div class="e-summary"><p>{{ excerpt | regex_replace(pattern="&#?[A-Za-z0-9]*$", rep="") | safe }}…</p></div>
+  {% endif %}
   {% endif %}
   {% endif %}
   {% if page.taxonomies and page.taxonomies.tags %}
