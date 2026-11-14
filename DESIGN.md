@@ -83,7 +83,8 @@ spacing:
   lg: "1.25rem"
   xl: "2.5rem"
   xxl: "3rem"
-  measure: "700px"
+  measure: "652px"
+  site-frame: "1200px"
 components:
   inline-code:
     backgroundColor: "{colors.wings-shade}"
@@ -146,7 +147,7 @@ components:
 
 **Creative North Star: "The Ghost Light"**
 
-The ghost light is the single bare lamp left burning on an empty stage after everyone has gone home. This blog is what gets written under it: one person, late, turning a messy day into sentences. The page is warm dark paper, not a black screen; the type is a book serif, read at a comfortable 700px measure; the only colour with any heat is a footlight amber, used for the things you can touch (links, the drop cap, the ❦ under the header, focus rings) and for nothing else.
+The ghost light is the single bare lamp left burning on an empty stage after everyone has gone home. This blog is what gets written under it: one person, late, turning a messy day into sentences. The page is warm dark paper, not a black screen; the type is a book serif, read at a comfortable 652px measure; the only colour with any heat is a footlight amber, used for the things you can touch (links, the drop cap, the ❦ under the header, focus rings) and for nothing else.
 
 It is the sibling of finnrut.is ("The Callboard", recorded in `MAIN_WEBSITE.md`). Both rooms share the same stock: Cooper for titles, Sabon Next for reading, PragmataPro for code and identifiers, one warm accent, paper surfaces with hairline rules, and the torn-paper footer slips. The blog is quieter. There are no tilted prints or ticket stubs on the page; posts are long, often technical, and must be comfortable from first line to last footnote. Personality lives in a few small, deliberate places: the Cooper drop cap, the fleuron, small-caps labels, the slips that lift in the footer.
 
@@ -226,15 +227,15 @@ Markdown alerts (note, tip, important, warning, caution) carry the only other hu
 
 ## Layout
 
-A single centred column: `max-width: 700px`, padding 2rem 1.5rem 3rem (1.25rem 1rem 2rem under 600px). No sidebar, no grid at page level. Vertical rhythm comes from spacing, not boxes: headings get 3rem above and 1rem below; paragraphs and lists 1.25rem below; sections such as footnotes, Related, Comments, pagination and the footer each start with 2.5–4rem of space and a 1px rule.
+A wide site frame surrounds a single centred reading column. Header and footer expand to `max-width: 1200px`, with fluid gutters (`clamp(1.5rem, 4vw, 4rem)`); `main` keeps the incumbent 652px text width (the former 700px body minus its 1.5rem padding on either side). Page padding is 2rem above and 3rem below, reduced to 1.25rem / 2rem with 1rem gutters under 600px. No sidebar, no grid at page level. Vertical rhythm comes from spacing, not boxes: headings get 3rem above and 1rem below; paragraphs and lists 1.25rem below; sections such as footnotes, Related, Comments, pagination and the footer each start with 2.5–4rem of space and a 1px rule.
 
-The header is a single row of small-caps nav links with the theme toggle pushed to the right, closed by a hairline that the ❦ ornament sits on. Posts on the index are separated by a dashed rule. Small grids appear only inside components: the "Elsewhere" cards (`minmax(14rem, 1fr)`) and the footer directory (`minmax(8rem, 1fr)`, with a container query).
+The header is a row of small-caps nav links with the theme toggle pushed to the right, closed by a wide hairline that the ❦ ornament sits on. Navigation wraps naturally on narrow screens, preserving DOM and focus order. Posts on the index are separated by a dashed rule. Small grids appear only inside components: the "Elsewhere" cards (`minmax(14rem, 1fr)`) and the footer directory (`minmax(8rem, 1fr)`, with a container query).
 
 Code blocks stay inside the measure, cap at 28rem tall, and scroll with fading edge hints; line numbers hide under 600px.
 
 ### Named Rules
 
-**The Measure Rule.** Everything, including code, lives inside the 700px column. Nothing bleeds out to full width.
+**The Measure Rule.** Reading content, including code, stays inside the 652px text column. The header and footer use the wider 1200px site frame; they do not lengthen prose lines.
 
 ## Elevation & Depth
 
@@ -260,7 +261,7 @@ Small, soft corners on interface pieces: 2px on alerts, 3px on inline code, imag
 
 ### Navigation
 
-Small-caps Sabon 600 at 0.95rem, 0.06em tracking, Chalk Ink, 1.75rem apart (1.25rem on mobile). Hover turns Footlight Amber with an underline at 0.15em offset. The theme toggle is a 1.05rem outline icon (1.7 stroke) at the right edge, hidden until JS runs; focus gets a 2px amber outline. A skip link drops in from the top-left on focus.
+Small-caps Sabon 600 at 0.95rem, 0.06em tracking, Chalk Ink, 1.75rem apart (1rem on mobile). Hover turns Footlight Amber with an underline at 0.15em offset. The theme toggle is a 1.05rem outline icon (1.7 stroke) at the right edge, hidden until JS runs; focus gets a 2px amber outline. A skip link drops in from the top-left on focus.
 
 ### Text Links
 
@@ -301,7 +302,7 @@ Ported from finnrut.is: a Cooper 1.25rem heading in Dust Ink, then a grid of 44p
 - **Do** ship the dark edition as the first paint for every new reader; light only after the reader picks it.
 - **Do** keep both editions in step: every new colour is a custom property defined for dark and light, and both pass pa11y contrast for text and links.
 - **Do** use `var(--accent)` for interactive affordances and focus (`2px solid`, 2–3px offset).
-- **Do** keep prose at 18px Sabon Next, 1.75 line height, inside the 700px measure.
+- **Do** keep prose at 18px Sabon Next, 1.75 line height, inside the 652px text measure.
 - **Do** use small-caps Sabon for labels and PragmataPro for literals.
 - **Do** wrap motion in a reduced-motion guard; transitions are 150ms colour/opacity, 1px lifts, 220ms slips.
 
@@ -311,7 +312,7 @@ Ported from finnrut.is: a Cooper 1.25rem heading in Dust Ink, then a grid of 44p
 - **Don't** use `#000`, `#fff` or cool greys outside print styles.
 - **Don't** set body text, labels or `h2`+ in Cooper.
 - **Don't** put shadows on text, rules or icons.
-- **Don't** let content break out of the 700px column.
+- **Don't** let reading content break out of the 652px text column; reserve the wider frame for header and footer.
 - **Don't** import the main site's tilted prints, ticket stubs or playbill-scale name into post pages; the footer slips are the one shared paper object.
 
 ## Known Drift
