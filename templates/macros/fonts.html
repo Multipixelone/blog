@@ -12,12 +12,12 @@
     glyph actually needs it. -#}
 
 {# The body serif, needed by every page before first paint. #}
-{% macro serif_preload() %}
+{% component serif_preload() %}
 <link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/Sabon%20Next%20Regular.woff2" crossorigin>
-{%- endmacro serif_preload %}
+{%- endcomponent serif_preload %}
 
 {# Regular mono. Worth preloading only where a code block is above or near the
    fold, otherwise it is a download nobody is waiting on. #}
-{% macro mono_preload() %}
+{% component mono_preload() %}
 <link rel="preload" as="font" type="font/woff2" href="https://fonts.finnrut.is/PragmataPro_Mono_Regular_ligatures_0827.woff2" crossorigin>
-{%- endmacro mono_preload %}
+{%- endcomponent mono_preload %}

@@ -124,6 +124,14 @@ JSONLD_RE = re.compile(
 # A pattern that assumed `property` came first matched nothing and made the
 # verification pass below a no-op.
 META_TAG_RE = re.compile(r"<meta\b([^>]*)>", re.IGNORECASE)
+
+# templates/page.html puts `data-pagefind-body` on a post's <article> only when
+# the page is not `hidden`. Zola leaves hidden pages out of section listings
+# and taxonomies, so the same marker decides whether a post counts toward the
+# tag cards. Matched attribute-wise for the same minify_html reasons as above.
+LISTED_ARTICLE_RE = re.compile(
+    r"<article\b[^>]*\bdata-pagefind-body(?![\w-])", re.IGNORECASE
+)
 ATTR_RE = re.compile(r"""([\w:.-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>=`]+))""")
 
 
@@ -355,6 +363,8 @@ def parse_post(html_path: Path):
             "description": data.get("description", ""),
             "tags": data.get("keywords") or [],
             "meta": f"FINN RUTIS  ·  {date}  ·  {minutes} min read",
+            # Hidden posts still get their own card but don't count toward tags.
+            "listed": LISTED_ARTICLE_RE.search(page) is not None,
         }
     return None
 
@@ -428,8 +438,9 @@ def main():
             description=post["description"],
             tags=post["tags"],
         )
-        for tag in post["tags"]:
-            tag_counts[tag] = tag_counts.get(tag, 0) + 1
+        if post.get("listed", True):
+            for tag in post["tags"]:
+                tag_counts[tag] = tag_counts.get(tag, 0) + 1
         posts += 1
         print(f"  og/{post['slug']}.png  ←  {post['title']}")
 

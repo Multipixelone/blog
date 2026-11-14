@@ -1,9 +1,10 @@
 {# Structured-data fragments shared between templates, so the same facts can't
    be stated two different ways in two places.
 
-   Tera macros don't inherit the calling template's context, so `config` is
-   passed in explicitly rather than reached for. Each macro emits *properties*,
-   not the surrounding braces: the caller owns the object it is building. #}
+   Tera components don't inherit the calling template's context, so `config`
+   is an implicit (`@`) parameter, resolved from the caller's context. Each
+   component emits *properties*, not the surrounding braces: the caller owns
+   the object it is building. #}
 
 {# The site's Person. Used by page.html as a post's author/publisher and by
    about.html as the page's own subject — both carry the same @id, which is what
@@ -14,13 +15,8 @@
    entries with no `url`, mailto: links (the address is published as `email`
    instead), and anything marked `same_as = false` — sameAs is for pages that
    identify the person, not for contact links that happen to be URLs. #}
-{% macro person(config) %}
-{%- set_global same_as = [] -%}
-{%- for profile in config.extra.profiles | default(value=[]) -%}
-{%- if profile.url and profile.url is not starting_with("mailto:") and profile.same_as | default(value=true) -%}
-{%- set_global same_as = same_as | concat(with=profile.url) -%}
-{%- endif -%}
-{%- endfor -%}
+{% component person(@config) %}
+{%- set same_as = [profile.url for profile in config.extra.profiles | default(value=[]) if profile.url and profile.url is not starting_with(pat="mailto:") and profile.same_as | default(value=true)] -%}
 "@type": "Person",
     "@id": "{{ get_url(path="@/about/_index.md") | safe }}#person",
     "name": {{ config.author | json_encode | safe }},
@@ -29,4 +25,4 @@
     "email": {{ config.extra.author_email | json_encode | safe }},
     {%- endif %}
     "sameAs": {{ same_as | json_encode | safe }}
-{%- endmacro person %}
+{%- endcomponent person %}

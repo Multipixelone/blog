@@ -1,16 +1,14 @@
 {% extends "base.html" %}
-{% import "macros/icons.html" as icons %}
-{% import "macros/fonts.html" as fonts %}
 
 {#- This page is monospace from the fingerprint down: the fetch commands, the
     armored key block, all of it. Unconditional. -#}
-{% block preload %}{{ fonts::mono_preload() }}{% endblock preload %}
+{% block preload %}{{ <mono_preload /> }}{% endblock preload %}
 
 {% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
-{% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block description %}{{ (section.description or config.description) }}{% endblock %}
 {% block og_title %}{{ section.title }}{% endblock og_title %}
 {% block og_url %}{{ section.permalink }}{% endblock og_url %}
-{% block og_description %}{{ section.description | default(value=config.description) }}{% endblock og_description %}
+{% block og_description %}{{ (section.description or config.description) }}{% endblock og_description %}
 {% block canonical %}{{ section.permalink }}{% endblock canonical %}
 
 {% block content %}
@@ -28,7 +26,7 @@
   <h2 id="the-key">The key</h2>
   <p>
     <a class="key-download" href="{{ get_url(path=key_file) }}" download>
-      {{ icons::icon(name="download") }}
+      {{ <icon name="download" /> }}
       <span>Download</span>
       <code>{{ key_file }}</code>
     </a>

@@ -45,14 +45,13 @@ insert_anchor_links = "right"
 # its styling don't arrive separately.
 bottom_footnotes = true
 
-# style = "class" emits z-* token classes; colors come entirely from
-# static/giallo-{light,dark}.css (Gruvbox). The theme names below are only a
-# fallback if style is switched to inline/enriched — Zola 0.22 ships no
-# "gruvbox" theme, so keep the bundled github pair to stay build-green.
+# Class mode emits theme-specific z-l-*/z-d-* classes and matching
+# giallo-{light,dark}.css. Let Zola generate both Gruvbox themes; static files
+# with those names would overwrite the generated numeric token mappings.
 [markdown.highlighting]
 style = "class"
-light_theme = "github-light"
-dark_theme = "github-dark"
+light_theme = "gruvbox-light-medium"
+dark_theme = "gruvbox-dark-medium"
 error_on_missing_language = true
 
 [extra]

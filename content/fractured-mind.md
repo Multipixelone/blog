@@ -1,6 +1,7 @@
 ---
 title: "Fractured Mind: Who can I talk to about this"
 date: 2026-08-12
+hidden: true
 description: a theatre kid who works w/ AI has a couple opinions abt robots
 slug: fractured-mind
 template: page.html

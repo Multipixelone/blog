@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
-{% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block description %}{{ (section.description or config.description) }}{% endblock %}
 {% block og_title %}{{ section.title }} — {{ config.title }}{% endblock og_title %}
 {% block og_url %}{{ section.permalink }}{% endblock og_url %}
-{% block og_description %}{{ section.description | default(value=config.description) }}{% endblock og_description %}
+{% block og_description %}{{ (section.description or config.description) }}{% endblock og_description %}
 {% block canonical %}{{ section.permalink }}{% endblock canonical %}
 {% block og_image %}
 <meta property="og:image" content="{{ get_url(path="og/archive.png", trailing_slash=false) }}">
@@ -28,7 +28,7 @@
 {%- set_global years = [] %}
 {%- for post in blog.pages %}
 {%- if post.year not in years %}
-{%- set_global years = years | concat(with=post.year) %}
+{%- set_global years = [...years, post.year] %}
 {%- endif %}
 {%- endfor %}
 

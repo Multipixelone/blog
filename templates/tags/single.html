@@ -18,11 +18,11 @@
 <meta name="twitter:image:alt" content="Social card for the #{{ term.name }} tag">{% endblock twitter_image %}
 {# Tera scopes `set` to the block it's in — a top-level one wouldn't reach
    either block — so the feed base is derived once per block that needs it. #}
-{% block feed %}{% set feed_base = term.permalink | trim_end_matches(pat='/') | safe %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} — #{{ term.name }} (Atom)" href="{{ feed_base }}/atom.xml">
+{% block feed %}{% set feed_base = term.permalink | trim_end(pat='/') | safe %}<link rel="alternate" type="application/atom+xml" title="{{ config.title }} — #{{ term.name }} (Atom)" href="{{ feed_base }}/atom.xml">
 <link rel="alternate" type="application/rss+xml" title="{{ config.title }} — #{{ term.name }} (RSS)" href="{{ feed_base }}/rss.xml">{% endblock feed %}
 
 {% block content %}
-{% set feed_base = term.permalink | trim_end_matches(pat='/') | safe %}
+{% set feed_base = term.permalink | trim_end(pat='/') | safe %}
 <nav class="tag-back" aria-label="Tag navigation">
   <a href="{{ get_url(path="/tags/") }}">← All tags</a>
 </nav>

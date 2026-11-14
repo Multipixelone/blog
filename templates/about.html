@@ -1,12 +1,10 @@
 {% extends "base.html" %}
-{% import "macros/icons.html" as icons %}
-{% import "macros/jsonld.html" as jsonld %}
 
 {% block title %}{{ section.title }} — {{ config.title }}{% endblock %}
-{% block description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block description %}{{ (section.description or config.description) }}{% endblock %}
 {% block og_title %}{{ section.title }}{% endblock %}
 {% block og_url %}{{ section.permalink }}{% endblock %}
-{% block og_description %}{{ section.description | default(value=config.description) }}{% endblock %}
+{% block og_description %}{{ (section.description or config.description) }}{% endblock %}
 {% block canonical %}{{ section.permalink }}{% endblock canonical %}
 {% block og_image %}
 <meta property="og:image" content="{{ get_url(path="og/about.png", trailing_slash=false) }}">
@@ -29,7 +27,7 @@
   "@id": "{{ section.permalink | safe }}",
   "url": "{{ section.permalink | safe }}",
   "name": {{ section.title | json_encode | safe }},
-  "description": {{ section.description | default(value=config.description) | json_encode | safe }},
+  "description": {{ (section.description or config.description) | json_encode | safe }},
   "inLanguage": "en",
   "isPartOf": {
     "@type": "WebSite",
@@ -38,7 +36,7 @@
     "name": {{ config.title | json_encode | safe }}
   },
   "mainEntity": {
-    {{ jsonld::person(config=config) }}
+    {{ <person /> }}
   }
 }
 </script>
@@ -74,14 +72,14 @@
       {#- A profile without `url` is an identifier with no public page (e.g. a
           Signal username) — same card, just not a link. #}
       {%- if profile.url %}
-      <a class="{% if profile.url is starting_with("mailto:") %}u-email{% else %}u-url{% endif %}" href="{{ profile.url }}" rel="me">
-        {{ icons::icon(name=profile.icon) }}
+      <a class="{% if profile.url is starting_with(pat="mailto:") %}u-email{% else %}u-url{% endif %}" href="{{ profile.url }}" rel="me">
+        {{ <icon name={profile.icon} /> }}
         <span class="elsewhere-name">{{ profile.name }}</span>
         {%- if profile.handle %}<span class="elsewhere-handle">{{ profile.handle }}</span>{% endif %}
       </a>
       {%- else %}
       <span class="elsewhere-static">
-        {{ icons::icon(name=profile.icon) }}
+        {{ <icon name={profile.icon} /> }}
         <span class="elsewhere-name">{{ profile.name }}</span>
         {%- if profile.handle %}<span class="elsewhere-handle">{{ profile.handle }}</span>{% endif %}
       </span>
@@ -90,14 +88,14 @@
     {%- endfor %}
     <li>
       <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}" type="application/rss+xml">
-        {{ icons::icon(name="rss") }}
+        {{ <icon name="rss" /> }}
         <span class="elsewhere-name">RSS</span>
         <span class="elsewhere-handle">/rss.xml</span>
       </a>
     </li>
     <li>
       <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}" type="application/atom+xml">
-        {{ icons::icon(name="rss") }}
+        {{ <icon name="rss" /> }}
         <span class="elsewhere-name">Atom</span>
         <span class="elsewhere-handle">/atom.xml</span>
       </a>

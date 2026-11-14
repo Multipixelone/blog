@@ -30,13 +30,13 @@
       {%- endif -%}
     "/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    {% if last_updated is defined %}<updated>{{ last_updated | date(format="%+") }}</updated>{% endif %}
+    {% if last_updated is defined %}<updated>{{ last_updated | date(format="%Y-%m-%dT%H:%M:%S%:z") }}</updated>{% endif %}
     <id>{{ feed_url | safe }}</id>
     {%- for page in pages %}
     <entry xml:lang="{{ page.lang }}">
         <title>{{ page.title }}</title>
-        <published>{{ page.date | date(format="%+") }}</published>
-        <updated>{{ page.updated | default(value=page.date) | date(format="%+") }}</updated>
+        <published>{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%:z") }}</published>
+        <updated>{{ (page.updated or page.date) | date(format="%Y-%m-%dT%H:%M:%S%:z") }}</updated>
         <author>
           <name>{% if page.authors %}{{ page.authors[0] }}{% else %}{{ config.author }}{% endif %}</name>
           {%- if config.extra.author_email %}

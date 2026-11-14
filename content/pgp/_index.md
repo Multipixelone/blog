@@ -10,7 +10,7 @@ If you want to send me encrypted mail, or check that something signed by
 
 ## Fingerprint
 
-{{ pgp_fingerprint() }}
+{{ <pgp_fingerprint /> }}
 
 ## Getting it
 

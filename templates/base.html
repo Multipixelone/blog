@@ -1,5 +1,3 @@
-{% import "macros/icons.html" as icons %}
-{% import "macros/fonts.html" as fonts %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +7,7 @@
       Templates whose page leads with monospace add to this via the `preload`
       block; see templates/macros/fonts.html for why the URLs are literal. -#}
   <link rel="preconnect" href="https://fonts.finnrut.is" crossorigin>
-  {{ fonts::serif_preload() }}
+  {{ <serif_preload /> }}
   {%- block preload %}{% endblock preload %}
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
@@ -49,7 +47,7 @@
       IndieAuth-style verifiers) fetch whatever URL the profile lists — usually
       the site root — and look for a rel="me" link back to the profile. Opt in
       per profile with `verify = true` in zola.toml. #}
-  {%- for profile in config.extra.profiles | default(value=[]) | filter(attribute="verify", value=true) %}
+  {%- for profile in [p for p in config.extra.profiles | default(value=[]) if p.verify] %}
   <link rel="me" href="{{ profile.url }}">
   {%- endfor %}
   {#- The humans.txt convention: rel="author" is how anyone looking for it
@@ -96,7 +94,7 @@
       the page names its author's fediverse account. Derived from the Mastodon
       row in config.extra.profiles rather than a second copy of the handle, so
       moving instances is a one-line edit in zola.toml. #}
-  {%- set fediverse = config.extra.profiles | default(value=[]) | filter(attribute="icon", value="mastodon") %}
+  {%- set fediverse = [p for p in config.extra.profiles | default(value=[]) if p.icon == "mastodon"] %}
   {%- if fediverse | length > 0 and fediverse[0].handle %}
   <meta name="fediverse:creator" content="{{ fediverse[0].handle }}">
   {%- endif %}
@@ -131,17 +129,17 @@
       {%- if profile.footer %}
       <a href="{{ profile.url }}" rel="me">
         <span class="footer-link-paper" aria-hidden="true"></span>
-        {{ icons::icon(name=profile.icon) }}<span class="footer-link-label">{{ profile.name }}</span>
+        {{ <icon name={profile.icon} /> }}<span class="footer-link-label">{{ profile.name }}</span>
       </a>
       {%- endif %}
       {%- endfor %}
       <a href="{{ get_url(path="@/pgp/_index.md") }}"{% if current_path | default(value="") == "/pgp/" %} aria-current="page"{% endif %}>
         <span class="footer-link-paper" aria-hidden="true"></span>
-        {{ icons::icon(name="key") }}<span class="footer-link-label">PGP key</span>
+        {{ <icon name="key" /> }}<span class="footer-link-label">PGP key</span>
       </a>
       <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}" type="application/rss+xml">
         <span class="footer-link-paper" aria-hidden="true"></span>
-        {{ icons::icon(name="rss") }}<span class="footer-link-label">RSS feed</span>
+        {{ <icon name="rss" /> }}<span class="footer-link-label">RSS feed</span>
       </a>
     </nav>
     </div>
@@ -164,13 +162,13 @@
       </span>
       {%- if commit %}
       <a class="build-badge" href="{{ config.extra.repo_url }}/commit/{{ parts | first }}">
-        {{ icons::icon(name="commit") }}
+        {{ <icon name="commit" /> }}
         <span>built from</span>
         <code>{{ parts | first | truncate(length=7, end="") }}{% if parts | length > 1 %}-dirty{% endif %}</code>
       </a>
       {%- else %}
       <a class="build-badge" href="{{ config.extra.repo_url }}">
-        {{ icons::icon(name="commit") }}
+        {{ <icon name="commit" /> }}
         <span>built from this repo</span>
       </a>
       {%- endif %}
@@ -181,7 +179,7 @@
   <script>
   (function () {
     function initCodeBlocks() {
-      document.querySelectorAll('pre.z-code').forEach(function (pre) {
+      document.querySelectorAll('pre.giallo').forEach(function (pre) {
         var code = pre.querySelector('code');
         if (!code) return;
 

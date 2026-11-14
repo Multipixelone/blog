@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {%- for entry in entries %}
-{%- if not entry.permalink is ending_with("/page/1/") %}
+{%- if not entry.permalink is ending_with(pat="/page/1/") %}
   <url>
     <loc>{{ entry.permalink }}</loc>{% if entry.updated %}
     <lastmod>{{ entry.updated | date(format="%Y-%m-%d") }}</lastmod>{% endif %}

@@ -22,6 +22,23 @@ zola serve           # local server at http://localhost:1111
 ```
 
 Or with [direnv](https://direnv.net/): allow the `.envrc` once, then `zola serve`.
+The flake supplies Zola 0.23.6 for both development and builds.
+
+### Unlisted posts
+
+Use Zola's native front matter to keep a post out of listings while leaving its
+URL accessible:
+
+```yaml
+hidden: true
+```
+
+Hidden posts are public, not private drafts. Zola omits them from section and tag
+listings, feeds, and the sitemap. The page template also excludes them from
+Pagefind search. Hidden posts keep their own social cards but do not count toward
+tag-card totals. Remove `hidden` (or set it to `false`) to list a post again.
+Use `draft: true` instead when a post should not be built at all; preview drafts
+with `zola serve --drafts`.
 
 ## Build
 
@@ -68,7 +85,7 @@ against the built site and files an issue when they rot, and fails if
 The footer's icon row and the About page's "Elsewhere" list are both rendered
 from `[[extra.profiles]]` in `zola.toml`, so they can't drift apart. To add a
 place, append a block there; if its `icon` isn't one `templates/macros/icons.html`
-already draws, add an arm to that macro (anything unrecognised falls back to a
+already draws, add an arm to that component (anything unrecognised falls back to a
 generic link glyph). Drop `footer = true` to list somewhere on About only.
 
 ## Feeds
@@ -238,8 +255,8 @@ content/               markdown posts and pages
 templates/             Tera HTML templates (hand-rolled minimal theme), incl. 404.html
 templates/atom.xml     feed templates, overriding Zola's built-ins
 templates/rss.xml
-templates/macros/      inline SVG icon set (footer, About, PGP page)
-templates/shortcodes/  markdown-callable snippets
+templates/macros/      shared Tera components (icons, fonts, structured data)
+templates/shortcodes/  markdown-callable components (legacy directory name)
 static/                CNAME, robots.txt, style.css, fonts, favicon
 scripts/               build-time helpers (Open Graph card generator)
 zola.toml              site configuration

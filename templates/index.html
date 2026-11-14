@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% import "macros/icons.html" as icons %}
 {% block canonical %}{% if paginator and paginator.current_index == 1 %}{{ section.permalink }}{% else %}{{ current_url }}{% endif %}{% endblock canonical %}
 
 {% block json_ld %}
@@ -32,7 +31,7 @@
     to on a listing page. Full text goes out over both, so subscribing is a real
     alternative to visiting rather than a teaser. #}
 <p class="subscribe">
-  {{ icons::icon(name="rss") }}
+  {{ <icon name="rss" /> }}
   Follow along by <a href="{{ get_url(path="rss.xml", trailing_slash=false) }}">RSS</a>
   or <a href="{{ get_url(path="atom.xml", trailing_slash=false) }}">Atom</a></p>
 

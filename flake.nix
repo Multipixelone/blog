@@ -24,6 +24,9 @@
             version = "0.1.0";
             src = ./.;
             SITE_COMMIT = commit;
+            # Zola initializes its HTTP client even for local-only load_data.
+            # The sandbox has no system certificate store.
+            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
             nativeBuildInputs = [
               pkgs.zola
               # Open Graph card generation: Pillow draws the cards, woff2 supplies
