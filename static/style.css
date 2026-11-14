@@ -8,16 +8,34 @@
   --accent-hover: #8c3800;
   --selection-bg: #f5d9c4;
   --border: #ddd6c6;
-  --code-bg: #f3efe6;
-  --code-border: #e7e0d1;
-  /* Gruvbox code chrome; token colors come from Zola's generated themes. */
+  /* Inline code chips: Gruvbox light bg0_s with a bg1 rim. */
+  --code-bg: #f2e5bc;
+  --code-border: #e5d4a8;
+  --code-ink: #3c3836;
+  /* Gruvbox code chrome (light-medium). Token colors come from Zola's
+     generated giallo-light.css; these only paint the surfaces around them. */
   --z-bg: #fbf1c7;
-  --z-hl: #ebdbb2;
-  --z-scroll-shadow: rgba(60, 56, 54, 0.18);
-  --giallo-ln: #a89984;
+  --z-chrome: #f2e5bc;
+  --z-rule: #e5d4a8;
+  --z-border: #d5c4a1;
+  --z-muted: #665c54;
+  --z-hl: #f2dfa8;
+  --z-sel: #d5c4a1;
+  --z-mark: #b57614;
+  --z-hl-ln: #af3a03;
+  --z-lang: #af3a03;
+  --z-green: #79740e;
+  --z-yellow: #b57614;
+  --z-scroll-shadow: rgba(60, 56, 54, 0.16);
+  --z-shadow: 0 10px 24px -16px rgba(60, 56, 54, 0.45);
+  --giallo-ln: #928374;
   --shadow: rgba(43, 37, 32, 0.06);
   /* Top ambient highlight in the page background gradient. */
   --glow: rgba(255, 255, 255, 0.5);
+  /* The site frame can breathe without lengthening lines of prose. */
+  --site-width: 1200px;
+  --reading-width: 652px;
+  --page-gutter: clamp(1.5rem, 4vw, 4rem);
   --font-mono:
     "PragmataPro Mono Liga", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, "Liberation Mono", monospace;
@@ -34,22 +52,30 @@
     color-scheme: dark;
     --paper: #1c1915;
     --paper-shade: #242019;
-  /* The site frame can breathe without lengthening lines of prose. */
-  --site-width: 1200px;
-  --reading-width: 652px;
-  --page-gutter: clamp(1.5rem, 4vw, 4rem);
     --ink: #e8e2d8;
     --muted: #9e9486;
     --accent: #ff9e42;
     --accent-hover: #ffb366;
     --selection-bg: #5a2e0f;
     --border: #3b342c;
-    --code-bg: #242019;
-    --code-border: #332d26;
+    --code-bg: #32302f;
+    --code-border: #45403d;
+    --code-ink: #ebdbb2;
     --z-bg: #282828;
+    --z-chrome: #32302f;
+    --z-rule: #3c3836;
+    --z-border: #3c3836;
+    --z-muted: #a89984;
     --z-hl: #3c3836;
-    --z-scroll-shadow: rgba(0, 0, 0, 0.35);
-    --giallo-ln: #665c54;
+    --z-sel: #504945;
+    --z-mark: #fabd2f;
+    --z-hl-ln: #fabd2f;
+    --z-lang: #fe8019;
+    --z-green: #b8bb26;
+    --z-yellow: #fabd2f;
+    --z-scroll-shadow: rgba(0, 0, 0, 0.45);
+    --z-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.9);
+    --giallo-ln: #928374;
     --shadow: rgba(0, 0, 0, 0.2);
     --glow: rgba(255, 255, 255, 0.04);
   }
@@ -65,12 +91,24 @@
   --accent-hover: #ffb366;
   --selection-bg: #5a2e0f;
   --border: #3b342c;
-  --code-bg: #242019;
-  --code-border: #332d26;
+  --code-bg: #32302f;
+  --code-border: #45403d;
+  --code-ink: #ebdbb2;
   --z-bg: #282828;
+  --z-chrome: #32302f;
+  --z-rule: #3c3836;
+  --z-border: #3c3836;
+  --z-muted: #a89984;
   --z-hl: #3c3836;
-  --z-scroll-shadow: rgba(0, 0, 0, 0.35);
-  --giallo-ln: #665c54;
+  --z-sel: #504945;
+  --z-mark: #fabd2f;
+  --z-hl-ln: #fabd2f;
+  --z-lang: #fe8019;
+  --z-green: #b8bb26;
+  --z-yellow: #fabd2f;
+  --z-scroll-shadow: rgba(0, 0, 0, 0.45);
+  --z-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.9);
+  --giallo-ln: #928374;
   --shadow: rgba(0, 0, 0, 0.2);
   --glow: rgba(255, 255, 255, 0.04);
 }
@@ -230,6 +268,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+main {
+  max-width: var(--reading-width);
+  margin-inline: auto;
+}
+
 ::selection {
   background: var(--selection-bg);
   color: var(--ink);
@@ -259,7 +302,13 @@ header::after {
 
 header nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 0.5rem 1.75rem;
+}
+
+header nav a {
+  margin-right: 0;
 }
 
 nav a {
@@ -274,11 +323,6 @@ nav a {
 }
 
 nav a:hover {
-main {
-  max-width: var(--reading-width);
-  margin-inline: auto;
-}
-
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 0.15em;
@@ -308,13 +352,7 @@ main {
   color: var(--accent);
 }
 
-  flex-wrap: wrap;
 .theme-toggle svg {
-  gap: 0.5rem 1.75rem;
-}
-
-header nav a {
-  margin-right: 0;
   display: none;
   width: 1.05rem;
   height: 1.05rem;
@@ -474,27 +512,32 @@ time {
   margin-bottom: 0.5rem;
 }
 
+/* Inline code: a small Gruvbox chip (bg0_s on light, bg0_s/bg1 on dark) that
+   sits warmly on the paper without shouting over the prose. */
 code {
   font-family: var(--font-mono);
   background: var(--code-bg);
   border: 1px solid var(--code-border);
-  padding: 0.1em 0.3em;
-  border-radius: 3px;
+  padding: 0.08em 0.36em 0.12em;
+  border-radius: 4px;
   font-size: 0.85em;
-  color: var(--ink);
+  color: var(--code-ink);
+  /* Long identifiers break rather than push past the column on phones. */
+  overflow-wrap: anywhere;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 pre {
   font-family: var(--font-mono);
-  background: var(--code-bg);
-  border: 1px solid var(--code-border);
+  background: var(--z-bg);
+  color: var(--code-ink);
+  border: 1px solid var(--z-border);
   padding: 1rem;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow-x: auto;
   font-size: 0.85em;
-  box-shadow:
-    inset 0 0 0 1px var(--paper-shade),
-    0 2px 6px var(--shadow);
+  box-shadow: var(--z-shadow);
 }
 
 pre code {
@@ -507,7 +550,10 @@ pre code {
 }
 
 /* ------------------------------------------------------------------
-   Code blocks: header bar, line numbers, copy button, scroll hints
+   Code blocks: a Gruvbox card. Zola's generated giallo-light/dark.css
+   colors the tokens and the bg0 surface; everything below is chrome —
+   a bg0_s header with the Gruvbox stripe, a sticky line-number gutter,
+   a yellow-marked highlighted line, and a header-docked copy button.
    ------------------------------------------------------------------ */
 
 pre.giallo {
@@ -515,82 +561,113 @@ pre.giallo {
   display: flex;
   flex-direction: column;
   max-height: 28rem;
+  margin: 1.75rem 0;
   padding: 0;
   overflow: auto;
+  line-height: 1.6;
+  color: var(--code-ink);
   background-color: var(--z-bg);
+  /* Scroll hints: the shadow shows only when there is more to the right. */
   background-image:
-    linear-gradient(to right, var(--z-bg) 0%, transparent 100%),
     linear-gradient(to left, var(--z-bg) 0%, transparent 100%),
-    linear-gradient(to right, var(--z-scroll-shadow) 0%, transparent 100%),
     linear-gradient(to left, var(--z-scroll-shadow) 0%, transparent 100%);
   background-position:
-    left center,
     right center,
-    left center,
     right center;
   background-size:
     2rem 100%,
-    2rem 100%,
-    0.75rem 100%,
     0.75rem 100%;
   background-repeat: no-repeat;
-  background-attachment: local, local, scroll, scroll;
+  background-attachment: local, scroll;
   counter-reset: line;
+  scrollbar-color: var(--z-border) transparent;
+  scrollbar-width: thin;
 }
 
-/* Header bar: filename or language. Real element so it can be sticky. */
+pre.giallo ::selection {
+  background: var(--z-sel);
+}
+
+/* Header bar: language/filename on the left, copy on the right. Sticky on
+   both axes so it stays put while the reader scrolls long or wide code. */
 .z-code-header {
   position: sticky;
   top: 0;
-  z-index: 1;
+  left: 0;
+  z-index: 2;
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.6rem 0.85rem;
+  min-height: 2.5rem;
+  /* Left edge lines up with the line-number gutter below. */
+  padding: 0 0.35rem 0 1rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 400;
   line-height: 1.2;
-  letter-spacing: 0.03em;
-  text-transform: none;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--muted);
-  background-color: var(--z-bg);
-  border-bottom: 1px solid var(--code-border);
-  border-radius: 4px 4px 0 0;
+  color: var(--z-muted);
+  background-color: var(--z-chrome);
+  border-bottom: 1px solid var(--z-rule);
 }
 
-/* <code> is now a flex child of the column-direction pre — give it its own
-   padding (the pre itself has padding: 0) and let it shrink on the cross-axis
-   so long lines don't blow out the container width. */
+.z-code-lang {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.75em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--z-lang);
+}
+
+.z-code-lang .z-code-sublang {
+  color: var(--z-muted);
+}
+
+/* <code> is a flex child of the column-direction pre. It grows to the widest
+   line so highlighted rows and the gutter span the full scroll width. */
 pre.giallo > code {
   display: block;
-  flex: 1 0 100%;
-  min-width: 0;
-  padding: 1rem;
+  flex: 1 0 auto;
+  align-self: flex-start;
+  min-width: 100%;
+  width: max-content;
+  padding: 0.85rem 0;
 }
 
 /* One line per .giallo-l wrapper. */
 pre.giallo .giallo-l {
+  /* inline-block, not block: Giallo leaves a literal newline between line
+     wrappers, which a block box would render as an extra blank row. */
   display: inline-block;
-  min-height: 1lh;
+  box-sizing: border-box;
   width: 100%;
+  min-height: 1lh;
+  padding-right: 1.5rem;
 }
 
-/* CSS-counter line numbers. */
+/* CSS-counter line numbers in a sticky gutter that stays visible while the
+   reader scrolls sideways. */
 pre.giallo .giallo-l::before {
   counter-increment: line;
   content: counter(line);
+  position: sticky;
+  left: 0;
+  z-index: 1;
   display: inline-block;
-  min-width: 3ch;
-  padding-right: 0.75em;
+  box-sizing: content-box;
+  min-width: 2ch;
+  margin-right: 1.1ch;
+  padding: 0 0.9ch 0 1rem;
   text-align: right;
   user-select: none;
+  -webkit-user-select: none;
   color: var(--giallo-ln);
+  background-color: var(--z-bg);
+  border-right: 1px solid var(--z-rule);
 }
 
 /* Hide Zola's native line-number elements if an author ever uses linenos. */
@@ -598,26 +675,36 @@ pre.giallo .giallo-ln {
   display: none;
 }
 
-/* Full-line highlighted rows carry both theme classes in Giallo's output. */
+/* Highlighted rows (hl_lines) carry both theme classes in Giallo's output:
+   a warm wash with a thin yellow mark on the gutter edge. */
 pre.giallo .giallo-l.z-l-hl,
 pre.giallo .giallo-l.z-d-hl {
   background-color: var(--z-hl);
 }
 
-/* Copy button. */
+pre.giallo .giallo-l.z-l-hl::before,
+pre.giallo .giallo-l.z-d-hl::before {
+  color: var(--z-hl-ln);
+  background-color: var(--z-hl);
+  box-shadow: inset 2px 0 0 var(--z-mark);
+}
+
+/* Copy button, docked in the header. */
 .copy-btn {
-  position: absolute;
-  top: 0.35rem;
-  right: 0.5rem;
-  z-index: 2;
-  padding: 0.15rem 0.5rem;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  min-height: 1.9rem;
+  padding: 0 0.65rem;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  line-height: 1.4;
-  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--z-muted);
   background-color: transparent;
-  border: 1px solid var(--code-border);
-  border-radius: 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
   cursor: pointer;
   transition:
     color 0.15s ease,
@@ -625,22 +712,58 @@ pre.giallo .giallo-l.z-d-hl {
     border-color 0.15s ease;
 }
 
+.copy-btn svg {
+  width: 1.05em;
+  height: 1.05em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .copy-btn:hover,
 .copy-btn:focus-visible {
-  color: var(--accent);
-  border-color: var(--accent);
-  background-color: var(--paper-shade);
-  outline: none;
+  color: var(--z-yellow);
+  background-color: var(--z-bg);
+  border-color: var(--z-border);
+}
+
+/* Same 2px accent ring as every other control on the site. */
+.copy-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.copy-btn:active {
+  background-color: var(--z-hl);
 }
 
 .copy-btn.copied {
-  color: var(--accent);
+  color: var(--z-green);
+  border-color: transparent;
+  background-color: transparent;
 }
 
-/* Make code blocks keyboard-scrollable. */
+.copy-btn.failed {
+  color: var(--z-lang);
+}
+
+/* Screen-reader-only live region for copy results. */
+.z-code-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Make code blocks keyboard-scrollable. The ring sits outside the card: an
+   inset ring would be painted over by the sticky header and gutter. */
 pre.giallo:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: -3px;
+  outline-offset: 3px;
 }
 
 kbd,
@@ -648,11 +771,6 @@ samp,
 var {
   font-family: var(--font-mono);
 }
-
-/* Zola-generated giallo-*.css supplies Gruvbox token colors. The matching
-   --z-bg surface also colors the header and scroll hints, keeping each block
-   a distinct Gruvbox "card" atop the paper; the pre rule's border + shadow
-   frame it. Inline <code> (no .giallo wrapper) keeps --code-bg/--ink. */
 
 article {
   margin-bottom: 3rem;
@@ -1801,6 +1919,10 @@ h6:hover > .zola-anchor,
 }
 
 @media (max-width: 600px) {
+  :root {
+    --page-gutter: 1rem;
+  }
+
   body {
     font-size: 17px;
     padding-block: 1.25rem 2rem;
@@ -1818,27 +1940,27 @@ h6:hover > .zola-anchor,
     font-size: 1.3rem;
   }
 
+  header nav {
+    column-gap: 1rem;
+  }
+
   nav a {
     margin-right: 1.25rem;
   }
 
   .z-code-header {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: 0.6rem;
   }
 
-  pre.giallo > code {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-
-  /* Hide line numbers on narrow screens. */
+  /* Slimmer gutter on narrow screens. */
   pre.giallo .giallo-l::before {
-    display: none;
+    min-width: 1ch;
+    padding: 0 0.7ch 0 0.6rem;
+    margin-right: 0.9ch;
   }
 
-  .copy-btn {
-    right: 0.35rem;
+  pre.giallo .giallo-l {
+    padding-right: 0.75rem;
   }
 }
 
@@ -1876,6 +1998,10 @@ h6:hover > .zola-anchor,
     max-width: none;
   }
 
+  main {
+    max-width: none;
+  }
+
   header nav,
   footer,
   .copy-btn,
@@ -1896,9 +2022,30 @@ h6:hover > .zola-anchor,
     max-height: none;
     overflow: visible;
     border: 1px solid #ccc;
-  }
-}
-  main {
-    max-width: none;
+    box-shadow: none;
+    break-inside: avoid;
   }
 
+  /* Paper can't scroll: wrap long lines instead of clipping them. */
+  pre.giallo > code {
+    width: auto;
+  }
+
+  /* Hanging indent: wrapped continuations start under the code, not under
+     the line number. The offset equals the gutter's full width. */
+  pre.giallo .giallo-l {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding-left: calc(1rem + 4ch + 1px);
+    text-indent: calc(-1rem - 4ch - 1px);
+  }
+
+  pre.giallo .giallo-l::before {
+    position: static;
+    text-indent: 0;
+  }
+
+  .z-code-header {
+    position: static;
+  }
+}

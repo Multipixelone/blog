@@ -209,40 +209,65 @@
         var label = 'Code block' + (caption !== 'code' ? ': ' + caption : '');
         pre.setAttribute('aria-label', label);
 
-        // Real header element (replaces the ::before pseudo-element).
+        // Header bar: caption on the left, copy button docked on the right.
+        // A filename gets its language as a quieter suffix.
         var header = document.createElement('div');
         header.className = 'z-code-header';
-        header.textContent = caption;
+        var title = document.createElement('span');
+        title.className = 'z-code-lang';
+        title.textContent = caption;
+        if (name && displayLang) {
+          var sub = document.createElement('span');
+          sub.className = 'z-code-sublang';
+          sub.textContent = displayLang;
+          title.appendChild(sub);
+        }
+        header.appendChild(title);
         pre.insertBefore(header, code);
 
-        // Copy button.
+        // Copy button (icon + word; the word swaps for feedback). Only offered
+        // where the Clipboard API exists, so it never sits there doing nothing.
+        if (!(navigator.clipboard && navigator.clipboard.writeText)) return;
+        var ICON_COPY = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
+        var ICON_DONE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'copy-btn';
-        btn.setAttribute('aria-label', 'Copy code to clipboard');
-        btn.textContent = 'Copy';
+        // The accessible name keeps the visible word in it (label-in-name).
+        btn.setAttribute('aria-label', 'Copy code');
+        // Polite live region so screen readers hear the result of a copy.
+        var status = document.createElement('span');
+        status.className = 'z-code-status';
+        status.setAttribute('role', 'status');
+        var reset;
+        function setBtn(icon, text) {
+          btn.innerHTML = icon + '<span></span>';
+          btn.lastChild.textContent = text;
+        }
+        function settle(icon, text, cls, said) {
+          clearTimeout(reset);
+          setBtn(icon, text);
+          btn.classList.remove('copied', 'failed');
+          if (cls) btn.classList.add(cls);
+          status.textContent = said;
+          reset = setTimeout(function () {
+            setBtn(ICON_COPY, 'Copy');
+            btn.classList.remove('copied', 'failed');
+            status.textContent = '';
+          }, 2000);
+        }
+        setBtn(ICON_COPY, 'Copy');
 
         btn.addEventListener('click', function () {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(code.textContent).then(function () {
-              btn.textContent = 'Copied!';
-              btn.classList.add('copied');
-              btn.setAttribute('aria-label', 'Copied');
-              setTimeout(function () {
-                btn.textContent = 'Copy';
-                btn.classList.remove('copied');
-                btn.setAttribute('aria-label', 'Copy code to clipboard');
-              }, 2000);
-            }).catch(function () {
-              btn.textContent = 'Error';
-              setTimeout(function () {
-                btn.textContent = 'Copy';
-              }, 2000);
-            });
-          }
+          navigator.clipboard.writeText(code.textContent).then(function () {
+            settle(ICON_DONE, 'Copied', 'copied', 'Code copied to clipboard');
+          }).catch(function () {
+            settle(ICON_COPY, 'Copy failed', 'failed', 'Copy failed. Select the code and copy it by hand.');
+          });
         });
 
-        pre.appendChild(btn);
+        header.appendChild(btn);
+        header.appendChild(status);
       });
     }
 
