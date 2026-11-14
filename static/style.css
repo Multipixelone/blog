@@ -1769,11 +1769,10 @@ h6:hover > .zola-anchor,
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   min-height: 44px;
   color: var(--muted);
-  text-decoration-color: var(--border);
-  text-underline-offset: 0.2em;
+  text-decoration: none;
 }
 
 .build-badge:is(:hover, :focus-visible) {
@@ -1785,14 +1784,25 @@ h6:hover > .zola-anchor,
   height: 0.95rem;
 }
 
+/* One text run keeps the statement and revision on the same underline. */
+.build-badge .source-label {
+  font: 0.75rem/1.5 var(--font-mono);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.build-badge:is(:hover, :focus-visible) .source-label {
+  text-decoration-thickness: 2px;
+}
+
 /* Keep the revision as bare monospace rather than an inline code chip. */
 .build-badge code {
   padding: 0;
   border: 0;
   background: none;
   color: inherit;
-  font-size: 0.95em;
-  font-variant: normal;
+  font: inherit;
   letter-spacing: 0;
 }
 

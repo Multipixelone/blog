@@ -163,13 +163,12 @@
       {%- if commit %}
       <a class="build-badge" href="{{ config.extra.repo_url }}/commit/{{ parts | first }}">
         {{ <icon name="commit" /> }}
-        <span>built from</span>
-        <code>{{ parts | first | truncate(length=7, end="") }}{% if parts | length > 1 %}-dirty{% endif %}</code>
+        <span class="source-label">built from <code>{{ parts | first | truncate(length=7, end="") }}{% if parts | length > 1 %}-dirty{% endif %}</code></span>
       </a>
       {%- else %}
       <a class="build-badge" href="{{ config.extra.repo_url }}">
         {{ <icon name="commit" /> }}
-        <span>built from this repo</span>
+        <span class="source-label">built from this repo</span>
       </a>
       {%- endif %}
       </span>
