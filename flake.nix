@@ -7,6 +7,11 @@
     let
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed f;
       pkgsFor = system: nixpkgs.legacyPackages.${system};
+      # One publication boundary for interactive serve, checks, and site builds.
+      zolaFor = pkgs: pkgs.writeShellScriptBin "zola" ''
+        exec ${pkgs.python3.withPackages (ps: [ ps.pyyaml ])}/bin/python3 \
+          ${./scripts/zola.py} ${pkgs.zola}/bin/zola "$@"
+      '';
 
       # Commit the site was built from, surfaced by the footer's build badge.
       # `self.rev` needs a clean tree; a dirty one falls back to `self.dirtyRev`
@@ -25,7 +30,7 @@
             src = ./.;
             SITE_COMMIT = commit;
             nativeBuildInputs = [
-              pkgs.zola
+              (zolaFor pkgs)
               # Open Graph card generation: Pillow draws the cards, woff2 supplies
               # woff2_decompress (Cooper ships as woff2; Pillow needs ttf).
               (pkgs.python3.withPackages (ps: [ ps.pillow ]))
@@ -45,7 +50,7 @@
         {
           default = pkgs.mkShellNoCC {
             packages = [
-              pkgs.zola
+              (zolaFor pkgs)
               # pillow: OG cards. feedparser + libxslt: scripts/check_feeds.py.
               # pyyaml: scripts/check_frontmatter.py. fonttools + brotli:
               # scripts/subset_fonts.py (dev-only; the build never subsets).
