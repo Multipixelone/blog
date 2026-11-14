@@ -4,6 +4,7 @@ date: 2026-06-26
 description: "Why declarative systems like NixOS are the future: one source of truth for an entire fleet, modules, and composition that imperative sysadmin can't match."
 slug: nixos-for-who
 template: page.html
+draft: true
 taxonomies:
   tags:
     - technology
