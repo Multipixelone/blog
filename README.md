@@ -23,35 +23,6 @@ zola serve           # local server at http://localhost:1111
 
 Or with [direnv](https://direnv.net/): allow the `.envrc` once, then `zola serve`.
 
-Use the repository's Nix environment for `zola serve`, `zola build`, and
-`zola check` (including `nix develop --command zola check`). It supplies the
-shared publication launcher in `scripts/zola.py`, not an unmanaged system Zola.
-Posts in date-sorted sections are unpublished until their front matter has a
-`date`; deleting that field unpublishes a post without deleting its content.
-A date-like filename alone does not publish a post; an empty YAML date is also
-unpublished.
-Section indexes and pages in other sections are unaffected. Dated posts keep
-Zola's existing behavior, including future dates and explicit `draft` handling;
-`--drafts` still includes dated drafts, but does not publish undated posts.
-
-The launcher gives Zola a private temporary site snapshot with undated posts
-(and their bundle assets) omitted before routes, taxonomies, or feeds are built.
-It never rewrites source front matter. `serve` watches source inputs and restarts
-against a fresh snapshot on edits, including adding/removing dates; its temporary
-tree is removed on exit. Before serving it clears stale output (including old
-search indexes), preserving configured dotfiles and explicit-output overwrite
-guards. Build/check snapshots are removed after the command.
-Arguments such as `--root`, `--config`, and `--output-dir` still refer to the
-original site, and output remains in the normal location. The launcher is scoped
-to this site's input directories; `serve --extra-watch-path` is rejected rather
-than silently watching files outside its snapshot.
-
-Publication regression checks (including a complete build and live date changes):
-
-```sh
-nix develop --command python3 -m unittest discover -s tests -v
-```
-
 ## Build
 
 ```sh
