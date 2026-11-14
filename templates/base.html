@@ -57,9 +57,15 @@
   <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") }}">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f4ed">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1c1915">
-  <link rel="stylesheet" id="giallo-light" href="{{ get_url(path="giallo-light.css") }}" media="(prefers-color-scheme: light)">
-  <link rel="stylesheet" id="giallo-dark" href="{{ get_url(path="giallo-dark.css") }}" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+  {#- Zola generates the giallo themes at build time, so cache_bust (which hashes
+      static/ files) can't see them. Version both theme sheets and style.css by
+      build commit instead: class names change whenever the theme or Zola does,
+      and a stale cached sheet leaves every code token uncolored. -#}
+  {%- set asset_v = get_env(name="SITE_COMMIT", default="") | truncate(length=12, end="") %}
+  {%- set asset_q = "" %}{% if asset_v %}{% set asset_q = "?v=" ~ asset_v %}{% endif %}
+  <link rel="stylesheet" id="giallo-light" href="{{ get_url(path="giallo-light.css") }}{{ asset_q }}" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" id="giallo-dark" href="{{ get_url(path="giallo-dark.css") }}{{ asset_q }}" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="{{ get_url(path="style.css") }}{{ asset_q }}">
   <script>
   // Apply the reader's saved theme choice before first paint (no flash). Defines
   // window.__setTheme(mode) — 'light' | 'dark' | 'auto' — reused by the toggle.
