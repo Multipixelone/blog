@@ -220,7 +220,7 @@ Feed notices, Markdown alerts and the table of contents stay on the page's paper
 
 ## Layout
 
-A wide site frame surrounds a single centred reading column. Header and footer expand to `max-width: 1200px`, with fluid gutters (`clamp(1.5rem, 4vw, 4rem)`); `main` keeps the incumbent 652px text width (the former 700px body minus its 1.5rem padding on either side). Page padding is 2rem above and 3rem below, reduced to 1.25rem / 2rem with 1rem gutters under 600px. No sidebar, no grid at page level. Vertical rhythm comes from spacing, not boxes: headings get 3rem above and 1rem below; paragraphs and lists 1.25rem below; sections such as footnotes, Related, Comments, pagination and the footer each start with 2.5–4rem of space and a 1px rule.
+A wide site frame surrounds a single centred reading column. Header and footer expand to `max-width: 1200px`, with fluid gutters (`clamp(1.5rem, 4vw, 4rem)`), and are never narrower than the text column. `main` keeps the original reading frame exactly: `max-width: 700px` with 1.5rem side padding (1rem under 600px), giving a 652px text width. Page padding is 2rem above and 3rem below, reduced to 1.25rem / 2rem under 600px. No sidebar, no grid at page level. Vertical rhythm comes from spacing, not boxes: headings get 3rem above and 1rem below; paragraphs and lists 1.25rem below; sections such as footnotes, Related, Comments, pagination and the footer each start with 2.5–4rem of space and a 1px rule.
 
 The header is a row of small-caps nav links with the theme toggle pushed to the right, closed by a wide hairline that the ❦ ornament sits on. Navigation wraps naturally on narrow screens, preserving DOM and focus order. Posts on the index are separated by a dashed rule. Small grids appear only inside components: the "Elsewhere" cards (`minmax(14rem, 1fr)`) and the footer directory (`minmax(8rem, 1fr)`, with a container query).
 
@@ -254,7 +254,7 @@ Small, soft corners on interface pieces: 3px on inline code, images and the copy
 
 ### Navigation
 
-Small-caps Sabon 600 at 0.95rem, 0.06em tracking, Chalk Ink, 1.75rem apart (1rem on mobile). Hover turns Footlight Amber with an underline at 0.15em offset. The theme toggle is a 1.05rem outline icon (1.7 stroke) at the right edge, hidden until JS runs; focus gets a 2px amber outline. A skip link drops in from the top-left on focus.
+Small-caps Sabon 600 at 0.95rem, 0.06em tracking, Chalk Ink, 1.75rem apart (0.75rem on mobile, wrapping on the narrowest screens). Hover turns Footlight Amber with an underline at 0.15em offset. The theme toggle is a 1.05rem outline icon (1.7 stroke) at the right edge, hidden until JS runs; focus gets a 2px amber outline. A skip link drops in from the top-left on focus.
 
 ### Text Links
 
