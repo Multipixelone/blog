@@ -18,17 +18,6 @@
   --shadow: rgba(43, 37, 32, 0.06);
   /* Top ambient highlight in the page background gradient. */
   --glow: rgba(255, 255, 255, 0.5);
-  /* Markdown alert (callout) border + surface colors. */
-  --alert-note-bd: #4a6fa5;
-  --alert-note-bg: #f0f4fa;
-  --alert-tip-bd: #4a7a4a;
-  --alert-tip-bg: #f0f7f0;
-  --alert-important-bd: #6a4a8a;
-  --alert-important-bg: #f5f0fa;
-  --alert-warning-bd: #a07a2a;
-  --alert-warning-bg: #faf6ee;
-  --alert-caution-bd: #a04a4a;
-  --alert-caution-bg: #faf0f0;
   --font-mono:
     "PragmataPro Mono Liga", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, "Liberation Mono", monospace;
@@ -63,16 +52,6 @@
     --giallo-ln: #665c54;
     --shadow: rgba(0, 0, 0, 0.2);
     --glow: rgba(255, 255, 255, 0.04);
-    --alert-note-bd: #6a8fc5;
-    --alert-note-bg: #1a2230;
-    --alert-tip-bd: #6a9a6a;
-    --alert-tip-bg: #182218;
-    --alert-important-bd: #9a6aba;
-    --alert-important-bg: #221a2a;
-    --alert-warning-bd: #c09a4a;
-    --alert-warning-bg: #221e14;
-    --alert-caution-bd: #c06a6a;
-    --alert-caution-bg: #221616;
   }
 }
 
@@ -94,16 +73,6 @@
   --giallo-ln: #665c54;
   --shadow: rgba(0, 0, 0, 0.2);
   --glow: rgba(255, 255, 255, 0.04);
-  --alert-note-bd: #6a8fc5;
-  --alert-note-bg: #1a2230;
-  --alert-tip-bd: #6a9a6a;
-  --alert-tip-bg: #182218;
-  --alert-important-bd: #9a6aba;
-  --alert-important-bg: #221a2a;
-  --alert-warning-bd: #c09a4a;
-  --alert-warning-bg: #221e14;
-  --alert-caution-bd: #c06a6a;
-  --alert-caution-bg: #221616;
 }
 
 @font-face {
@@ -975,17 +944,30 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   text-underline-offset: 0.15em;
 }
 
+/* Reading asides share the page's paper. Fine rules and a little air set
+   them apart from the prose without turning them into notification cards. */
+.feed-banner,
+.markdown-alert,
+.toc {
+  margin: 1.75rem 0;
+  padding: 1rem 0;
+  border-block: 1px solid var(--border);
+}
+
+:is(.feed-banner, .markdown-alert) > :first-child {
+  margin-top: 0;
+}
+
+:is(.feed-banner, .markdown-alert) > :last-child {
+  margin-bottom: 0;
+}
+
 /* ------------------------------------------------------------------
    Table of contents — a <details> above the post body, rendered only
    when the post has three or more headings.
    ------------------------------------------------------------------ */
 .toc {
-  margin: 1.75rem 0 2.5rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 4px;
-  background: var(--paper-shade);
+  margin-bottom: 2.5rem;
   font-size: 0.9rem;
 }
 
@@ -1860,54 +1842,10 @@ h6:hover > .zola-anchor,
   }
 }
 
-/* GitHub-style markdown alerts (Obsidian callouts) */
-.markdown-alert {
-  border-left: 3px solid;
-  :root {
-    --page-gutter: 1rem;
-  }
-
-  padding: 0.5em 1em;
-  margin: 1em 0;
-  border-radius: 2px;
-}
-
+/* Markdown alert labels carry their meaning in words, not colored rails. */
 .markdown-alert p:first-child {
-  margin-top: 0;
+  margin-bottom: 0.5rem;
   font-weight: 600;
-}
-
-.markdown-alert p:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-alert-note {
-  border-left-color: var(--alert-note-bd);
-  background: var(--alert-note-bg);
-  header nav {
-    column-gap: 1rem;
-  }
-
-}
-
-.markdown-alert-tip {
-  border-left-color: var(--alert-tip-bd);
-  background: var(--alert-tip-bg);
-}
-
-.markdown-alert-important {
-  border-left-color: var(--alert-important-bd);
-  background: var(--alert-important-bg);
-}
-
-.markdown-alert-warning {
-  border-left-color: var(--alert-warning-bd);
-  background: var(--alert-warning-bg);
-}
-
-.markdown-alert-caution {
-  border-left-color: var(--alert-caution-bd);
-  background: var(--alert-caution-bg);
 }
 
 /* Respect a reduced-motion preference: kill smooth scroll and near-instant

@@ -22,11 +22,6 @@ colors:
   rule-line: "#ddd6c6"
   light-code-bg: "#f3efe6"
   light-code-border: "#e7e0d1"
-  alert-note: "#6a8fc5"
-  alert-tip: "#6a9a6a"
-  alert-important: "#9a6aba"
-  alert-warning: "#c09a4a"
-  alert-caution: "#c06a6a"
 typography:
   display:
     fontFamily: '"Cooper*", Georgia, serif'
@@ -116,11 +111,9 @@ components:
     backgroundColor: "{colors.wings-black}"
     textColor: "{colors.footlight-amber}"
   toc:
-    backgroundColor: "{colors.wings-shade}"
     textColor: "{colors.chalk-ink}"
     typography: "{typography.meta}"
-    rounded: "{rounded.md}"
-    padding: "0.75rem 1rem"
+    padding: "1rem 0"
   elsewhere-card:
     backgroundColor: "{colors.wings-shade}"
     textColor: "{colors.chalk-ink}"
@@ -132,8 +125,8 @@ components:
     rounded: "{rounded.card}"
     padding: "1rem 1.1rem"
   markdown-alert:
-    rounded: "{rounded.hairline}"
-    padding: "0.5em 1em"
+    textColor: "{colors.chalk-ink}"
+    padding: "1rem 0"
   footer-slip:
     backgroundColor: "{colors.wings-shade}"
     textColor: "{colors.dust-ink}"
@@ -169,7 +162,7 @@ Two editions on the same structure. Each has one paper, one heavier backing stoc
 
 ### Primary
 
-- **Footlight Amber** (#ff9e42): the accent in the dark edition. Links, the drop cap, the ❦ header ornament, hovered nav and tags, focus outlines, the left stripe on the table of contents. 8.52:1 on Wings Black.
+- **Footlight Amber** (#ff9e42): the accent in the dark edition. Links, the drop cap, the ❦ header ornament, hovered nav and tags, focus outlines. 8.52:1 on Wings Black.
 - **Bright Footlight** (#ffb366): hovered links, and the footer slip label when hovered or current. 9.92:1 on Wings Black.
 - **Marquee Rust** (#b54a00): the accent in the light edition, shared with finnrut.is. 4.85:1 on Playbill Paper.
 - **Deep Marquee Rust** (#8c3800): Marquee Rust's hover in the light edition.
@@ -177,7 +170,7 @@ Two editions on the same structure. Each has one paper, one heavier backing stoc
 ### Neutral (dark edition, default)
 
 - **Wings Black** (#1c1915): page background, and the `theme-color` meta in dark mode.
-- **Wings Shade** (#242019): backing stock for inline code, the table of contents, tag chips, "Elsewhere" cards, comments, footer slips.
+- **Wings Shade** (#242019): backing stock for inline code, tag chips, "Elsewhere" cards, comments, footer slips.
 - **Chalk Ink** (#e8e2d8): body text and headings. 13.59:1 on Wings Black.
 - **Dust Ink** (#9e9486): dates, reading time, pronouns, footnotes, tag links, footer text. 5.87:1 on Wings Black, 5.43:1 on Wings Shade.
 - **Ember Blush** (#5a2e0f): text selection and the highlight on a targeted footnote.
@@ -188,13 +181,13 @@ Two editions on the same structure. Each has one paper, one heavier backing stoc
 
 - **Playbill Paper** (#f7f4ed), **Callboard Card** (#efeadd), **Program Ink** (#2b2520, 13.77:1), **Faded Ink** (#6f6456, 5.26:1), **Stub Blush** (#f5d9c4) and **Rule Line** (#ddd6c6): the same roles as their dark counterparts, with the same names and values as finnrut.is. Code uses **Light Code Bg** (#f3efe6) and **Light Code Border** (#e7e0d1), plus the Gruvbox light surface from `giallo-light.css`.
 
-### Alerts
+### Reading Asides
 
-Markdown alerts (note, tip, important, warning, caution) carry the only other hues: a muted blue, green, violet, ochre and red, used as a 3px left border on a barely tinted surface of the same hue. The values in the frontmatter are the dark-edition borders; each edition defines its own `--alert-*-bd` / `--alert-*-bg` pair in `static/style.css`.
+Feed notices, Markdown alerts and the table of contents stay on the page's paper, separated by neutral 1px horizontal rules and vertical space. No colored rails, tinted surfaces or nested cards. Alert labels (note, tip, important, warning, caution) convey their meaning in words, not color.
 
 ### Named Rules
 
-**The One Lamp Rule.** Each edition has exactly one accent. Amber (or Rust) marks what can be clicked, focused or followed, plus the drop cap and the fleuron. It is never a background fill, never body text, never a heading colour. Alert hues stay inside alerts.
+**The One Lamp Rule.** Each edition has exactly one accent. Amber (or Rust) marks what can be clicked, focused or followed, plus the drop cap and the fleuron. It is never a background fill, never body text, never a heading colour. Reading asides use neutral ink and rules.
 
 **The Ghost Light Rule.** Dark is the default edition for every new reader. Light exists, is fully supported and must pass the same contrast checks, but it is opt-in.
 
@@ -255,7 +248,7 @@ Mostly flat. Depth comes from tone: Wings Shade sitting on Wings Black, bordered
 
 ## Shapes
 
-Small, soft corners on interface pieces: 2px on alerts, 3px on inline code, images and the copy button, 4px on code blocks, the TOC, search and focus rings, 6px on cards and comments. Chips and the key download link are full pills (999px). The header ornament is a ❦ fleuron; footer slips have a torn right edge (a `clip-path` polygon) and rest at -2deg or 1.5deg. Rules are 1px; the index separator and the slip's inner line are dashed.
+Small, soft corners on interface pieces: 3px on inline code, images and the copy button, 4px on code blocks, search and focus rings, 6px on cards and comments. Reading asides are unboxed and have no rounded corners. Chips and the key download link are full pills (999px). The header ornament is a ❦ fleuron; footer slips have a torn right edge (a `clip-path` polygon) and rest at -2deg or 1.5deg. Rules are 1px; the index separator and the slip's inner line are dashed.
 
 ## Components
 
@@ -281,11 +274,11 @@ On `/tags/`: Wings Shade pills, 1px rule border, small-caps label with a mono co
 
 ### Table of Contents
 
-A `<details>` above posts with three or more headings: Wings Shade, 1px rule, a 3px amber left stripe, 4px corners, 0.9rem text, small-caps summary.
+A `<details>` above posts with three or more headings: neutral 1px horizontal rules, 1rem vertical padding, 0.9rem text, small-caps summary. The native disclosure marker stays intact.
 
-### Markdown Alerts
+### Feed Notices and Markdown Alerts
 
-3px left border in the alert's hue on its tinted surface, 2px corners, 0.5em 1em padding; first line is bold.
+Unboxed asides on the page's paper, with neutral 1px horizontal rules and 1rem vertical padding. Text aligns with the reading column. Markdown alert labels use weight for emphasis; feed URLs are bare, wrapping monospace text that can be selected in one click.
 
 ### Cards (Elsewhere, Comments)
 

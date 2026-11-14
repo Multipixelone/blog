@@ -97,26 +97,19 @@
         <link rel="stylesheet" href="/giallo-dark.css" media="(prefers-color-scheme: dark)"/>
         <link rel="stylesheet" href="/style.css"/>
         <style>
-          .feed-banner {
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            background: var(--paper-shade);
-            padding: 1rem 1.25rem;
-            margin-bottom: 2.5rem;
-            border-radius: 4px;
-          }
-          .feed-banner p:first-child { margin-top: 0; }
-          .feed-banner p:last-child { margin-bottom: 0; }
+          .feed-banner { margin-bottom: 2.5rem; }
           .feed-url {
             display: block;
-            margin-top: 0.75rem;
-            padding: 0.6rem 0.8rem;
-            background: var(--code-bg);
-            border: 1px solid var(--code-border);
-            border-radius: 4px;
+            margin-block: 0.75rem;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: none;
+            color: var(--ink);
             font-family: var(--font-mono);
             font-size: 0.8rem;
-            word-break: break-all;
+            line-height: 1.65;
+            overflow-wrap: anywhere;
             user-select: all;
           }
           .feed-entries { list-style: none; padding-left: 0; margin: 0; }
