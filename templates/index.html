@@ -45,8 +45,8 @@
   <p class="home-entry-meta">
     {% if page.date %}
     <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%B %-d, %Y") }}</time>
-    {% endif %}
-    <span class="reading-time">{% if page.date %}<span aria-hidden="true">·</span> {% endif %}{{ page.reading_time }} min read</span>
+    {%- endif %}
+    {%- if page.date %}<span class="reading-time"> <span aria-hidden="true">·</span> {% else %}<span class="reading-time">{% endif %}{{ page.reading_time }} min read</span>
   </p>
   <span class="p-author h-card">
     <data class="p-name" value="{{ config.author }}"></data>

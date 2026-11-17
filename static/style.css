@@ -903,10 +903,10 @@ article h2 a:hover {
   font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2rem);
 }
 
+/* Same line as a post's meta: italic date, then an italic reading time that
+   carries its own " · " so the dot gets one word-space on each side. The global
+   `time` rule is a block, so pull it back inline here. */
 .home-entry-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0.65rem;
   margin: 0 0 1rem;
   color: var(--muted);
   font-size: 0.9rem;
@@ -915,14 +915,9 @@ article h2 a:hover {
 
 .home-entry-meta time,
 .home-entry-meta .reading-time {
+  display: inline;
   margin: 0;
-  font-size: inherit;
-  font-style: normal;
   white-space: nowrap;
-}
-
-.home-entry-meta .reading-time > span {
-  margin-right: 0.65rem;
 }
 
 .home-entry .e-summary > :first-child {
