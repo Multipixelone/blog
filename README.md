@@ -209,7 +209,10 @@ configured; enable it manually with `git config core.hooksPath .githooks`. Bypas
 once with `git commit --no-verify`.
 
 The production build publishes unmodified sources at `/sig/<slug>.md` and copies
-signatures to `/sig/<slug>.md.asc`. Readers can download both and verify locally:
+signatures to `/sig/<slug>.md.asc`. Each post's signed badge links to its
+`#verify-signature` endnote with download links and verification commands.
+Production deploys run `scripts/check_signatures.py` before building, just like CI.
+Readers can download both and verify locally:
 
 ```sh
 curl -O https://blog.finnrut.is/pgp.asc

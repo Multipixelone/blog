@@ -109,8 +109,38 @@
    nothing. Beats the usual trick of hiding an empty <a>. #}
 <article class="h-entry"{% if not page.hidden %} data-pagefind-body{% endif %}>
   <h1 class="p-name">{{ page.title }}</h1>
+  {#- Post signatures. sign_posts.py signs exactly the flat, non-draft posts
+      (content/*.md, via post_signatures.published_posts), so only those get a
+      status; anything else — drafts, bundles, nested pages — says nothing
+      rather than claim "no signature" for a page that was never eligible.
+      The signature itself is read from static/sig/; build.sh publishes the
+      matching Markdown bytes next to it. -#}
+  {%- set sig_scope = not page.draft and "/" not in page.relative_path %}
+  {%- set sig = false %}
+  {%- if sig_scope %}
+  {%- set sig_name = page.slug ~ ".md" %}
+  {%- set sig = load_data(path="static/sig/" ~ sig_name ~ ".asc", format="plain", required=false) %}
+  {#- Long key ID: the fingerprint's last 16 hex digits (64 bits), grouped in
+      fours. Derived from the canonical fingerprint, not the display copy. -#}
+  {%- set fp_hex = config.extra.pgp.fingerprint | replace(from=" ", to="") | upper %}
+  {%- set fp_tail = fp_hex[-16:] %}
+  {%- set long_id = fp_tail[0:4] ~ " " ~ fp_tail[4:8] ~ " " ~ fp_tail[8:12] ~ " " ~ fp_tail[12:16] %}
+  {%- endif %}
   {% if page.date %}
-  <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
+  <div class="post-meta">
+    <time class="dt-published" datetime="{{ page.date | date(format="%Y-%m-%dT%H:%M:%S%z") }}">{{ page.date | date(format="%Y-%m-%d") }}<span class="reading-time"> · {{ page.word_count }} words · {{ page.reading_time }} min read</span></time>
+    {%- if sig_scope %}
+    {#- The dot travels with the badge, so a wrapped row never ends on a
+        dangling separator. -#}
+    <span class="sig-status" data-pagefind-ignore><span class="sig-sep" aria-hidden="true">·</span>
+    {%- if sig %}
+      <a class="sig" href="#verify-signature" aria-label="Signed: how to verify this post's signature">signed</a>
+    {%- else %}
+      <span class="sig sig--unsigned">no signature published</span>
+    {%- endif %}
+    </span>
+    {%- endif %}
+  </div>
   {% endif %}
   {%- if page.updated %}
   <data class="dt-updated" value="{{ page.updated | date(format="%Y-%m-%dT%H:%M:%S%z") }}"></data>
@@ -169,6 +199,44 @@
     {% endfor %}
   </nav>
   {% endif %}
+  {%- if sig %}
+  {#- Endnote the "signed" badge points to: one muted line, closed. Readers who
+      don't care about signatures never see more than the summary; trust and
+      how to read gpg's output live on /pgp/#post-signatures, not here. URLs
+      are absolute so the commands paste and run as-is. -#}
+  {%- set key_url = get_url(path=config.extra.pgp.key_file) %}
+  {%- set key_name = config.extra.pgp.key_file | split(pat="/") | last %}
+  {%- set md_url = get_url(path="sig/" ~ sig_name) %}
+  {%- set asc_url = get_url(path="sig/" ~ sig_name ~ ".asc") %}
+  <details class="verify" id="verify-signature" data-pagefind-ignore>
+    <summary>Source signed with OpenPGP · how to verify</summary>
+    <p>The <a href="{{ md_url }}">Markdown source</a> has a <a href="{{ asc_url }}">detached signature</a> from key <code>{{ long_id }}</code> (<a href="{{ key_url }}">public key</a>, <a href="{{ get_url(path="@/pgp/_index.md") }}#post-signatures">about it</a>).</p>
+    <pre tabindex="0" aria-label="GnuPG commands to verify this post"><code>curl -fsSLO {{ key_url }}
+gpg --show-keys --fingerprint {{ key_name }}   # expect {{ config.extra.pgp.fingerprint_pretty }}
+gpg --import {{ key_name }}
+curl -fsSLO {{ md_url }}
+curl -fsSLO {{ asc_url }}
+gpg --verify {{ sig_name }}.asc {{ sig_name }}</code></pre>
+  </details>
+  <script>
+  // Following the "signed" badge lands on the closed endnote; open it. Fragment
+  // navigation only auto-reveals content *inside* a closed <details>, not the
+  // element itself. Without JS the summary is still right there to click.
+  (function () {
+    var note = document.getElementById('verify-signature');
+    if (!note) return;
+    function reveal() {
+      if (location.hash === '#verify-signature') note.open = true;
+    }
+    reveal();
+    window.addEventListener('hashchange', reveal);
+    // Same-hash clicks fire no hashchange, e.g. after closing it again.
+    document.querySelectorAll('a[href="#verify-signature"]').forEach(function (a) {
+      a.addEventListener('click', function () { note.open = true; });
+    });
+  })();
+  </script>
+  {%- endif %}
   {% if page.lower or page.higher %}
   <nav class="post-nav" aria-label="More posts">
     {% if page.lower %}<a href="{{ page.lower.permalink | safe }}">← {{ page.lower.title }}</a>{% endif %}

@@ -1067,6 +1067,135 @@ article:has(> h1) > .e-content > p:first-of-type::first-letter {
   display: inline;
 }
 
+/* Post meta line: date and reading time, then whether the post's Markdown
+   source carries a detached OpenPGP signature (static/sig/). */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.45em;
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.post-meta .dt-published {
+  margin: 0;
+}
+
+/* Separator and badge wrap as one unit, so the row never ends on a lone dot. */
+.sig-status {
+  display: inline-flex;
+  align-items: baseline;
+  column-gap: 0.45em;
+  white-space: nowrap;
+}
+
+.sig-sep {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Just the word: the meta row is plain text (date, words, minutes), and the
+   key glyph already means "the PGP key page" in the footer. The key ID is the
+   same on every post, so it lives in the endnote, not the line. */
+.sig {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant: small-caps;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a.sig:hover,
+a.sig:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+a.sig:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.sig--unsigned {
+  font-style: italic;
+  font-variant: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sig {
+    transition: none;
+  }
+}
+
+/* Signature endnote: one muted line, closed by default. Readers who don't
+   care see only the summary; the rest is there for the ones who open it. */
+.verify {
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  scroll-margin-top: 1.5rem;
+}
+
+.verify summary {
+  cursor: pointer;
+  width: fit-content;
+  font-style: italic;
+  transition: color 0.15s ease;
+}
+
+.verify summary:hover {
+  color: var(--accent);
+}
+
+.verify summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.verify[open] summary {
+  margin-bottom: 0.6rem;
+}
+
+.verify p {
+  margin-bottom: 0.6rem;
+}
+
+.verify a {
+  color: inherit;
+  text-underline-offset: 0.15em;
+}
+
+.verify a:hover {
+  color: var(--accent);
+}
+
+.verify pre {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  box-shadow: none;
+}
+
+.verify pre:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verify summary {
+    transition: none;
+  }
+}
+
 /* ------------------------------------------------------------------
    Search — Pagefind's default UI, retinted. It exposes its own custom
    properties for exactly this, so the whole theme is a variable block

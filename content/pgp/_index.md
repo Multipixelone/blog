@@ -30,3 +30,16 @@ gpg --keyserver hkps://keys.openpgp.org \
 Either way, check that the fingerprint matches the one above before you use
 it. If you can, double-check it with me over something that isn't
 email.
+
+## Post signatures
+
+Each signed post links to its Markdown source and a detached signature, with
+commands for checking them in the post's verification endnote. The signature
+covers the source, not the rendered HTML, images or external content.
+
+Before trusting it, check the full fingerprint above through an independent
+channel. A "Good signature" from this fingerprint is what you want. A trust or
+identity warning only means you haven't certified the key; it isn't a bad
+signature. "BAD signature" means the file has changed.
+
+The site doesn't verify anything in your browser; you run the checks yourself.
