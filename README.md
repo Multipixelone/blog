@@ -67,6 +67,7 @@ The Nix flake runs these checks automatically:
 - **nix flake check** — validates the flake and its outputs
 - **site build** — the static site builds successfully from `.#default`
 - **front-matter consistency** — `scripts/check_frontmatter.py`
+- **post signatures** — `scripts/check_signatures.py` (public key only)
 - **feed validity** — `scripts/check_feeds.py`, plus an XSL render of every feed
 - **accessibility** — pa11y-ci over every page in the sitemap
 - **Lighthouse** — one URL per template; a11y and SEO block, perf warns
@@ -179,6 +180,44 @@ when it exists, so removing it degrades the page to the fingerprint and the
 fetch instructions instead of leaving a dead download link. The filename and the
 fingerprint live in `[extra.pgp]` in `zola.toml`, which also feeds the About
 page's fingerprint line.
+
+### Signed posts
+
+After adding or editing a published post, run in the dev shell:
+
+```sh
+scripts/sign-posts.sh        # sign missing/stale signatures only
+scripts/sign-posts.sh --all  # force re-signing
+```
+
+This uses local key `0x59BF38D05371C5E9` and signs the **exact Markdown source
+bytes**, including front matter, into `static/sig/<slug>.md.asc`. Commit those
+signatures with the posts. The slug comes from front matter, falling back to the
+filename stem. Drafts and section indexes are excluded; hidden posts are still
+published and signed. The script prints and removes orphaned signatures when a
+post is deleted, renamed, or becomes a draft. Never put the private key in CI.
+
+CI runs `python3 scripts/check_signatures.py`: an isolated temporary keyring
+containing only `static/pgp.asc` checks every published post with `gpgv`. Missing,
+stale/invalid, and orphaned signatures fail CI. Every byte-level edit needs a new
+signature, even if it does not warrant an `updated` date.
+
+The production build publishes unmodified sources at `/sig/<slug>.md` and copies
+signatures to `/sig/<slug>.md.asc`. Readers can download both and verify locally:
+
+```sh
+curl -O https://blog.finnrut.is/pgp.asc
+# Check the key fingerprint against an independently trusted source first.
+gpg --show-keys --fingerprint pgp.asc
+gpg --import pgp.asc
+curl -O https://blog.finnrut.is/sig/hello-world.md
+curl -O https://blog.finnrut.is/sig/hello-world.md.asc
+gpg --verify hello-world.md.asc hello-world.md
+```
+
+The signature authenticates the downloaded source, not the rendered HTML or its
+assets. Plain `zola serve` copies signatures but does not run the source-copy
+step; use `scripts/build.sh <output-dir>` or `nix build .#default` for both files.
 
 ## Search
 

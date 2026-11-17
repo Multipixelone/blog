@@ -31,7 +31,7 @@
               pkgs.zola
               # Open Graph card generation: Pillow draws the cards, woff2 supplies
               # woff2_decompress (Cooper ships as woff2; Pillow needs ttf).
-              (pkgs.python3.withPackages (ps: [ ps.pillow ]))
+              (pkgs.python3.withPackages (ps: [ ps.pillow ps.pyyaml ]))
               pkgs.woff2
               # Static search: indexes the built HTML, no service and no runtime.
               pkgs.pagefind
@@ -50,7 +50,7 @@
             packages = [
               pkgs.zola
               # pillow: OG cards. feedparser + libxslt: scripts/check_feeds.py.
-              # pyyaml: scripts/check_frontmatter.py. fonttools + brotli:
+              # pyyaml: front matter and signed-source publication. fonttools + brotli:
               # scripts/subset_fonts.py (dev-only; the build never subsets).
               (pkgs.python3.withPackages (ps: [
                 ps.pillow
@@ -62,6 +62,8 @@
               pkgs.woff2
               pkgs.pagefind
               pkgs.libxslt
+              # Signing locally; CI verifies with gpgv and the public key only.
+              pkgs.gnupg
             ];
             # Give `zola serve` the same footer badge the real build gets from
             # `self.rev` — with the same "-dirty" convention.

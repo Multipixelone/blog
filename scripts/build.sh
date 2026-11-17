@@ -24,6 +24,9 @@ fi
 
 zola build --base-url "$base_url" --output-dir "$out"
 
+# Zola copies static/sig/*.md.asc verbatim; publish the exact signed bytes too.
+python3 scripts/publish_post_sources.py "$out"
+
 # Social cards. The generator handles the woff2 -> ttf step Pillow needs.
 python3 scripts/gen_og_cards.py \
   --out "$out" --title "Finn Rutis" --base-url "$base_url"

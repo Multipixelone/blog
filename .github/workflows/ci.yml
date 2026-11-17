@@ -44,6 +44,8 @@ jobs:
           else
             nix develop --command python3 scripts/check_frontmatter.py content
           fi
+      - name: Published post signatures (public key only)
+        run: nix develop --command python3 scripts/check_signatures.py
       # Nothing else in CI looks at the cards, so a Pillow/FreeType/font bump
       # could change how they render without failing anything.
       - name: Social card render
