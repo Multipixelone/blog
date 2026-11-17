@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Reject commits whose staged posts lack valid signatures.
+# Checks the index (what will be committed), not the working tree.
+set -euo pipefail
+
+# Only posts, signatures and the public key can change the result.
+if git diff --cached --quiet -- content static/sig static/pgp.asc; then
+  exit 0
+fi
+
+root="$(git rev-parse --show-toplevel)"
+snapshot="$(mktemp -d "${TMPDIR:-/tmp}/blog-precommit.XXXXXX")"
+trap 'rm -rf "$snapshot"' EXIT
+
+git checkout-index --all --prefix="$snapshot/"
+
+check=(python3 "$root/scripts/check_signatures.py"
+  --content "$snapshot/content"
+  --signatures "$snapshot/static/sig"
+  --public-key "$snapshot/static/pgp.asc")
+
+if command -v gpg >/dev/null && python3 -c 'import yaml' 2>/dev/null; then
+  "${check[@]}"
+else
+  nix develop "$root" --command "${check[@]}"
+fi || {
+  echo >&2
+  echo "pre-commit: run scripts/sign-posts.sh, stage static/sig/, and retry" >&2
+  echo "            (bypass with git commit --no-verify)" >&2
+  exit 1
+}

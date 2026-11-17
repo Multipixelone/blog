@@ -73,6 +73,11 @@
                 SITE_COMMIT="$SITE_COMMIT-dirty"
               fi
               export SITE_COMMIT
+              # Enable the tracked hooks (signature check) unless hooks are
+              # already routed elsewhere.
+              if [ -z "$(git config --local --get core.hooksPath 2>/dev/null)" ]; then
+                git config --local core.hooksPath .githooks 2>/dev/null || true
+              fi
             '';
           };
         });

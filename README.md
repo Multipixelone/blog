@@ -202,6 +202,12 @@ containing only `static/pgp.asc` checks every published post with `gpgv`. Missin
 stale/invalid, and orphaned signatures fail CI. Every byte-level edit needs a new
 signature, even if it does not warrant an `updated` date.
 
+The same check runs locally as a pre-commit hook (`.githooks/pre-commit`) against
+the staged index whenever posts, signatures or the public key change. Entering the
+dev shell sets `core.hooksPath = .githooks` unless another hooks path is already
+configured; enable it manually with `git config core.hooksPath .githooks`. Bypass
+once with `git commit --no-verify`.
+
 The production build publishes unmodified sources at `/sig/<slug>.md` and copies
 signatures to `/sig/<slug>.md.asc`. Readers can download both and verify locally:
 
