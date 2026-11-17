@@ -25,6 +25,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: nixbuild/nix-quick-install-action@v35
+      - name: Published post signatures (public key only)
+        run: nix develop --command python3 scripts/check_signatures.py
       - name: Build site
         run: nix build .#default --print-build-logs
       - name: Setup Pages
