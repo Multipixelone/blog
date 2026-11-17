@@ -443,8 +443,8 @@ a:hover {
 article a[rel~="external"]::after {
   content: "\2060";
   content: "\2060" / " (off site)";
-  padding-right: 0.72em;
-  margin-left: 0.12em;
+  padding-right: 0.66em;
+  margin-left: 0.06em;
   background-color: currentColor;
   -webkit-mask: var(--link-mark) no-repeat right 0 top 0.2em / 0.62em 0.62em;
   mask: var(--link-mark) no-repeat right 0 top 0.2em / 0.62em 0.62em;
@@ -455,8 +455,9 @@ article a[rel~="external"]:is([href^="https://finnrut.is"], [href*=".finnrut.is"
   content: "\2060";
   content: "\2060" / " (another of my sites)";
   padding-right: 0.92em;
-  -webkit-mask-position: right 0 top 0.3em;
-  mask-position: right 0 top 0.3em;
+  margin-left: 0.12em;
+  -webkit-mask-position: right 0 top 0.18em;
+  mask-position: right 0 top 0.18em;
   -webkit-mask-size: 0.82em 0.82em;
   mask-size: 0.82em 0.82em;
   --link-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5h16a2 2 0 0 1 2 2v1.6a1.9 1.9 0 0 0 0 3.8v1.6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1.6a1.9 1.9 0 0 0 0-3.8V8.5a2 2 0 0 1 2-2z'/%3E%3Cpath d='M15.5 9.6v.8M15.5 11.6v.8M15.5 13.6v.8'/%3E%3C/svg%3E");
